@@ -6,19 +6,59 @@ output: html_document
 ---
 
 The goal of these analyses is to detect increases in syndromic disease activity associated with  COVID-19. As a test, we are using syndromic disease data from New York City. Data are stratified by day, borrough, age group. the data were downloaded from the [Epiquery website](https://a816-health.nyc.gov/hdi/epiquery/visualizations?PageType=ps&PopulationSource=Syndromic)
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = normalizePath("..")) #sets Working directory to be 1 folder up
 
+library(reshape2)
+library(lubridate)
 ```
 
+Import the data and remove the unnecesary rows. Note that the file downloads as a .csv format, but it is actually a tab-separated file.
 ```{r}
 ili1<- read.table('./Data/ILI_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
+resp1<-read.table('./Data/resp_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
 
-names(ili1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'count')
+combo1<-rbind.data.frame(ili1, resp1)
 
-ili1<-ili1[,c('borough','age_group','date','count')]
+names(combo1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'count')
+
+combo1<-combo1[,c('syndrome','borough','age_group','date','count')]
+saveRDS(combo1,'./Data/ili_resp.rds')
 ```
+
+Reshape the data. For now, just focus on ILI
+```{r}
+combo1$count<-as.numeric(as.character(combo1$count))
+combo1$date<-as.Date(combo1$date, '%m/%d/%y')
+combo1.m<-melt(combo1[combo1$syndrome=="Influenza-like illness (ILI)",], id.vars=c('syndrome', 'borough','age_group','date'))
+combo1.a<-dcast(combo1.m, date +borough+syndrome~age_group )
+```
+
+
+```{r}
+nyc<-combo1.a[combo1.a$borough=='Citywide',]
+nyc$age.rat<-(nyc$`Ages 65+ years`+0.5)/(nyc$`Ages 0-4 years`+0.5)
+```
+
+```{r, fig.width=4, fig.height=6}
+par(mfrow=c(2,1), mar=c(2,2,2,1))
+plot(nyc$date,nyc$`Ages 0-4 years`, type='l', bty='l', main='ILI <5 years in NYC')
+plot(nyc$date,nyc$`Ages 65+ years`, type='l', bty='l', main='ILI 65+ years in NYC')
+```
+
+Ratio of ILI in 65+ vs <5 year old, citywide
+```{r}
+plot(nyc$date,log(nyc$age.rat), type='l', bty='l', main='ratio of 65+ and <5 year ILI in NYC', yaxt='n', ylab='Ratio')
+axis(side=2, at=-c(-5, -0.5, 0, 0.5), label=round(exp(c(-5, -0.5, 0, 0.5)),2) )
+
+```
+
+
+
+
+
 
 
 
