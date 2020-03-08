@@ -16,7 +16,7 @@ library(lubridate)
 ```
 
 Import the data and remove the unnecesary rows. Note that the file downloads as a .csv format, but it is actually a tab-separated file.
-```{r}
+```{r, eval=F}
 ili1<- read.table('./Data/ILI_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
 resp1<-read.table('./Data/resp_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
 
@@ -25,13 +25,14 @@ combo1<-rbind.data.frame(ili1, resp1)
 names(combo1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'count')
 
 combo1<-combo1[,c('syndrome','borough','age_group','date','count')]
+combo1$date<-as.Date(combo1$date, '%m/%d/%y')
+combo1$count<-gsub(',', '', combo1$count) #remove commas from number
+combo1$count<-as.numeric(as.character(combo1$count))
 saveRDS(combo1,'./Data/ili_resp.rds')
 ```
 
 Reshape the data. For now, just focus on ILI
 ```{r}
-combo1$count<-as.numeric(as.character(combo1$count))
-combo1$date<-as.Date(combo1$date, '%m/%d/%y')
 combo1.m<-melt(combo1[combo1$syndrome=="Influenza-like illness (ILI)",], id.vars=c('syndrome', 'borough','age_group','date'))
 combo1.a<-dcast(combo1.m, date +borough+syndrome~age_group )
 ```
@@ -40,6 +41,11 @@ combo1.a<-dcast(combo1.m, date +borough+syndrome~age_group )
 ```{r}
 nyc<-combo1.a[combo1.a$borough=='Citywide',]
 nyc$age.rat<-(nyc$`Ages 65+ years`+0.5)/(nyc$`Ages 0-4 years`+0.5)
+```
+
+
+```{r}
+plot(nyc$date,nyc$`All age groups`, type='l', bty='l', main='ILI all ages in NYC')
 ```
 
 ```{r, fig.width=4, fig.height=6}
