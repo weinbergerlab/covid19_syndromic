@@ -1,0 +1,25 @@
+---
+title: "covid_19_syndromic"
+author: "Dan Weinberger"
+date: "3/8/2020"
+output: html_document
+---
+
+The goal of these analyses is to detect increases in syndromic disease activity associated with  COVID-19. As a test, we are using syndromic disease data from New York City. Data are stratified by day, borrough, age group. the data were downloaded from the [Epiquery website](https://a816-health.nyc.gov/hdi/epiquery/visualizations?PageType=ps&PopulationSource=Syndromic)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("..")) #sets Working directory to be 1 folder up
+
+```
+
+```{r}
+ili1<- read.table('./Data/ILI_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
+
+names(ili1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'count')
+
+ili1<-ili1[,c('borough','age_group','date','count')]
+```
+
+
+
+
