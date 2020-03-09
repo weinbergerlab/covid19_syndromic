@@ -135,7 +135,7 @@ control.predictor = list(compute = TRUE) )
 summary(m.rw1)
 ```
 
-
+Something wrong here
 ```{r}
 pred.rw1<-m.rw1$summary.fitted.values$`0.5quant`
 pred.rw1<-exp(pred.rw1)/(1+exp(pred.rw1))
