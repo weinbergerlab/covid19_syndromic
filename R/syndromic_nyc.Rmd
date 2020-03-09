@@ -172,6 +172,7 @@ combo2.sub<-combo2[, c('agec', 'MMWRyear', 'MMWRweek', 'borough', 'ili','flu.rat
 ili.m<-melt(combo2.sub, id.vars=c('borough','agec','MMWRyear','MMWRweek'))
 ili.a<-acast(ili.m, MMWRyear+MMWRweek ~borough~agec~variable , fun.aggregate = sum )
 clean.array.jags<-ili.a[,c('Bronx','Brooklyn','Manhattan','Queens' ,'Staten Island'),c('1','5'),]
+clean.array.jags[216,,,"flu.rate"]<-clean.array.jags[215,,,"flu.rate"] #patch for now to deal with missing last week of 
 saveRDS(clean.array.jags,'./Data/jags.ds.rds')
 ```
 
@@ -198,38 +199,42 @@ for(i in 1:n.space){
    for(t in 1:n.time){
 
       y.kid[i,t] ~ dpois(lambda.kid[i,t])
-      log(lambda.kid[i,t]) <- alpha1[i] + beta[1,i]*sqrt.flu[t] + beta[2,i]*sqrt.rsv[t] + non.flu.kid[t]
+      log(lambda.kid[i,t]) <- alpha1[i] + epsilon[1,i]*sqrt.flu[t] + epsilon[2,i]*sqrt.rsv[t] + non.flu.kid[i,t]
     
       y.adult[i,t] ~ dpois(lambda.adult[i,t])
-      log(lambda.adult[i,t]) <- alpha2[i] + delta[1,i]*sqrt.flu[t] + delta[2,i]*sqrt.rsv[t] + non.flu.adult[t]
+      log(lambda.adult[i,t]) <- alpha2[i] + delta[1,i]*sqrt.flu[t] + delta[2,i]*sqrt.rsv[t] + non.flu.adult[i,t]
     
-    
-      #     x[i,t,]%*%gamma +          
-      #            beta0 + beta0_space[i] +  
-      #             (beta1 + beta1_space[i])*(t - theta_space[i])*ifelse((t >= theta_space[i]), 1, 0)
+      mu[i,t] <- non.flu.adult[i,t] - non.flu.kid[i,t] #difference bc on log scale
+      #log.est.ratio[i,t] ~ dnorm(mu[i,t] , sigma2_epsilon_inv )
+      
+        mu[i,t] <-  beta0 + beta0_space[i] +  
+                   (beta1 + beta1_space[i])*(t - theta_space[i])*ifelse((t >= theta_space[i]), 1, 0)
 
 
       }
 
-   #beta0_space[i] ~ dnorm(0.00, 0.0001)
-   #beta1_space[i] ~ dnorm(0.00, 0.0001)
-   #theta_space[i] ~ dcat(pi)
+   beta0_space[i] ~ dnorm(0.00, 1e-4)
+   beta1_space[i] ~ dnorm(0.00, 1e-4)
+   theta_space[i] ~ dcat(pi)
 
 }
-   
-non.flu.kid[1]~  dnorm(0, 1e-4)
-non.flu.adult[1]~ dnorm(0, 1e-4)
+
+for(i in 1:n.space){
+  non.flu.kid[i,1]~  dnorm(0, 1e-4)
+  non.flu.adult[i,1]~ dnorm(0, 1e-4)
 for(t in 2:n.time){
-  non.flu.kid[t]~dnorm(non.flu.kid[t-1], tau.kid)
-  non.flu.adult[t]~dnorm(non.flu.adult[t-1], tau.adult)
+  non.flu.kid[i,t]~dnorm(non.flu.kid[i,t-1], tau.kid) #note shared tau for all time series
+  non.flu.adult[i,t]~dnorm(non.flu.adult[i,t-1], tau.adult) #note shared tau for all time series
+}
 }
 
 for(j in 1:n.space){
 alpha1[j] ~ dnorm(0,1e-4)
 alpha2[j] ~ dnorm(0, 1e-4)
 
+#todo: could shrink these
 for(k in 1:2){
- beta[k,j]~ dnorm(0, 1e-4)
+ epsilon[k,j]~ dnorm(0, 1e-4)
  delta[k,j]~dnorm(0, 1e-4)
 
 }
@@ -242,16 +247,19 @@ sd.kid~dunif(0,100)
 tau.adult<-1/sd.adult^2
 sd.adult~dunif(0,100)
 
-beta0 ~ dnorm(0.00, 0.0001)
-beta1 ~ dnorm(0.00, 0.0001)
+beta0 ~ dnorm(0.00, 1e-4)
+beta1 ~ dnorm(0.00, 1e-4)
+sigma2_epsilon_inv <- 1/sigma2_epsilon
+sigma2_epsilon ~ dgamma(0.01, 0.01)
+
 # for(j in 1:p_x){
 #    gamma[j] ~ dnorm(0.00, 0.0001)
 # }
 
-# pi ~ ddirch(alpha[1:n.time])
-# for(j in 1:n.time){
-#    alpha[j]<-1.00
-#    }
+ pi ~ ddirch(alpha[1:n.time])
+ for(j in 1:n.time){
+    alpha[j]<-1.00
+    }
 
 }
 "
