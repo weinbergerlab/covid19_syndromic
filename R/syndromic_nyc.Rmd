@@ -204,11 +204,16 @@ for(i in 1:n.space){
       y.adult[i,t] ~ dpois(lambda.adult[i,t])
       log(lambda.adult[i,t]) <- alpha2[i] + delta[1,i]*sqrt.flu[t] + delta[2,i]*sqrt.rsv[t] + non.flu.adult[i,t]
     
-      mu[i,t] <- non.flu.adult[i,t] - non.flu.kid[i,t] #difference bc on log scale
-      #log.est.ratio[i,t] ~ dnorm(mu[i,t] , sigma2_epsilon_inv )
+    # We are interested in CHANGES in dufference between non.flu.adult[i,t] and non.flu.kid[i,t]
       
-        mu[i,t] <-  beta0 + beta0_space[i] +  
-                   (beta1 + beta1_space[i])*(t - theta_space[i])*ifelse((t >= theta_space[i]), 1, 0)
+      diff_hat[i,t] <- non.flu.adult[i,t] - non.flu.kid[i,t] #difference bc on log scale
+      
+      
+      
+      #Model of true time series 
+     #  true.ratio[i,t] ~ dnorm(mu[i,t] , sigma2_epsilon_inv )
+      #mu[i,t] <-  beta0 + beta0_space[i] +  
+                  # (beta1 + beta1_space[i])*(t - theta_space[i])*ifelse((t >= theta_space[i]), 1, 0)
 
 
       }
