@@ -14,6 +14,8 @@ knitr::opts_knit$set(root.dir = normalizePath("..")) #sets Working directory to 
 library(reshape2)
 library(lubridate)
 library(mgcv)
+library(INLA)
+library(inlabru)
 ```
 
 Import the data and remove the unnecesary rows. Note that the file downloads as a .csv format, but it is actually a tab-separated file.
@@ -104,6 +106,7 @@ points(nyc$date,raw.ratio, col='red')
 Disaggregated boroughs data. Fit through Jan 2020, then extrapolate seasonal baseline forward
 ```{r}
 bur1<- combo1.a[combo1.a$borough != 'Citywide',]
+bur1$borough<-factor(bur1$borough)
 bur1.fit<-bur1[bur1$date<as.Date('2020-02-01'),]
 
 mod2<-gam(cbind(bur1.fit$o65, bur1.fit$u5)~dow+s(day.index, bs='bs') +borough, family=binomial, data=bur1.fit)
@@ -113,10 +116,33 @@ plot(bur1$date, pred2, type='p')
 ```
 Pointwise log likelihood
 ```{r}
-log.like.mod2<--dbinom(bur1$o65,bur1$o65+ bur1$u5,pred2, log=T)
+log.like.mod2<- -dbinom(bur1$o65,bur1$o65+ bur1$u5,pred2, log=T)
 plot(bur1$date, log.like.mod2)
 abline(v=as.Date('2020-02-01'), lty=2, col='gray', bty='l')
 ```
+
+
+```{r}
+bur1.fit.alt<-bur1
+bur1.fit.alt$o65.fit<-bur1.fit.alt$o65
+bur1.fit.alt$o65.fit[bur1$date>=as.Date('2020-01-01')]<-NA
+bur1.fit.alt$u5.fit<-bur1.fit.alt$u5
+bur1.fit.alt$u5.fit[bur1$date>=as.Date('2020-01-01')]<-NA
+
+form1<-as.formula('o65.fit ~  borough + dow +f(day.index, model = "rw1", constr = FALSE)')
+m.rw1 <- inla( form1 ,   family='binomial', data=bur1.fit.alt, Ntrials= (bur1.fit.alt$u5+ bur1.fit.alt$o65.fit), 
+control.predictor = list(compute = TRUE) )
+summary(m.rw1)
+```
+
+
+```{r}
+pred.rw1<-m.rw1$summary.fitted.values$`0.5quant`
+pred.rw1<-exp(pred.rw1)/(1+exp(pred.rw1))
+plot(bur1$date, pred.rw1)
+```
+
+
 
 
 
