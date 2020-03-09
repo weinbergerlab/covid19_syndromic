@@ -40,8 +40,8 @@ combo1<-readRDS('./Data/ili_resp.rds')
 ```
 
 ```{r}
-select.syndrome<-"Respiratory"
-#select.syndrome<-"Influenza-like illness (ILI)"
+#select.syndrome<-"Respiratory"
+select.syndrome<-"Influenza-like illness (ILI)"
 
 ```
 
@@ -94,7 +94,7 @@ lapply(ages, plot.rat)
 Export for SATSCAN temporal clustering
 ```{r}
 getwd()
-write.csv(nyc, file='../Data/nyc_resp.csv')
+#write.csv(nyc, file='../Data/nyc_resp.csv')
 ```
 
 
@@ -166,6 +166,7 @@ ratio.wk<-nyc.agg$o65/nyc.agg$u5
 ```{r}
 plot(nyc.agg$weekdate, ratio.wk)
 ```
+
 ```{r}
 nyc.agg$epiyr<-year(nyc.agg$weekdate)
 nyc.agg$epiyr[month(nyc.agg$weekdate)<=6] <-nyc.agg$epiyr[month(nyc.agg$weekdate)<=6]-1
@@ -173,7 +174,7 @@ nyc.agg$jul1.date<-as.Date(paste(nyc.agg$epiyr,'07', '01', sep='-'), )
 nyc.agg$season.index<- as.numeric(difftime(nyc.agg$weekdate , nyc.agg$jul1.date, unit='weeks'))
 nyc.agg$index<-1:nrow(nyc.agg)
 
-mod2<-gam(cbind(nyc.agg$o65, nyc.agg$u5)~ s(season.index, bs='bs') +s(index, bs='bs'), family=binomial, data=nyc.agg)
+mod2<-gam(cbind(nyc.agg$o65, nyc.agg$u5)~ s(season.index, bs='bs') , family=binomial, data=nyc.agg)
 plot(mod2)
 pred2<-predict(mod2, type='response')
 raw.ratio<-(nyc.agg$o65+0.5)/(nyc.agg$u5+nyc.agg$o65)
