@@ -1,0 +1,879 @@
+"Influenza Hospitalization Rates (per 100,000 population) for the FluSurv-NET Network (downloaded on "Mar-09-2020)
+Influenza Division - Centers for Disease Control and Prevention.
+CATCHMENT,NETWORK,SEASON,MMWR-YEAR,MMWR-WEEK,AGE CATEGORY,CUMULATIVE RATE,WEEKLY RATE 
+New York - Albany,EIP,2015-16,2015,40,0-4 yr,0,0
+New York - Albany,EIP,2015-16,2015,41,0-4 yr,0,0
+New York - Albany,EIP,2015-16,2015,42,0-4 yr,0,0
+New York - Albany,EIP,2015-16,2015,43,0-4 yr,0,0
+New York - Albany,EIP,2015-16,2015,44,0-4 yr,0,0
+New York - Albany,EIP,2015-16,2015,45,0-4 yr,0,0
+New York - Albany,EIP,2015-16,2015,46,0-4 yr,1.9,1.9
+New York - Albany,EIP,2015-16,2015,47,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2015,48,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2015,49,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2015,50,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2015,51,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2015,52,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2016,1,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2016,2,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2016,3,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2016,4,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2016,5,0-4 yr,1.9,0
+New York - Albany,EIP,2015-16,2016,6,0-4 yr,3.7,1.9
+New York - Albany,EIP,2015-16,2016,7,0-4 yr,9.3,5.6
+New York - Albany,EIP,2015-16,2016,8,0-4 yr,13,3.7
+New York - Albany,EIP,2015-16,2016,9,0-4 yr,20.4,7.4
+New York - Albany,EIP,2015-16,2016,10,0-4 yr,27.8,7.4
+New York - Albany,EIP,2015-16,2016,11,0-4 yr,35.3,7.4
+New York - Albany,EIP,2015-16,2016,12,0-4 yr,39,3.7
+New York - Albany,EIP,2015-16,2016,13,0-4 yr,50.1,11.1
+New York - Albany,EIP,2015-16,2016,14,0-4 yr,52,1.9
+New York - Albany,EIP,2015-16,2016,15,0-4 yr,55.7,3.7
+New York - Albany,EIP,2015-16,2016,16,0-4 yr,55.7,0
+New York - Albany,EIP,2015-16,2016,17,0-4 yr,57.5,1.9
+New York - Albany,EIP,2015-16,2015,40,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,41,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,42,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,43,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,44,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,45,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,46,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,47,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,48,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,49,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,50,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,51,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2015,52,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2016,1,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2016,2,5-17 yr,0,0
+New York - Albany,EIP,2015-16,2016,3,5-17 yr,0.6,0.6
+New York - Albany,EIP,2015-16,2016,4,5-17 yr,0.6,0
+New York - Albany,EIP,2015-16,2016,5,5-17 yr,1.3,0.6
+New York - Albany,EIP,2015-16,2016,6,5-17 yr,1.3,0
+New York - Albany,EIP,2015-16,2016,7,5-17 yr,1.3,0
+New York - Albany,EIP,2015-16,2016,8,5-17 yr,1.3,0
+New York - Albany,EIP,2015-16,2016,9,5-17 yr,1.9,0.6
+New York - Albany,EIP,2015-16,2016,10,5-17 yr,5.2,3.2
+New York - Albany,EIP,2015-16,2016,11,5-17 yr,10.4,5.2
+New York - Albany,EIP,2015-16,2016,12,5-17 yr,14.9,4.5
+New York - Albany,EIP,2015-16,2016,13,5-17 yr,16.9,1.9
+New York - Albany,EIP,2015-16,2016,14,5-17 yr,18.8,1.9
+New York - Albany,EIP,2015-16,2016,15,5-17 yr,22.1,3.2
+New York - Albany,EIP,2015-16,2016,16,5-17 yr,22.7,0.6
+New York - Albany,EIP,2015-16,2016,17,5-17 yr,24,1.3
+New York - Albany,EIP,2015-16,2015,40,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,41,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,42,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,43,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,44,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,45,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,46,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,47,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,48,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,49,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,50,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,51,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2015,52,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2016,1,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2016,2,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2016,3,18-49 yr,0,0
+New York - Albany,EIP,2015-16,2016,4,18-49 yr,0.2,0.2
+New York - Albany,EIP,2015-16,2016,5,18-49 yr,0.7,0.5
+New York - Albany,EIP,2015-16,2016,6,18-49 yr,1.1,0.5
+New York - Albany,EIP,2015-16,2016,7,18-49 yr,2.5,1.4
+New York - Albany,EIP,2015-16,2016,8,18-49 yr,4.4,1.8
+New York - Albany,EIP,2015-16,2016,9,18-49 yr,6.2,1.8
+New York - Albany,EIP,2015-16,2016,10,18-49 yr,11,4.8
+New York - Albany,EIP,2015-16,2016,11,18-49 yr,14.5,3.4
+New York - Albany,EIP,2015-16,2016,12,18-49 yr,18.6,4.1
+New York - Albany,EIP,2015-16,2016,13,18-49 yr,20.9,2.3
+New York - Albany,EIP,2015-16,2016,14,18-49 yr,22.5,1.6
+New York - Albany,EIP,2015-16,2016,15,18-49 yr,23.4,0.9
+New York - Albany,EIP,2015-16,2016,16,18-49 yr,24.8,1.4
+New York - Albany,EIP,2015-16,2016,17,18-49 yr,26,1.1
+New York - Albany,EIP,2015-16,2015,40,50-64 yr,0,0
+New York - Albany,EIP,2015-16,2015,41,50-64 yr,0,0
+New York - Albany,EIP,2015-16,2015,42,50-64 yr,0,0
+New York - Albany,EIP,2015-16,2015,43,50-64 yr,0,0
+New York - Albany,EIP,2015-16,2015,44,50-64 yr,0.9,0.9
+New York - Albany,EIP,2015-16,2015,45,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2015,46,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2015,47,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2015,48,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2015,49,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2015,50,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2015,51,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2015,52,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2016,1,50-64 yr,0.9,0
+New York - Albany,EIP,2015-16,2016,2,50-64 yr,1.3,0.4
+New York - Albany,EIP,2015-16,2016,3,50-64 yr,1.8,0.4
+New York - Albany,EIP,2015-16,2016,4,50-64 yr,1.8,0
+New York - Albany,EIP,2015-16,2016,5,50-64 yr,3.6,1.8
+New York - Albany,EIP,2015-16,2016,6,50-64 yr,5.8,2.2
+New York - Albany,EIP,2015-16,2016,7,50-64 yr,9.8,4
+New York - Albany,EIP,2015-16,2016,8,50-64 yr,15.1,5.3
+New York - Albany,EIP,2015-16,2016,9,50-64 yr,21.4,6.2
+New York - Albany,EIP,2015-16,2016,10,50-64 yr,29.4,8
+New York - Albany,EIP,2015-16,2016,11,50-64 yr,36.1,6.7
+New York - Albany,EIP,2015-16,2016,12,50-64 yr,44.6,8.5
+New York - Albany,EIP,2015-16,2016,13,50-64 yr,53.9,9.4
+New York - Albany,EIP,2015-16,2016,14,50-64 yr,58.8,4.9
+New York - Albany,EIP,2015-16,2016,15,50-64 yr,63.7,4.9
+New York - Albany,EIP,2015-16,2016,16,50-64 yr,67.3,3.6
+New York - Albany,EIP,2015-16,2016,17,50-64 yr,70.8,3.6
+New York - Albany,EIP,2015-16,2015,40,65+ yr,0,0
+New York - Albany,EIP,2015-16,2015,41,65+ yr,0.6,0.6
+New York - Albany,EIP,2015-16,2015,42,65+ yr,0.6,0
+New York - Albany,EIP,2015-16,2015,43,65+ yr,0.6,0
+New York - Albany,EIP,2015-16,2015,44,65+ yr,0.6,0
+New York - Albany,EIP,2015-16,2015,45,65+ yr,0.6,0
+New York - Albany,EIP,2015-16,2015,46,65+ yr,1.2,0.6
+New York - Albany,EIP,2015-16,2015,47,65+ yr,1.2,0
+New York - Albany,EIP,2015-16,2015,48,65+ yr,1.2,0
+New York - Albany,EIP,2015-16,2015,49,65+ yr,1.2,0
+New York - Albany,EIP,2015-16,2015,50,65+ yr,1.2,0
+New York - Albany,EIP,2015-16,2015,51,65+ yr,1.2,0
+New York - Albany,EIP,2015-16,2015,52,65+ yr,1.2,0
+New York - Albany,EIP,2015-16,2016,1,65+ yr,1.2,0
+New York - Albany,EIP,2015-16,2016,2,65+ yr,1.2,0
+New York - Albany,EIP,2015-16,2016,3,65+ yr,2.3,1.2
+New York - Albany,EIP,2015-16,2016,4,65+ yr,2.3,0
+New York - Albany,EIP,2015-16,2016,5,65+ yr,2.9,0.6
+New York - Albany,EIP,2015-16,2016,6,65+ yr,3.5,0.6
+New York - Albany,EIP,2015-16,2016,7,65+ yr,7.5,4.1
+New York - Albany,EIP,2015-16,2016,8,65+ yr,13.3,5.8
+New York - Albany,EIP,2015-16,2016,9,65+ yr,19.1,5.8
+New York - Albany,EIP,2015-16,2016,10,65+ yr,28.9,9.8
+New York - Albany,EIP,2015-16,2016,11,65+ yr,40.5,11.6
+New York - Albany,EIP,2015-16,2016,12,65+ yr,51.5,11
+New York - Albany,EIP,2015-16,2016,13,65+ yr,69.5,17.9
+New York - Albany,EIP,2015-16,2016,14,65+ yr,78.1,8.7
+New York - Albany,EIP,2015-16,2016,15,65+ yr,84.5,6.4
+New York - Albany,EIP,2015-16,2016,16,65+ yr,87.4,2.9
+New York - Albany,EIP,2015-16,2016,17,65+ yr,93.8,6.4
+New York - Albany,EIP,2015-16,2015,40,Overall,0,0
+New York - Albany,EIP,2015-16,2015,41,Overall,0.1,0.1
+New York - Albany,EIP,2015-16,2015,42,Overall,0.1,0
+New York - Albany,EIP,2015-16,2015,43,Overall,0.1,0
+New York - Albany,EIP,2015-16,2015,44,Overall,0.3,0.2
+New York - Albany,EIP,2015-16,2015,45,Overall,0.3,0
+New York - Albany,EIP,2015-16,2015,46,Overall,0.5,0.2
+New York - Albany,EIP,2015-16,2015,47,Overall,0.5,0
+New York - Albany,EIP,2015-16,2015,48,Overall,0.5,0
+New York - Albany,EIP,2015-16,2015,49,Overall,0.5,0
+New York - Albany,EIP,2015-16,2015,50,Overall,0.5,0
+New York - Albany,EIP,2015-16,2015,51,Overall,0.5,0
+New York - Albany,EIP,2015-16,2015,52,Overall,0.5,0
+New York - Albany,EIP,2015-16,2016,1,Overall,0.5,0
+New York - Albany,EIP,2015-16,2016,2,Overall,0.6,0.1
+New York - Albany,EIP,2015-16,2016,3,Overall,1,0.4
+New York - Albany,EIP,2015-16,2016,4,Overall,1.1,0.1
+New York - Albany,EIP,2015-16,2016,5,Overall,1.8,0.8
+New York - Albany,EIP,2015-16,2016,6,Overall,2.7,0.9
+New York - Albany,EIP,2015-16,2016,7,Overall,5.1,2.4
+New York - Albany,EIP,2015-16,2016,8,Overall,8.2,3.1
+New York - Albany,EIP,2015-16,2016,9,Overall,11.7,3.6
+New York - Albany,EIP,2015-16,2016,10,Overall,18,6.2
+New York - Albany,EIP,2015-16,2016,11,Overall,23.9,6
+New York - Albany,EIP,2015-16,2016,12,Overall,30.2,6.2
+New York - Albany,EIP,2015-16,2016,13,Overall,37,6.8
+New York - Albany,EIP,2015-16,2016,14,Overall,40.6,3.6
+New York - Albany,EIP,2015-16,2016,15,Overall,43.7,3.2
+New York - Albany,EIP,2015-16,2016,16,Overall,45.6,1.9
+New York - Albany,EIP,2015-16,2016,17,Overall,48.2,2.6
+New York - Albany,EIP,2016-17,2016,40,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,41,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,42,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,43,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,44,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,45,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,46,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,47,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,48,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,49,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,50,0-4 yr,0,0
+New York - Albany,EIP,2016-17,2016,51,0-4 yr,3.7,3.7
+New York - Albany,EIP,2016-17,2016,52,0-4 yr,3.7,0
+New York - Albany,EIP,2016-17,2017,1,0-4 yr,3.7,0
+New York - Albany,EIP,2016-17,2017,2,0-4 yr,3.7,0
+New York - Albany,EIP,2016-17,2017,3,0-4 yr,5.6,1.9
+New York - Albany,EIP,2016-17,2017,4,0-4 yr,5.6,0
+New York - Albany,EIP,2016-17,2017,5,0-4 yr,9.3,3.7
+New York - Albany,EIP,2016-17,2017,6,0-4 yr,11.1,1.9
+New York - Albany,EIP,2016-17,2017,7,0-4 yr,14.8,3.7
+New York - Albany,EIP,2016-17,2017,8,0-4 yr,20.4,5.6
+New York - Albany,EIP,2016-17,2017,9,0-4 yr,22.3,1.9
+New York - Albany,EIP,2016-17,2017,10,0-4 yr,22.3,0
+New York - Albany,EIP,2016-17,2017,11,0-4 yr,22.3,0
+New York - Albany,EIP,2016-17,2017,12,0-4 yr,31.6,9.3
+New York - Albany,EIP,2016-17,2017,13,0-4 yr,33.4,1.9
+New York - Albany,EIP,2016-17,2017,14,0-4 yr,33.4,0
+New York - Albany,EIP,2016-17,2017,15,0-4 yr,35.3,1.9
+New York - Albany,EIP,2016-17,2017,16,0-4 yr,35.3,0
+New York - Albany,EIP,2016-17,2017,17,0-4 yr,35.3,0
+New York - Albany,EIP,2016-17,2016,40,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,41,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,42,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,43,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,44,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,45,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,46,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,47,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,48,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,49,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,50,5-17 yr,0,0
+New York - Albany,EIP,2016-17,2016,51,5-17 yr,0.7,0.7
+New York - Albany,EIP,2016-17,2016,52,5-17 yr,0.7,0
+New York - Albany,EIP,2016-17,2017,1,5-17 yr,0.7,0
+New York - Albany,EIP,2016-17,2017,2,5-17 yr,0.7,0
+New York - Albany,EIP,2016-17,2017,3,5-17 yr,0.7,0
+New York - Albany,EIP,2016-17,2017,4,5-17 yr,1.3,0.7
+New York - Albany,EIP,2016-17,2017,5,5-17 yr,3.3,2
+New York - Albany,EIP,2016-17,2017,6,5-17 yr,6.6,3.3
+New York - Albany,EIP,2016-17,2017,7,5-17 yr,7.9,1.3
+New York - Albany,EIP,2016-17,2017,8,5-17 yr,9.2,1.3
+New York - Albany,EIP,2016-17,2017,9,5-17 yr,10.5,1.3
+New York - Albany,EIP,2016-17,2017,10,5-17 yr,10.5,0
+New York - Albany,EIP,2016-17,2017,11,5-17 yr,10.5,0
+New York - Albany,EIP,2016-17,2017,12,5-17 yr,12.5,2
+New York - Albany,EIP,2016-17,2017,13,5-17 yr,13.1,0.7
+New York - Albany,EIP,2016-17,2017,14,5-17 yr,13.1,0
+New York - Albany,EIP,2016-17,2017,15,5-17 yr,15.1,2
+New York - Albany,EIP,2016-17,2017,16,5-17 yr,15.7,0.7
+New York - Albany,EIP,2016-17,2017,17,5-17 yr,15.7,0
+New York - Albany,EIP,2016-17,2016,40,18-49 yr,0,0
+New York - Albany,EIP,2016-17,2016,41,18-49 yr,0,0
+New York - Albany,EIP,2016-17,2016,42,18-49 yr,0,0
+New York - Albany,EIP,2016-17,2016,43,18-49 yr,0,0
+New York - Albany,EIP,2016-17,2016,44,18-49 yr,0,0
+New York - Albany,EIP,2016-17,2016,45,18-49 yr,0,0
+New York - Albany,EIP,2016-17,2016,46,18-49 yr,0,0
+New York - Albany,EIP,2016-17,2016,47,18-49 yr,0.2,0.2
+New York - Albany,EIP,2016-17,2016,48,18-49 yr,0.2,0
+New York - Albany,EIP,2016-17,2016,49,18-49 yr,0.2,0
+New York - Albany,EIP,2016-17,2016,50,18-49 yr,0.5,0.2
+New York - Albany,EIP,2016-17,2016,51,18-49 yr,0.7,0.2
+New York - Albany,EIP,2016-17,2016,52,18-49 yr,0.9,0.2
+New York - Albany,EIP,2016-17,2017,1,18-49 yr,1.6,0.7
+New York - Albany,EIP,2016-17,2017,2,18-49 yr,2.5,0.9
+New York - Albany,EIP,2016-17,2017,3,18-49 yr,3.9,1.4
+New York - Albany,EIP,2016-17,2017,4,18-49 yr,5.3,1.4
+New York - Albany,EIP,2016-17,2017,5,18-49 yr,6.5,1.2
+New York - Albany,EIP,2016-17,2017,6,18-49 yr,8.1,1.6
+New York - Albany,EIP,2016-17,2017,7,18-49 yr,8.8,0.7
+New York - Albany,EIP,2016-17,2017,8,18-49 yr,11.1,2.3
+New York - Albany,EIP,2016-17,2017,9,18-49 yr,12.2,1.2
+New York - Albany,EIP,2016-17,2017,10,18-49 yr,12.7,0.5
+New York - Albany,EIP,2016-17,2017,11,18-49 yr,13.2,0.5
+New York - Albany,EIP,2016-17,2017,12,18-49 yr,13.2,0
+New York - Albany,EIP,2016-17,2017,13,18-49 yr,14.1,0.9
+New York - Albany,EIP,2016-17,2017,14,18-49 yr,14.8,0.7
+New York - Albany,EIP,2016-17,2017,15,18-49 yr,15.5,0.7
+New York - Albany,EIP,2016-17,2017,16,18-49 yr,15.5,0
+New York - Albany,EIP,2016-17,2017,17,18-49 yr,15.5,0
+New York - Albany,EIP,2016-17,2016,40,50-64 yr,0,0
+New York - Albany,EIP,2016-17,2016,41,50-64 yr,0,0
+New York - Albany,EIP,2016-17,2016,42,50-64 yr,0,0
+New York - Albany,EIP,2016-17,2016,43,50-64 yr,0.4,0.4
+New York - Albany,EIP,2016-17,2016,44,50-64 yr,0.4,0
+New York - Albany,EIP,2016-17,2016,45,50-64 yr,0.4,0
+New York - Albany,EIP,2016-17,2016,46,50-64 yr,0.4,0
+New York - Albany,EIP,2016-17,2016,47,50-64 yr,0.9,0.4
+New York - Albany,EIP,2016-17,2016,48,50-64 yr,1.3,0.4
+New York - Albany,EIP,2016-17,2016,49,50-64 yr,1.3,0
+New York - Albany,EIP,2016-17,2016,50,50-64 yr,2.2,0.9
+New York - Albany,EIP,2016-17,2016,51,50-64 yr,2.2,0
+New York - Albany,EIP,2016-17,2016,52,50-64 yr,4,1.8
+New York - Albany,EIP,2016-17,2017,1,50-64 yr,5.8,1.8
+New York - Albany,EIP,2016-17,2017,2,50-64 yr,6.7,0.9
+New York - Albany,EIP,2016-17,2017,3,50-64 yr,8.5,1.8
+New York - Albany,EIP,2016-17,2017,4,50-64 yr,11.7,3.1
+New York - Albany,EIP,2016-17,2017,5,50-64 yr,15.7,4
+New York - Albany,EIP,2016-17,2017,6,50-64 yr,23.3,7.6
+New York - Albany,EIP,2016-17,2017,7,50-64 yr,27.8,4.5
+New York - Albany,EIP,2016-17,2017,8,50-64 yr,34.5,6.7
+New York - Albany,EIP,2016-17,2017,9,50-64 yr,38.1,3.6
+New York - Albany,EIP,2016-17,2017,10,50-64 yr,40.8,2.7
+New York - Albany,EIP,2016-17,2017,11,50-64 yr,43,2.2
+New York - Albany,EIP,2016-17,2017,12,50-64 yr,45.3,2.2
+New York - Albany,EIP,2016-17,2017,13,50-64 yr,47.1,1.8
+New York - Albany,EIP,2016-17,2017,14,50-64 yr,48.9,1.8
+New York - Albany,EIP,2016-17,2017,15,50-64 yr,49.8,0.9
+New York - Albany,EIP,2016-17,2017,16,50-64 yr,52.5,2.7
+New York - Albany,EIP,2016-17,2017,17,50-64 yr,52.9,0.4
+New York - Albany,EIP,2016-17,2016,40,65+ yr,0,0
+New York - Albany,EIP,2016-17,2016,41,65+ yr,0.6,0.6
+New York - Albany,EIP,2016-17,2016,42,65+ yr,1.7,1.1
+New York - Albany,EIP,2016-17,2016,43,65+ yr,1.7,0
+New York - Albany,EIP,2016-17,2016,44,65+ yr,1.7,0
+New York - Albany,EIP,2016-17,2016,45,65+ yr,1.7,0
+New York - Albany,EIP,2016-17,2016,46,65+ yr,1.7,0
+New York - Albany,EIP,2016-17,2016,47,65+ yr,2.3,0.6
+New York - Albany,EIP,2016-17,2016,48,65+ yr,2.3,0
+New York - Albany,EIP,2016-17,2016,49,65+ yr,2.8,0.6
+New York - Albany,EIP,2016-17,2016,50,65+ yr,2.8,0
+New York - Albany,EIP,2016-17,2016,51,65+ yr,5.1,2.3
+New York - Albany,EIP,2016-17,2016,52,65+ yr,9.6,4.5
+New York - Albany,EIP,2016-17,2017,1,65+ yr,18.1,8.5
+New York - Albany,EIP,2016-17,2017,2,65+ yr,30.5,12.4
+New York - Albany,EIP,2016-17,2017,3,65+ yr,45.8,15.3
+New York - Albany,EIP,2016-17,2017,4,65+ yr,58.7,13
+New York - Albany,EIP,2016-17,2017,5,65+ yr,72.3,13.6
+New York - Albany,EIP,2016-17,2017,6,65+ yr,92.1,19.8
+New York - Albany,EIP,2016-17,2017,7,65+ yr,120.3,28.2
+New York - Albany,EIP,2016-17,2017,8,65+ yr,145.2,24.9
+New York - Albany,EIP,2016-17,2017,9,65+ yr,163.8,18.6
+New York - Albany,EIP,2016-17,2017,10,65+ yr,176.8,13
+New York - Albany,EIP,2016-17,2017,11,65+ yr,183,6.2
+New York - Albany,EIP,2016-17,2017,12,65+ yr,194.9,11.9
+New York - Albany,EIP,2016-17,2017,13,65+ yr,206.7,11.9
+New York - Albany,EIP,2016-17,2017,14,65+ yr,216.3,9.6
+New York - Albany,EIP,2016-17,2017,15,65+ yr,223.1,6.8
+New York - Albany,EIP,2016-17,2017,16,65+ yr,228.2,5.1
+New York - Albany,EIP,2016-17,2017,17,65+ yr,232.1,4
+New York - Albany,EIP,2016-17,2016,40,Overall,0,0
+New York - Albany,EIP,2016-17,2016,41,Overall,0.1,0.1
+New York - Albany,EIP,2016-17,2016,42,Overall,0.3,0.2
+New York - Albany,EIP,2016-17,2016,43,Overall,0.4,0.1
+New York - Albany,EIP,2016-17,2016,44,Overall,0.4,0
+New York - Albany,EIP,2016-17,2016,45,Overall,0.4,0
+New York - Albany,EIP,2016-17,2016,46,Overall,0.4,0
+New York - Albany,EIP,2016-17,2016,47,Overall,0.7,0.3
+New York - Albany,EIP,2016-17,2016,48,Overall,0.8,0.1
+New York - Albany,EIP,2016-17,2016,49,Overall,0.9,0.1
+New York - Albany,EIP,2016-17,2016,50,Overall,1.2,0.3
+New York - Albany,EIP,2016-17,2016,51,Overall,1.9,0.8
+New York - Albany,EIP,2016-17,2016,52,Overall,3.2,1.3
+New York - Albany,EIP,2016-17,2017,1,Overall,5.3,2.1
+New York - Albany,EIP,2016-17,2017,2,Overall,8,2.7
+New York - Albany,EIP,2016-17,2017,3,Overall,11.6,3.7
+New York - Albany,EIP,2016-17,2017,4,Overall,15.2,3.6
+New York - Albany,EIP,2016-17,2017,5,Overall,19.3,4.1
+New York - Albany,EIP,2016-17,2017,6,Overall,25.6,6.3
+New York - Albany,EIP,2016-17,2017,7,Overall,32,6.4
+New York - Albany,EIP,2016-17,2017,8,Overall,39.1,7.1
+New York - Albany,EIP,2016-17,2017,9,Overall,43.9,4.7
+New York - Albany,EIP,2016-17,2017,10,Overall,46.8,3
+New York - Albany,EIP,2016-17,2017,11,Overall,48.6,1.7
+New York - Albany,EIP,2016-17,2017,12,Overall,51.8,3.3
+New York - Albany,EIP,2016-17,2017,13,Overall,54.8,3
+New York - Albany,EIP,2016-17,2017,14,Overall,57.1,2.3
+New York - Albany,EIP,2016-17,2017,15,Overall,59.2,2
+New York - Albany,EIP,2016-17,2017,16,Overall,60.7,1.5
+New York - Albany,EIP,2016-17,2017,17,Overall,61.5,0.8
+New York - Albany,EIP,2017-18,2017,40,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,41,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,42,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,43,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,44,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,45,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,46,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,47,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,48,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,49,0-4 yr,0,0
+New York - Albany,EIP,2017-18,2017,50,0-4 yr,1.9,1.9
+New York - Albany,EIP,2017-18,2017,51,0-4 yr,3.7,1.9
+New York - Albany,EIP,2017-18,2017,52,0-4 yr,9.3,5.6
+New York - Albany,EIP,2017-18,2018,1,0-4 yr,13,3.7
+New York - Albany,EIP,2017-18,2018,2,0-4 yr,20.4,7.4
+New York - Albany,EIP,2017-18,2018,3,0-4 yr,24.1,3.7
+New York - Albany,EIP,2017-18,2018,4,0-4 yr,33.3,9.3
+New York - Albany,EIP,2017-18,2018,5,0-4 yr,42.6,9.3
+New York - Albany,EIP,2017-18,2018,6,0-4 yr,48.1,5.6
+New York - Albany,EIP,2017-18,2018,7,0-4 yr,55.5,7.4
+New York - Albany,EIP,2017-18,2018,8,0-4 yr,64.8,9.3
+New York - Albany,EIP,2017-18,2018,9,0-4 yr,68.5,3.7
+New York - Albany,EIP,2017-18,2018,10,0-4 yr,77.7,9.3
+New York - Albany,EIP,2017-18,2018,11,0-4 yr,79.6,1.9
+New York - Albany,EIP,2017-18,2018,12,0-4 yr,79.6,0
+New York - Albany,EIP,2017-18,2018,13,0-4 yr,81.4,1.9
+New York - Albany,EIP,2017-18,2018,14,0-4 yr,81.4,0
+New York - Albany,EIP,2017-18,2018,15,0-4 yr,85.1,3.7
+New York - Albany,EIP,2017-18,2018,16,0-4 yr,87,1.9
+New York - Albany,EIP,2017-18,2018,17,0-4 yr,90.7,3.7
+New York - Albany,EIP,2017-18,2017,40,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,41,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,42,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,43,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,44,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,45,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,46,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,47,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,48,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,49,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,50,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,51,5-17 yr,0,0
+New York - Albany,EIP,2017-18,2017,52,5-17 yr,1.3,1.3
+New York - Albany,EIP,2017-18,2018,1,5-17 yr,2,0.7
+New York - Albany,EIP,2017-18,2018,2,5-17 yr,2.7,0.7
+New York - Albany,EIP,2017-18,2018,3,5-17 yr,2.7,0
+New York - Albany,EIP,2017-18,2018,4,5-17 yr,3.3,0.7
+New York - Albany,EIP,2017-18,2018,5,5-17 yr,6.6,3.3
+New York - Albany,EIP,2017-18,2018,6,5-17 yr,6.6,0
+New York - Albany,EIP,2017-18,2018,7,5-17 yr,10,3.3
+New York - Albany,EIP,2017-18,2018,8,5-17 yr,13.3,3.3
+New York - Albany,EIP,2017-18,2018,9,5-17 yr,14.6,1.3
+New York - Albany,EIP,2017-18,2018,10,5-17 yr,14.6,0
+New York - Albany,EIP,2017-18,2018,11,5-17 yr,14.6,0
+New York - Albany,EIP,2017-18,2018,12,5-17 yr,15.9,1.3
+New York - Albany,EIP,2017-18,2018,13,5-17 yr,15.9,0
+New York - Albany,EIP,2017-18,2018,14,5-17 yr,16.6,0.7
+New York - Albany,EIP,2017-18,2018,15,5-17 yr,16.6,0
+New York - Albany,EIP,2017-18,2018,16,5-17 yr,16.6,0
+New York - Albany,EIP,2017-18,2018,17,5-17 yr,17.3,0.7
+New York - Albany,EIP,2017-18,2017,40,18-49 yr,0,0
+New York - Albany,EIP,2017-18,2017,41,18-49 yr,0,0
+New York - Albany,EIP,2017-18,2017,42,18-49 yr,0,0
+New York - Albany,EIP,2017-18,2017,43,18-49 yr,0,0
+New York - Albany,EIP,2017-18,2017,44,18-49 yr,0,0
+New York - Albany,EIP,2017-18,2017,45,18-49 yr,0,0
+New York - Albany,EIP,2017-18,2017,46,18-49 yr,0.2,0.2
+New York - Albany,EIP,2017-18,2017,47,18-49 yr,0.2,0
+New York - Albany,EIP,2017-18,2017,48,18-49 yr,0.5,0.2
+New York - Albany,EIP,2017-18,2017,49,18-49 yr,0.9,0.5
+New York - Albany,EIP,2017-18,2017,50,18-49 yr,1.6,0.7
+New York - Albany,EIP,2017-18,2017,51,18-49 yr,2.3,0.7
+New York - Albany,EIP,2017-18,2017,52,18-49 yr,3.9,1.6
+New York - Albany,EIP,2017-18,2018,1,18-49 yr,6.7,2.8
+New York - Albany,EIP,2017-18,2018,2,18-49 yr,8.5,1.8
+New York - Albany,EIP,2017-18,2018,3,18-49 yr,10.4,1.8
+New York - Albany,EIP,2017-18,2018,4,18-49 yr,13.1,2.8
+New York - Albany,EIP,2017-18,2018,5,18-49 yr,16.1,3
+New York - Albany,EIP,2017-18,2018,6,18-49 yr,18,1.8
+New York - Albany,EIP,2017-18,2018,7,18-49 yr,20.5,2.5
+New York - Albany,EIP,2017-18,2018,8,18-49 yr,23.3,2.8
+New York - Albany,EIP,2017-18,2018,9,18-49 yr,25.1,1.8
+New York - Albany,EIP,2017-18,2018,10,18-49 yr,26.5,1.4
+New York - Albany,EIP,2017-18,2018,11,18-49 yr,26.5,0
+New York - Albany,EIP,2017-18,2018,12,18-49 yr,27.4,0.9
+New York - Albany,EIP,2017-18,2018,13,18-49 yr,29.1,1.6
+New York - Albany,EIP,2017-18,2018,14,18-49 yr,30.2,1.2
+New York - Albany,EIP,2017-18,2018,15,18-49 yr,30.7,0.5
+New York - Albany,EIP,2017-18,2018,16,18-49 yr,31.1,0.5
+New York - Albany,EIP,2017-18,2018,17,18-49 yr,32.3,1.2
+New York - Albany,EIP,2017-18,2017,40,50-64 yr,0,0
+New York - Albany,EIP,2017-18,2017,41,50-64 yr,0,0
+New York - Albany,EIP,2017-18,2017,42,50-64 yr,0.5,0.5
+New York - Albany,EIP,2017-18,2017,43,50-64 yr,0.5,0
+New York - Albany,EIP,2017-18,2017,44,50-64 yr,0.9,0.5
+New York - Albany,EIP,2017-18,2017,45,50-64 yr,0.9,0
+New York - Albany,EIP,2017-18,2017,46,50-64 yr,0.9,0
+New York - Albany,EIP,2017-18,2017,47,50-64 yr,0.9,0
+New York - Albany,EIP,2017-18,2017,48,50-64 yr,1.8,0.9
+New York - Albany,EIP,2017-18,2017,49,50-64 yr,3.2,1.4
+New York - Albany,EIP,2017-18,2017,50,50-64 yr,3.2,0
+New York - Albany,EIP,2017-18,2017,51,50-64 yr,5.9,2.7
+New York - Albany,EIP,2017-18,2017,52,50-64 yr,11.7,5.9
+New York - Albany,EIP,2017-18,2018,1,50-64 yr,22.1,10.4
+New York - Albany,EIP,2017-18,2018,2,50-64 yr,32.9,10.8
+New York - Albany,EIP,2017-18,2018,3,50-64 yr,44.6,11.7
+New York - Albany,EIP,2017-18,2018,4,50-64 yr,57.2,12.6
+New York - Albany,EIP,2017-18,2018,5,50-64 yr,68.9,11.7
+New York - Albany,EIP,2017-18,2018,6,50-64 yr,80.6,11.7
+New York - Albany,EIP,2017-18,2018,7,50-64 yr,90.5,9.9
+New York - Albany,EIP,2017-18,2018,8,50-64 yr,103.2,12.6
+New York - Albany,EIP,2017-18,2018,9,50-64 yr,109,5.9
+New York - Albany,EIP,2017-18,2018,10,50-64 yr,113.1,4.1
+New York - Albany,EIP,2017-18,2018,11,50-64 yr,116.7,3.6
+New York - Albany,EIP,2017-18,2018,12,50-64 yr,119.8,3.2
+New York - Albany,EIP,2017-18,2018,13,50-64 yr,123,3.2
+New York - Albany,EIP,2017-18,2018,14,50-64 yr,125.7,2.7
+New York - Albany,EIP,2017-18,2018,15,50-64 yr,128.4,2.7
+New York - Albany,EIP,2017-18,2018,16,50-64 yr,129.3,0.9
+New York - Albany,EIP,2017-18,2018,17,50-64 yr,130.6,1.4
+New York - Albany,EIP,2017-18,2017,40,65+ yr,0,0
+New York - Albany,EIP,2017-18,2017,41,65+ yr,0.5,0.5
+New York - Albany,EIP,2017-18,2017,42,65+ yr,0.5,0
+New York - Albany,EIP,2017-18,2017,43,65+ yr,1.1,0.5
+New York - Albany,EIP,2017-18,2017,44,65+ yr,1.1,0
+New York - Albany,EIP,2017-18,2017,45,65+ yr,1.6,0.5
+New York - Albany,EIP,2017-18,2017,46,65+ yr,3.3,1.6
+New York - Albany,EIP,2017-18,2017,47,65+ yr,4.4,1.1
+New York - Albany,EIP,2017-18,2017,48,65+ yr,10.9,6.5
+New York - Albany,EIP,2017-18,2017,49,65+ yr,15.8,4.9
+New York - Albany,EIP,2017-18,2017,50,65+ yr,26.2,10.4
+New York - Albany,EIP,2017-18,2017,51,65+ yr,42,15.8
+New York - Albany,EIP,2017-18,2017,52,65+ yr,67.1,25.1
+New York - Albany,EIP,2017-18,2018,1,65+ yr,98.2,31.1
+New York - Albany,EIP,2017-18,2018,2,65+ yr,127.1,28.9
+New York - Albany,EIP,2017-18,2018,3,65+ yr,159.8,32.7
+New York - Albany,EIP,2017-18,2018,4,65+ yr,204.6,44.7
+New York - Albany,EIP,2017-18,2018,5,65+ yr,245.5,40.9
+New York - Albany,EIP,2017-18,2018,6,65+ yr,284.2,38.7
+New York - Albany,EIP,2017-18,2018,7,65+ yr,323.5,39.3
+New York - Albany,EIP,2017-18,2018,8,65+ yr,354,30.5
+New York - Albany,EIP,2017-18,2018,9,65+ yr,372.6,18.5
+New York - Albany,EIP,2017-18,2018,10,65+ yr,383.5,10.9
+New York - Albany,EIP,2017-18,2018,11,65+ yr,398.8,15.3
+New York - Albany,EIP,2017-18,2018,12,65+ yr,407.5,8.7
+New York - Albany,EIP,2017-18,2018,13,65+ yr,419,11.5
+New York - Albany,EIP,2017-18,2018,14,65+ yr,428.8,9.8
+New York - Albany,EIP,2017-18,2018,15,65+ yr,433.7,4.9
+New York - Albany,EIP,2017-18,2018,16,65+ yr,439.1,5.5
+New York - Albany,EIP,2017-18,2018,17,65+ yr,446.2,7.1
+New York - Albany,EIP,2017-18,2017,40,Overall,0,0
+New York - Albany,EIP,2017-18,2017,41,Overall,0.1,0.1
+New York - Albany,EIP,2017-18,2017,42,Overall,0.2,0.1
+New York - Albany,EIP,2017-18,2017,43,Overall,0.3,0.1
+New York - Albany,EIP,2017-18,2017,44,Overall,0.4,0.1
+New York - Albany,EIP,2017-18,2017,45,Overall,0.5,0.1
+New York - Albany,EIP,2017-18,2017,46,Overall,0.9,0.4
+New York - Albany,EIP,2017-18,2017,47,Overall,1.1,0.2
+New York - Albany,EIP,2017-18,2017,48,Overall,2.5,1.4
+New York - Albany,EIP,2017-18,2017,49,Overall,3.8,1.3
+New York - Albany,EIP,2017-18,2017,50,Overall,6,2.2
+New York - Albany,EIP,2017-18,2017,51,Overall,9.8,3.7
+New York - Albany,EIP,2017-18,2017,52,Overall,16.6,6.8
+New York - Albany,EIP,2017-18,2018,1,Overall,25.7,9.1
+New York - Albany,EIP,2017-18,2018,2,Overall,34.3,8.6
+New York - Albany,EIP,2017-18,2018,3,Overall,43.5,9.2
+New York - Albany,EIP,2017-18,2018,4,Overall,55.8,12.3
+New York - Albany,EIP,2017-18,2018,5,Overall,67.7,11.9
+New York - Albany,EIP,2017-18,2018,6,Overall,78,10.3
+New York - Albany,EIP,2017-18,2018,7,Overall,88.9,10.9
+New York - Albany,EIP,2017-18,2018,8,Overall,99.1,10.2
+New York - Albany,EIP,2017-18,2018,9,Overall,104.7,5.7
+New York - Albany,EIP,2017-18,2018,10,Overall,108.6,3.8
+New York - Albany,EIP,2017-18,2018,11,Overall,112.1,3.5
+New York - Albany,EIP,2017-18,2018,12,Overall,114.9,2.8
+New York - Albany,EIP,2017-18,2018,13,Overall,118.3,3.4
+New York - Albany,EIP,2017-18,2018,14,Overall,121.2,2.9
+New York - Albany,EIP,2017-18,2018,15,Overall,123,1.8
+New York - Albany,EIP,2017-18,2018,16,Overall,124.5,1.4
+New York - Albany,EIP,2017-18,2018,17,Overall,126.8,2.3
+New York - Albany,EIP,2018-19,2018,40,0-4 yr,0,0
+New York - Albany,EIP,2018-19,2018,41,0-4 yr,0,0
+New York - Albany,EIP,2018-19,2018,42,0-4 yr,0,0
+New York - Albany,EIP,2018-19,2018,43,0-4 yr,0,0
+New York - Albany,EIP,2018-19,2018,44,0-4 yr,0,0
+New York - Albany,EIP,2018-19,2018,45,0-4 yr,1.9,1.9
+New York - Albany,EIP,2018-19,2018,46,0-4 yr,1.9,0
+New York - Albany,EIP,2018-19,2018,47,0-4 yr,1.9,0
+New York - Albany,EIP,2018-19,2018,48,0-4 yr,3.8,1.9
+New York - Albany,EIP,2018-19,2018,49,0-4 yr,3.8,0
+New York - Albany,EIP,2018-19,2018,50,0-4 yr,11.3,7.5
+New York - Albany,EIP,2018-19,2018,51,0-4 yr,15,3.8
+New York - Albany,EIP,2018-19,2018,52,0-4 yr,22.5,7.5
+New York - Albany,EIP,2018-19,2019,1,0-4 yr,24.4,1.9
+New York - Albany,EIP,2018-19,2019,2,0-4 yr,26.3,1.9
+New York - Albany,EIP,2018-19,2019,3,0-4 yr,26.3,0
+New York - Albany,EIP,2018-19,2019,4,0-4 yr,35.7,9.4
+New York - Albany,EIP,2018-19,2019,5,0-4 yr,41.3,5.6
+New York - Albany,EIP,2018-19,2019,6,0-4 yr,48.8,7.5
+New York - Albany,EIP,2018-19,2019,7,0-4 yr,58.2,9.4
+New York - Albany,EIP,2018-19,2019,8,0-4 yr,60.1,1.9
+New York - Albany,EIP,2018-19,2019,9,0-4 yr,60.1,0
+New York - Albany,EIP,2018-19,2019,10,0-4 yr,63.8,3.8
+New York - Albany,EIP,2018-19,2019,11,0-4 yr,67.6,3.8
+New York - Albany,EIP,2018-19,2019,12,0-4 yr,73.2,5.6
+New York - Albany,EIP,2018-19,2019,13,0-4 yr,75.1,1.9
+New York - Albany,EIP,2018-19,2019,14,0-4 yr,78.9,3.8
+New York - Albany,EIP,2018-19,2019,15,0-4 yr,78.9,0
+New York - Albany,EIP,2018-19,2019,16,0-4 yr,84.5,5.6
+New York - Albany,EIP,2018-19,2019,17,0-4 yr,90.1,5.6
+New York - Albany,EIP,2018-19,2018,40,5-17 yr,0,0
+New York - Albany,EIP,2018-19,2018,41,5-17 yr,0,0
+New York - Albany,EIP,2018-19,2018,42,5-17 yr,0,0
+New York - Albany,EIP,2018-19,2018,43,5-17 yr,0,0
+New York - Albany,EIP,2018-19,2018,44,5-17 yr,0,0
+New York - Albany,EIP,2018-19,2018,45,5-17 yr,0,0
+New York - Albany,EIP,2018-19,2018,46,5-17 yr,0,0
+New York - Albany,EIP,2018-19,2018,47,5-17 yr,0.7,0.7
+New York - Albany,EIP,2018-19,2018,48,5-17 yr,0.7,0
+New York - Albany,EIP,2018-19,2018,49,5-17 yr,1.3,0.7
+New York - Albany,EIP,2018-19,2018,50,5-17 yr,1.3,0
+New York - Albany,EIP,2018-19,2018,51,5-17 yr,2,0.7
+New York - Albany,EIP,2018-19,2018,52,5-17 yr,3.4,1.3
+New York - Albany,EIP,2018-19,2019,1,5-17 yr,3.4,0
+New York - Albany,EIP,2018-19,2019,2,5-17 yr,4,0.7
+New York - Albany,EIP,2018-19,2019,3,5-17 yr,6.1,2
+New York - Albany,EIP,2018-19,2019,4,5-17 yr,8.1,2
+New York - Albany,EIP,2018-19,2019,5,5-17 yr,10.8,2.7
+New York - Albany,EIP,2018-19,2019,6,5-17 yr,14.8,4
+New York - Albany,EIP,2018-19,2019,7,5-17 yr,16.8,2
+New York - Albany,EIP,2018-19,2019,8,5-17 yr,20.2,3.4
+New York - Albany,EIP,2018-19,2019,9,5-17 yr,21.5,1.3
+New York - Albany,EIP,2018-19,2019,10,5-17 yr,25.6,4
+New York - Albany,EIP,2018-19,2019,11,5-17 yr,28.3,2.7
+New York - Albany,EIP,2018-19,2019,12,5-17 yr,31.6,3.4
+New York - Albany,EIP,2018-19,2019,13,5-17 yr,35.7,4
+New York - Albany,EIP,2018-19,2019,14,5-17 yr,36.3,0.7
+New York - Albany,EIP,2018-19,2019,15,5-17 yr,37,0.7
+New York - Albany,EIP,2018-19,2019,16,5-17 yr,37,0
+New York - Albany,EIP,2018-19,2019,17,5-17 yr,39,2
+New York - Albany,EIP,2018-19,2018,40,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,41,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,42,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,43,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,44,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,45,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,46,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,47,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,48,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,49,18-49 yr,0,0
+New York - Albany,EIP,2018-19,2018,50,18-49 yr,0.5,0.5
+New York - Albany,EIP,2018-19,2018,51,18-49 yr,0.9,0.5
+New York - Albany,EIP,2018-19,2018,52,18-49 yr,2.3,1.4
+New York - Albany,EIP,2018-19,2019,1,18-49 yr,3,0.7
+New York - Albany,EIP,2018-19,2019,2,18-49 yr,4.2,1.2
+New York - Albany,EIP,2018-19,2019,3,18-49 yr,5.6,1.4
+New York - Albany,EIP,2018-19,2019,4,18-49 yr,7.7,2.1
+New York - Albany,EIP,2018-19,2019,5,18-49 yr,8.8,1.2
+New York - Albany,EIP,2018-19,2019,6,18-49 yr,10.9,2.1
+New York - Albany,EIP,2018-19,2019,7,18-49 yr,13.9,3
+New York - Albany,EIP,2018-19,2019,8,18-49 yr,16.3,2.3
+New York - Albany,EIP,2018-19,2019,9,18-49 yr,17.7,1.4
+New York - Albany,EIP,2018-19,2019,10,18-49 yr,19.8,2.1
+New York - Albany,EIP,2018-19,2019,11,18-49 yr,22.5,2.8
+New York - Albany,EIP,2018-19,2019,12,18-49 yr,24.9,2.3
+New York - Albany,EIP,2018-19,2019,13,18-49 yr,26.5,1.6
+New York - Albany,EIP,2018-19,2019,14,18-49 yr,28.6,2.1
+New York - Albany,EIP,2018-19,2019,15,18-49 yr,29.7,1.2
+New York - Albany,EIP,2018-19,2019,16,18-49 yr,30.7,0.9
+New York - Albany,EIP,2018-19,2019,17,18-49 yr,31.1,0.5
+New York - Albany,EIP,2018-19,2018,40,50-64 yr,0,0
+New York - Albany,EIP,2018-19,2018,41,50-64 yr,0,0
+New York - Albany,EIP,2018-19,2018,42,50-64 yr,0,0
+New York - Albany,EIP,2018-19,2018,43,50-64 yr,0,0
+New York - Albany,EIP,2018-19,2018,44,50-64 yr,0.5,0.5
+New York - Albany,EIP,2018-19,2018,45,50-64 yr,0.5,0
+New York - Albany,EIP,2018-19,2018,46,50-64 yr,0.5,0
+New York - Albany,EIP,2018-19,2018,47,50-64 yr,0.5,0
+New York - Albany,EIP,2018-19,2018,48,50-64 yr,0.5,0
+New York - Albany,EIP,2018-19,2018,49,50-64 yr,1.4,0.9
+New York - Albany,EIP,2018-19,2018,50,50-64 yr,3.6,2.3
+New York - Albany,EIP,2018-19,2018,51,50-64 yr,4.6,0.9
+New York - Albany,EIP,2018-19,2018,52,50-64 yr,7.7,3.2
+New York - Albany,EIP,2018-19,2019,1,50-64 yr,11.4,3.6
+New York - Albany,EIP,2018-19,2019,2,50-64 yr,17.8,6.4
+New York - Albany,EIP,2018-19,2019,3,50-64 yr,23.2,5.5
+New York - Albany,EIP,2018-19,2019,4,50-64 yr,27.3,4.1
+New York - Albany,EIP,2018-19,2019,5,50-64 yr,34.6,7.3
+New York - Albany,EIP,2018-19,2019,6,50-64 yr,42.8,8.2
+New York - Albany,EIP,2018-19,2019,7,50-64 yr,52.4,9.6
+New York - Albany,EIP,2018-19,2019,8,50-64 yr,60.1,7.7
+New York - Albany,EIP,2018-19,2019,9,50-64 yr,66.9,6.8
+New York - Albany,EIP,2018-19,2019,10,50-64 yr,74.2,7.3
+New York - Albany,EIP,2018-19,2019,11,50-64 yr,84.2,10
+New York - Albany,EIP,2018-19,2019,12,50-64 yr,95.6,11.4
+New York - Albany,EIP,2018-19,2019,13,50-64 yr,99.7,4.1
+New York - Albany,EIP,2018-19,2019,14,50-64 yr,102.4,2.7
+New York - Albany,EIP,2018-19,2019,15,50-64 yr,105.2,2.7
+New York - Albany,EIP,2018-19,2019,16,50-64 yr,106.5,1.4
+New York - Albany,EIP,2018-19,2019,17,50-64 yr,107.9,1.4
+New York - Albany,EIP,2018-19,2018,40,65+ yr,0,0
+New York - Albany,EIP,2018-19,2018,41,65+ yr,0,0
+New York - Albany,EIP,2018-19,2018,42,65+ yr,0,0
+New York - Albany,EIP,2018-19,2018,43,65+ yr,0,0
+New York - Albany,EIP,2018-19,2018,44,65+ yr,0,0
+New York - Albany,EIP,2018-19,2018,45,65+ yr,0,0
+New York - Albany,EIP,2018-19,2018,46,65+ yr,0,0
+New York - Albany,EIP,2018-19,2018,47,65+ yr,0,0
+New York - Albany,EIP,2018-19,2018,48,65+ yr,1.1,1.1
+New York - Albany,EIP,2018-19,2018,49,65+ yr,4.3,3.2
+New York - Albany,EIP,2018-19,2018,50,65+ yr,6.9,2.7
+New York - Albany,EIP,2018-19,2018,51,65+ yr,10.6,3.7
+New York - Albany,EIP,2018-19,2018,52,65+ yr,17,6.4
+New York - Albany,EIP,2018-19,2019,1,65+ yr,29.2,12.2
+New York - Albany,EIP,2018-19,2019,2,65+ yr,35.1,5.8
+New York - Albany,EIP,2018-19,2019,3,65+ yr,42,6.9
+New York - Albany,EIP,2018-19,2019,4,65+ yr,50.5,8.5
+New York - Albany,EIP,2018-19,2019,5,65+ yr,63.2,12.8
+New York - Albany,EIP,2018-19,2019,6,65+ yr,79.7,16.5
+New York - Albany,EIP,2018-19,2019,7,65+ yr,98.3,18.6
+New York - Albany,EIP,2018-19,2019,8,65+ yr,116.4,18.1
+New York - Albany,EIP,2018-19,2019,9,65+ yr,136,19.7
+New York - Albany,EIP,2018-19,2019,10,65+ yr,158.9,22.8
+New York - Albany,EIP,2018-19,2019,11,65+ yr,184.4,25.5
+New York - Albany,EIP,2018-19,2019,12,65+ yr,213.1,28.7
+New York - Albany,EIP,2018-19,2019,13,65+ yr,231.2,18.1
+New York - Albany,EIP,2018-19,2019,14,65+ yr,245.5,14.3
+New York - Albany,EIP,2018-19,2019,15,65+ yr,255.1,9.6
+New York - Albany,EIP,2018-19,2019,16,65+ yr,265.7,10.6
+New York - Albany,EIP,2018-19,2019,17,65+ yr,269.9,4.3
+New York - Albany,EIP,2018-19,2018,40,Overall,0,0
+New York - Albany,EIP,2018-19,2018,41,Overall,0,0
+New York - Albany,EIP,2018-19,2018,42,Overall,0,0
+New York - Albany,EIP,2018-19,2018,43,Overall,0,0
+New York - Albany,EIP,2018-19,2018,44,Overall,0.1,0.1
+New York - Albany,EIP,2018-19,2018,45,Overall,0.2,0.1
+New York - Albany,EIP,2018-19,2018,46,Overall,0.2,0
+New York - Albany,EIP,2018-19,2018,47,Overall,0.3,0.1
+New York - Albany,EIP,2018-19,2018,48,Overall,0.6,0.3
+New York - Albany,EIP,2018-19,2018,49,Overall,1.4,0.9
+New York - Albany,EIP,2018-19,2018,50,Overall,3,1.5
+New York - Albany,EIP,2018-19,2018,51,Overall,4.3,1.3
+New York - Albany,EIP,2018-19,2018,52,Overall,7.3,3
+New York - Albany,EIP,2018-19,2019,1,Overall,10.7,3.4
+New York - Albany,EIP,2018-19,2019,2,Overall,13.7,3.1
+New York - Albany,EIP,2018-19,2019,3,Overall,17,3.3
+New York - Albany,EIP,2018-19,2019,4,Overall,21.1,4
+New York - Albany,EIP,2018-19,2019,5,Overall,26.1,5
+New York - Albany,EIP,2018-19,2019,6,Overall,32.6,6.5
+New York - Albany,EIP,2018-19,2019,7,Overall,40,7.4
+New York - Albany,EIP,2018-19,2019,8,Overall,46.4,6.4
+New York - Albany,EIP,2018-19,2019,9,Overall,52.2,5.8
+New York - Albany,EIP,2018-19,2019,10,Overall,59.5,7.3
+New York - Albany,EIP,2018-19,2019,11,Overall,68,8.5
+New York - Albany,EIP,2018-19,2019,12,Overall,77.3,9.3
+New York - Albany,EIP,2018-19,2019,13,Overall,82.8,5.5
+New York - Albany,EIP,2018-19,2019,14,Overall,87.1,4.3
+New York - Albany,EIP,2018-19,2019,15,Overall,90,2.9
+New York - Albany,EIP,2018-19,2019,16,Overall,92.9,2.9
+New York - Albany,EIP,2018-19,2019,17,Overall,94.7,1.8
+New York - Albany,EIP,2019-20,2019,40,0-4 yr,0,0
+New York - Albany,EIP,2019-20,2019,41,0-4 yr,0,0
+New York - Albany,EIP,2019-20,2019,42,0-4 yr,0,0
+New York - Albany,EIP,2019-20,2019,43,0-4 yr,0,0
+New York - Albany,EIP,2019-20,2019,44,0-4 yr,1.9,1.9
+New York - Albany,EIP,2019-20,2019,45,0-4 yr,1.9,0
+New York - Albany,EIP,2019-20,2019,46,0-4 yr,1.9,0
+New York - Albany,EIP,2019-20,2019,47,0-4 yr,1.9,0
+New York - Albany,EIP,2019-20,2019,48,0-4 yr,3.8,1.9
+New York - Albany,EIP,2019-20,2019,49,0-4 yr,3.8,0
+New York - Albany,EIP,2019-20,2019,50,0-4 yr,5.6,1.9
+New York - Albany,EIP,2019-20,2019,51,0-4 yr,5.6,0
+New York - Albany,EIP,2019-20,2019,52,0-4 yr,7.5,1.9
+New York - Albany,EIP,2019-20,2020,1,0-4 yr,11.3,3.8
+New York - Albany,EIP,2019-20,2020,2,0-4 yr,16.9,5.6
+New York - Albany,EIP,2019-20,2020,3,0-4 yr,22.5,5.6
+New York - Albany,EIP,2019-20,2020,4,0-4 yr,37.6,15
+New York - Albany,EIP,2019-20,2020,5,0-4 yr,56.3,18.8
+New York - Albany,EIP,2019-20,2020,6,0-4 yr,84.5,28.2
+New York - Albany,EIP,2019-20,2020,7,0-4 yr,99.5,15
+New York - Albany,EIP,2019-20,2020,8,0-4 yr,125.8,26.3
+New York - Albany,EIP,2019-20,2020,9,0-4 yr,144.6,18.8
+New York - Albany,EIP,2019-20,2020,10,0-4 yr,null,null
+New York - Albany,EIP,2019-20,2019,40,5-17 yr,0,0
+New York - Albany,EIP,2019-20,2019,41,5-17 yr,0,0
+New York - Albany,EIP,2019-20,2019,42,5-17 yr,0,0
+New York - Albany,EIP,2019-20,2019,43,5-17 yr,0,0
+New York - Albany,EIP,2019-20,2019,44,5-17 yr,0.7,0.7
+New York - Albany,EIP,2019-20,2019,45,5-17 yr,0.7,0
+New York - Albany,EIP,2019-20,2019,46,5-17 yr,1.3,0.7
+New York - Albany,EIP,2019-20,2019,47,5-17 yr,1.3,0
+New York - Albany,EIP,2019-20,2019,48,5-17 yr,2,0.7
+New York - Albany,EIP,2019-20,2019,49,5-17 yr,2,0
+New York - Albany,EIP,2019-20,2019,50,5-17 yr,2,0
+New York - Albany,EIP,2019-20,2019,51,5-17 yr,2,0
+New York - Albany,EIP,2019-20,2019,52,5-17 yr,2.7,0.7
+New York - Albany,EIP,2019-20,2020,1,5-17 yr,4,1.3
+New York - Albany,EIP,2019-20,2020,2,5-17 yr,5.4,1.3
+New York - Albany,EIP,2019-20,2020,3,5-17 yr,6.1,0.7
+New York - Albany,EIP,2019-20,2020,4,5-17 yr,11.4,5.4
+New York - Albany,EIP,2019-20,2020,5,5-17 yr,16.1,4.7
+New York - Albany,EIP,2019-20,2020,6,5-17 yr,20.9,4.7
+New York - Albany,EIP,2019-20,2020,7,5-17 yr,24.9,4
+New York - Albany,EIP,2019-20,2020,8,5-17 yr,28.9,4
+New York - Albany,EIP,2019-20,2020,9,5-17 yr,31.6,2.7
+New York - Albany,EIP,2019-20,2020,10,5-17 yr,null,null
+New York - Albany,EIP,2019-20,2019,40,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,41,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,42,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,43,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,44,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,45,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,46,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,47,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,48,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,49,18-49 yr,0,0
+New York - Albany,EIP,2019-20,2019,50,18-49 yr,0.2,0.2
+New York - Albany,EIP,2019-20,2019,51,18-49 yr,1.2,0.9
+New York - Albany,EIP,2019-20,2019,52,18-49 yr,1.9,0.7
+New York - Albany,EIP,2019-20,2020,1,18-49 yr,2.1,0.2
+New York - Albany,EIP,2019-20,2020,2,18-49 yr,4,1.9
+New York - Albany,EIP,2019-20,2020,3,18-49 yr,6.3,2.3
+New York - Albany,EIP,2019-20,2020,4,18-49 yr,8.6,2.3
+New York - Albany,EIP,2019-20,2020,5,18-49 yr,11.9,3.3
+New York - Albany,EIP,2019-20,2020,6,18-49 yr,15.1,3.3
+New York - Albany,EIP,2019-20,2020,7,18-49 yr,20.2,5.1
+New York - Albany,EIP,2019-20,2020,8,18-49 yr,23,2.8
+New York - Albany,EIP,2019-20,2020,9,18-49 yr,27,4
+New York - Albany,EIP,2019-20,2020,10,18-49 yr,null,null
+New York - Albany,EIP,2019-20,2019,40,50-64 yr,0,0
+New York - Albany,EIP,2019-20,2019,41,50-64 yr,0,0
+New York - Albany,EIP,2019-20,2019,42,50-64 yr,0,0
+New York - Albany,EIP,2019-20,2019,43,50-64 yr,0,0
+New York - Albany,EIP,2019-20,2019,44,50-64 yr,0,0
+New York - Albany,EIP,2019-20,2019,45,50-64 yr,0,0
+New York - Albany,EIP,2019-20,2019,46,50-64 yr,0.9,0.9
+New York - Albany,EIP,2019-20,2019,47,50-64 yr,0.9,0
+New York - Albany,EIP,2019-20,2019,48,50-64 yr,1.4,0.5
+New York - Albany,EIP,2019-20,2019,49,50-64 yr,1.4,0
+New York - Albany,EIP,2019-20,2019,50,50-64 yr,2.3,0.9
+New York - Albany,EIP,2019-20,2019,51,50-64 yr,3.6,1.4
+New York - Albany,EIP,2019-20,2019,52,50-64 yr,6.8,3.2
+New York - Albany,EIP,2019-20,2020,1,50-64 yr,10.5,3.6
+New York - Albany,EIP,2019-20,2020,2,50-64 yr,18.2,7.7
+New York - Albany,EIP,2019-20,2020,3,50-64 yr,25.5,7.3
+New York - Albany,EIP,2019-20,2020,4,50-64 yr,34.6,9.1
+New York - Albany,EIP,2019-20,2020,5,50-64 yr,48.7,14.1
+New York - Albany,EIP,2019-20,2020,6,50-64 yr,60.1,11.4
+New York - Albany,EIP,2019-20,2020,7,50-64 yr,70.1,10
+New York - Albany,EIP,2019-20,2020,8,50-64 yr,82.4,12.3
+New York - Albany,EIP,2019-20,2020,9,50-64 yr,90.1,7.7
+New York - Albany,EIP,2019-20,2020,10,50-64 yr,null,null
+New York - Albany,EIP,2019-20,2019,40,65+ yr,0.5,0.5
+New York - Albany,EIP,2019-20,2019,41,65+ yr,0.5,0
+New York - Albany,EIP,2019-20,2019,42,65+ yr,0.5,0
+New York - Albany,EIP,2019-20,2019,43,65+ yr,0.5,0
+New York - Albany,EIP,2019-20,2019,44,65+ yr,0.5,0
+New York - Albany,EIP,2019-20,2019,45,65+ yr,0.5,0
+New York - Albany,EIP,2019-20,2019,46,65+ yr,1.1,0.5
+New York - Albany,EIP,2019-20,2019,47,65+ yr,1.1,0
+New York - Albany,EIP,2019-20,2019,48,65+ yr,2.1,1.1
+New York - Albany,EIP,2019-20,2019,49,65+ yr,2.7,0.5
+New York - Albany,EIP,2019-20,2019,50,65+ yr,4.3,1.6
+New York - Albany,EIP,2019-20,2019,51,65+ yr,7.4,3.2
+New York - Albany,EIP,2019-20,2019,52,65+ yr,12.8,5.3
+New York - Albany,EIP,2019-20,2020,1,65+ yr,20.7,8
+New York - Albany,EIP,2019-20,2020,2,65+ yr,34,13.3
+New York - Albany,EIP,2019-20,2020,3,65+ yr,46.2,12.2
+New York - Albany,EIP,2019-20,2020,4,65+ yr,53.7,7.4
+New York - Albany,EIP,2019-20,2020,5,65+ yr,68.5,14.9
+New York - Albany,EIP,2019-20,2020,6,65+ yr,97.2,28.7
+New York - Albany,EIP,2019-20,2020,7,65+ yr,116.4,19.1
+New York - Albany,EIP,2019-20,2020,8,65+ yr,131.8,15.4
+New York - Albany,EIP,2019-20,2020,9,65+ yr,149.3,17.5
+New York - Albany,EIP,2019-20,2020,10,65+ yr,null,null
+New York - Albany,EIP,2019-20,2019,40,Overall,0.1,0.1
+New York - Albany,EIP,2019-20,2019,41,Overall,0.1,0
+New York - Albany,EIP,2019-20,2019,42,Overall,0.1,0
+New York - Albany,EIP,2019-20,2019,43,Overall,0.1,0
+New York - Albany,EIP,2019-20,2019,44,Overall,0.3,0.2
+New York - Albany,EIP,2019-20,2019,45,Overall,0.3,0
+New York - Albany,EIP,2019-20,2019,46,Overall,0.7,0.4
+New York - Albany,EIP,2019-20,2019,47,Overall,0.7,0
+New York - Albany,EIP,2019-20,2019,48,Overall,1.2,0.5
+New York - Albany,EIP,2019-20,2019,49,Overall,1.2,0.1
+New York - Albany,EIP,2019-20,2019,50,Overall,1.9,0.7
+New York - Albany,EIP,2019-20,2019,51,Overall,3.2,1.2
+New York - Albany,EIP,2019-20,2019,52,Overall,5.3,2.1
+New York - Albany,EIP,2019-20,2020,1,Overall,8,2.7
+New York - Albany,EIP,2019-20,2020,2,Overall,13.3,5.3
+New York - Albany,EIP,2019-20,2020,3,Overall,18.4,5.1
+New York - Albany,EIP,2019-20,2020,4,Overall,24.1,5.8
+New York - Albany,EIP,2019-20,2020,5,Overall,32.8,8.7
+New York - Albany,EIP,2019-20,2020,6,Overall,43.8,11.1
+New York - Albany,EIP,2019-20,2020,7,Overall,52.9,9
+New York - Albany,EIP,2019-20,2020,8,Overall,61.3,8.5
+New York - Albany,EIP,2019-20,2020,9,Overall,69.1,7.8
+New York - Albany,EIP,2019-20,2020,10,Overall,null,null
+
+Disclaimer:
+The Influenza Hospitalization Surveillance Network (FluSurv-NET) data are preliminary and subject
+to change as more data become available. All incidence rates are unadjusted.  FluSurv-NET conducts
+population-based surveillance for laboratory-confirmed influenza related hospitalizations in
+children <18 years of age (since 2003-2004 influenza season) and adults (since 2005-2006 influenza
+season).  The FluSurv-NET covers over 70 counties in the 10 Emerging Infections Program (EIP)
+"states (CA, CO, CT, GA, MD, MN, NM, NY, OR, TN) and additional Influenza Hospitalization"
+Surveillance Project (IHSP) states.   The IHSP began during the 2009-2010 season to enhance
+"surveillance during the 2009 H1N1 pandemic.  IHSP sites included IA, ID, MI, OK and SD during"
+"2009-2010 season; ID, MI, OH, OK, RI, and UT during the 2010-2011 season; MI, OH, RI, and UT during"
+"the 2011-2012 season; IA, MI, OH, RI, and UT during the 2012-2013 season; and MI, OH, and UT during"
+"the 2013-2014 , 2014-2015 and 2015-2016 seasons.  Cumulative and weekly unadjusted incidence rates"
+"(per 100,000 population) are calculated using the National Center for Health Statistics' (NCHS)"
+population estimates for the counties included in the surveillance catchment area.  The rates
+"provided are likely to be underestimated as influenza-related hospitalizations can be missed,"
+"either because testing is not performed, or because cases may be attributed to other causes of"
+pneumonia or other common influenza-related complications.
