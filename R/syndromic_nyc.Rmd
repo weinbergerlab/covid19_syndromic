@@ -51,6 +51,16 @@ combo1.a<-dcast(combo1.m, date +borough+syndrome~age_group )
 
 
 ```{r}
+combo1.a$"o65"<-combo1.a$`Ages 65+ years`
+combo1.a$"u5"<-combo1.a$`Ages 0-4 years`
+combo1.a$dow<-as.factor(weekdays(combo1.a$date))
+combo1.a$epiyr<-year(combo1.a$date)
+combo1.a$epiyr[month(combo1.a$date)<=6] <-combo1.a$epiyr[month(combo1.a$date)<=6]-1
+combo1.a$jul1.date<-as.Date(paste(combo1.a$epiyr,'07', '01', sep='-'), )
+combo1.a$day.index<- as.numeric(difftime(combo1.a$date , combo1.a$jul1.date, unit='days'))
+```
+
+```{r}
 nyc<-combo1.a[combo1.a$borough=='Citywide',]
 #nyc<-combo1.a[combo1.a$borough=='Manhattan',]
 #nyc<-combo1.a[combo1.a$borough=='Queens',]
@@ -81,26 +91,34 @@ lapply(ages, plot.rat)
 ```
 
 
-
-Create index to count number of days from July 1 each year
-```{r}
-nyc$"o65"<-nyc$`Ages 65+ years`
-nyc$"u5"<-nyc$`Ages 0-4 years`
-nyc$dow<-as.factor(weekdays(nyc$date))
-nyc$epiyr<-year(nyc$date)
-nyc$epiyr[month(nyc$date)<=6] <-nyc$epiyr[month(nyc$date)<=6]-1
-nyc$jul1.date<-as.Date(paste(epiyr,'07', '01', sep='-'), )
-nyc$day.index<- as.numeric(difftime(nyc$date , nyc$jul1.date, unit='days'))
-```
-
+Model with smoothing spline for year
 ```{r}
 mod2<-gam(cbind(nyc$o65, nyc$u5)~dow+s(day.index, bs='bs'), family=binomial, data=nyc)
-plot(mod1)
+plot(mod2)
 pred2<-predict(mod2, type='response')
 raw.ratio<-(nyc$`Ages 65+ years`+0.5)/(nyc$`Ages 0-4 years`+0.5)
 plot(nyc$date, pred2, type='p')
 points(nyc$date,raw.ratio, col='red')
 ```
+
+Disaggregated boroughs data. Fit through Jan 2020, then extrapolate seasonal baseline forward
+```{r}
+bur1<- combo1.a[combo1.a$borough != 'Citywide',]
+bur1.fit<-bur1[bur1$date<as.Date('2020-02-01'),]
+
+mod2<-gam(cbind(bur1.fit$o65, bur1.fit$u5)~dow+s(day.index, bs='bs') +borough, family=binomial, data=bur1.fit)
+pred2<-predict(mod2, newdata=bur1,type='response')
+raw.ratio<-(bur1$`Ages 65+ years`+0.5)/(bur1$`Ages 0-4 years`+0.5)
+plot(bur1$date, pred2, type='p')
+```
+Pointwise log likelihood
+```{r}
+log.like.mod2<--dbinom(bur1$o65,bur1$o65+ bur1$u5,pred2, log=T)
+plot(bur1$date, log.like.mod2)
+abline(v=as.Date('2020-02-01'), lty=2, col='gray', bty='l')
+```
+
+
 
 
 
