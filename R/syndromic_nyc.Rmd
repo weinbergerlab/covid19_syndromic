@@ -16,50 +16,85 @@ library(lubridate)
 library(mgcv)
 library(INLA)
 library(inlabru)
+library(MMWRweek)
+library(cdcfluview)
+library(gtrendsR)
 ```
 
 Import the data and remove the unnecesary rows. Note that the file downloads as a .csv format, but it is actually a tab-separated file.
 ```{r, eval=F}
 ili1<- read.table('./Data/ILI_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
 resp1<-read.table('./Data/resp_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
-
 combo1<-rbind.data.frame(ili1, resp1)
 
 names(combo1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'count')
 
 combo1<-combo1[,c('syndrome','borough','age_group','date','count')]
 combo1$date<-as.Date(combo1$date, '%m/%d/%y')
+mmwr.week<-MMWRweek(combo1$date)
+combo1<-cbind.data.frame(combo1, mmwr.week)
 combo1$count<-gsub(',', '', combo1$count) #remove commas from number
 combo1$count<-as.numeric(as.character(combo1$count))
+
 saveRDS(combo1,'./Data/ili_resp.rds')
 ```
 
-Read in the data
+
+## Read in the data
 ```{r}
 combo1<-readRDS('./Data/ili_resp.rds')
 ```
 
+NREVSS flu data
+```{r}
+flu<-read.csv('./Data/FluSurveillance_EIP_New York - Albany_Data.csv', skip=2)
+#nrevss<-who_nrevss(region=c('state'))
+#clin.ny<-nrevss$clinical_labs
+#clin.ny<-clin.ny[clin.ny$region=='New York',]
+#clin.ny$percent_positive<-as.numeric(clin.ny$percent_positive)
+#clin.ny$wk_date<-NULL
+#clin.ny[,-c(1:2)]<-apply(clin.ny[,-c(1:2)],2, function(x) as.numeric(x))
+#flu<-clin.ny
+#ph.ny<-nrevss$public_health_labs
+#ph.ny<-ph.ny[ph.ny$region=='New York',]
+```
+
+google searches for RSV in NYC. can get 5 years of historical data
+```{r}
+rsv.down<-gtrends(keyword = 'RSV', geo="US-NY-501", time = "today+5-y",
+gprop = c("web") , category = 0,  low_search_volume = FALSE)
+saveRDS(rsv.down,'./Data/rsv_searches_nyc.rds')
+rsv<-rsv.down$interest_over_time[,c('date','hits')]
+rsv$date<-as.Date(rsv$date)
+mmwr.week.rsv<-MMWRweek(rsv$date)[,c('MMWRyear','MMWRweek')]
+rsv<-cbind.data.frame(rsv,mmwr.week.rsv)
+names(rsv)<-c('date','rsv.searches','MMWRyear','MMWRweek')
+```
+
+
 ```{r}
 #select.syndrome<-"Respiratory"
 select.syndrome<-"Influenza-like illness (ILI)"
-
 ```
 
-Reshape the data. For now, just focus on ILI
+Reshape the ILI data, aggregate by MMWR date. For now, just focus on ILI
 ```{r}
-combo1.m<-melt(combo1[combo1$syndrome==select.syndrome,], id.vars=c('syndrome', 'borough','age_group','date'))
-combo1.a<-dcast(combo1.m, date +borough+syndrome~age_group )
+combo1$MMWRday<-NULL
+combo1$date<-NULL
+
+combo1.m<-melt(combo1[combo1$syndrome==select.syndrome,], id.vars=c('syndrome', 'borough','age_group','MMWRyear','MMWRweek'))
+combo1.a<-dcast(combo1.m, MMWRyear+MMWRweek +borough+syndrome~age_group, fun.aggregate = sum )
 ```
+
 
 
 ```{r}
 combo1.a$"o65"<-combo1.a$`Ages 65+ years`
 combo1.a$"u5"<-combo1.a$`Ages 0-4 years`
-combo1.a$dow<-as.factor(weekdays(combo1.a$date))
-combo1.a$epiyr<-year(combo1.a$date)
-combo1.a$epiyr[month(combo1.a$date)<=6] <-combo1.a$epiyr[month(combo1.a$date)<=6]-1
-combo1.a$jul1.date<-as.Date(paste(combo1.a$epiyr,'07', '01', sep='-'), )
-combo1.a$day.index<- as.numeric(difftime(combo1.a$date , combo1.a$jul1.date, unit='days'))
+combo1.a$epiyr<-combo1.a$MMWRyear
+combo1.a$epiyr[combo1.a$MMWRweek<=26] <-combo1.a$epiyr[combo1.a$MMWRweek<=26] -1
+combo1.a$date.index<- combo1.a$MMWRyear +combo1.a$MMWRweek/52-1/52
+
 ```
 
 ```{r}
@@ -72,20 +107,20 @@ nyc<-combo1.a[combo1.a$borough=='Citywide',]
 
 
 ```{r}
-plot(nyc$date,nyc$"Ages 18-64 years", type='l', bty='l', main='ILI all ages in NYC')
+plot(nyc$date.index,nyc$"Ages 18-64 years", type='l', bty='l', main='ILI all ages in NYC')
 ```
 
 ```{r, fig.width=4, fig.height=6}
 par(mfrow=c(2,1), mar=c(2,2,2,1))
-plot(nyc$date,nyc$`Ages 0-4 years`, type='l', bty='l', main='ILI <5 years in NYC')
-plot(nyc$date,nyc$`Ages 65+ years`, type='l', bty='l', main='ILI 65+ years in NYC')
+plot(nyc$date.index,nyc$`Ages 0-4 years`, type='l', bty='l', main='ILI <5 years in NYC')
+plot(nyc$date.index,nyc$`Ages 65+ years`, type='l', bty='l', main='ILI 65+ years in NYC')
 ```
 Plot ratio of 65+ to younger age groups for ILI
 ```{r, fig.width=12, fig.height=4}
 ages<-c("Ages 0-4 years", "Ages 5-17 years",  "Ages 18-64 years" )
 plot.rat<-function(age.select){
 nyc$age.rat<-(nyc$`Ages 65+ years`+0.5)/(nyc[,age.select]+0.5)
-plot(nyc$date,log(nyc$age.rat), type='l', bty='l', main=paste0('ratio of 65+ and ',age.select), yaxt='n', ylab='Ratio')
+plot(nyc$date.index,log(nyc$age.rat), type='l', bty='l', main=paste0('ratio of 65+ and ',age.select), yaxt='n', ylab='Ratio')
 axis(side=2, at=-c(-5, -0.5, 0, 0.5), label=round(exp(c(-5, -0.5, 0, 0.5)),2) )
 }
 par(mfrow=c(1,3))
@@ -93,101 +128,90 @@ lapply(ages, plot.rat)
 ```
 Export for SATSCAN temporal clustering
 ```{r}
-getwd()
 #write.csv(nyc, file='../Data/nyc_resp.csv')
 ```
 
 
-Model with smoothing spline for year
-```{r}
-mod2<-gam(cbind(nyc$o65, nyc$u5)~dow+s(day.index, bs='bs'), family=binomial, data=nyc)
+```{r, echo=F, eval=F}
+#Model with smoothing spline for year; cc=cyclic cubic spline
+mod2<-gam(cbind(nyc$o65, nyc$u5)~  s(MMWRweek , bs='cc'), family=binomial, data=nyc)
 plot(mod2)
 pred2<-predict(mod2, type='response')
 raw.ratio<-(nyc$`Ages 65+ years`+0.5)/(nyc$`Ages 0-4 years`+nyc$`Ages 65+ years`)
-plot(nyc$date, pred2, type='p')
-points(nyc$date,raw.ratio, col='red')
+plot(nyc$date.index, pred2, type='p')
+points(nyc$date.index,raw.ratio, col='red')
 ```
 
-Disaggregated boroughs data. Fit through Jan 2020, then extrapolate seasonal baseline forward
+Disaggregated boroughs data. 
 ```{r}
 bur1<- combo1.a[combo1.a$borough != 'Citywide',]
 bur1$borough<-factor(bur1$borough)
-bur1.fit<-bur1[bur1$date<as.Date('2020-02-01'),]
+bur1.fit<-bur1[bur1$date.index< 2020,]
+```
 
-mod2<-gam(cbind(bur1.fit$o65, bur1.fit$u5)~dow+s(day.index, bs='bs') +borough, family=binomial, data=bur1.fit)
+Fit through Jan 2020, then extrapolate seasonal baseline forward
+```{r}
+mod2<-gam(cbind(bur1.fit$o65, bur1.fit$u5)~s(MMWRweek , bs='cc') +borough, family=binomial, data=bur1.fit)
 pred2<-predict(mod2, newdata=bur1,type='response')
 raw.ratio<-(bur1$`Ages 65+ years`+0.5)/(bur1$`Ages 0-4 years`+bur1$`Ages 65+ years`)
-plot(bur1$date, pred2, type='p')
+plot(bur1$date.index, pred2, type='p')
 ```
+
 Pointwise log likelihood
 ```{r}
 log.like.mod2<- -dbinom(bur1$o65,bur1$o65+ bur1$u5,pred2, log=T)
-plot(bur1$date, log.like.mod2)
-abline(v=as.Date('2020-02-01'), lty=2, col='gray', bty='l')
+plot(bur1$date.index, log.like.mod2)
+abline(v=2020, lty=2, col='gray', bty='l')
+```
+
+
+## Prepare data for JAGS
+
+```{r}
+ili<-combo1[combo1$syndrome==select.syndrome & combo1$age_group %in% c('Ages 0-4 years','Ages 65+ years'),  c('age_group','syndrome', 'borough','MMWRyear','MMWRweek','count')]
+names(ili)<-c('age_group','syndrome', 'borough','MMWRyear','MMWRweek','ili')
+ili$agec<-NA
+ili$agec[ili$age_group=='Ages 0-4 years']<-1
+ili$agec[ili$age_group=='Ages 65+ years']<-5
+```
+
+Use overall aggregate flu hospitalizations
+```{r}
+flu2<-flu[flu$AGE.CATEGORY %in% c('Overall'),]
+#flu2$agec<-NA
+#flu2$agec[flu2$AGE.CATEGORY=='0-4 yr']<-1
+#flu2$agec[flu2$AGE.CATEGORY=='65+ yr']<-5
+flu2<-flu2[,c('SEASON', 'MMWR.YEAR', 'MMWR.WEEK', 'WEEKLY.RATE')]
+names(flu2)<-c('season', 'MMWRyear', 'MMWRweek','flu.rate')
+flu2$flu.rate<-as.numeric(as.character(flu2$flu.rate))
+flu2$flu.rate[is.na(flu2$flu.rate)]<-9999
+
+```
+
+```{r}
+combo2<-merge(ili, flu2, by=c('MMWRyear','MMWRweek'), all.x=T)
+combo2<-merge(combo2, rsv, by=c('MMWRyear','MMWRweek'), all.x=T)
+combo2$flu.rate[is.na(combo2$flu.rate)]<-0
+combo2$flu.rate[combo2$flu.rate==9999]<-NA #last few weeks
 ```
 
 
 ```{r}
-bur1.fit.alt<-bur1
-bur1.fit.alt$o65.fit<-bur1.fit.alt$o65
-bur1.fit.alt$o65.fit[bur1$date>=as.Date('2020-01-01')]<-NA
-bur1.fit.alt$u5.fit<-bur1.fit.alt$u5
-bur1.fit.alt$u5.fit[bur1$date>=as.Date('2020-01-01')]<-NA
-
-form1<-as.formula('o65.fit ~  borough + dow +f(day.index, model = "rw1", constr = FALSE)')
-m.rw1 <- inla( form1 ,   family='binomial', data=bur1.fit.alt, Ntrials= (bur1.fit.alt$u5+ bur1.fit.alt$o65.fit), 
-control.predictor = list(compute = TRUE) )
-summary(m.rw1)
-```
-
-Something wrong here
-```{r}
-pred.rw1<-m.rw1$summary.fitted.values$`0.5quant`
-pred.rw1<-exp(pred.rw1)/(1+exp(pred.rw1))
-plot(bur1$date, pred.rw1)
-```
-
-
-
-
-
-
-
-
-
-Aggregate by week
-```{r}
-nyc$weekdate<-floor_date(nyc$date, unit='week')
-nyc.agg<-aggregate(nyc[,c('u5','o65')], by=list('weekdate'=nyc$weekdate), FUN=sum)
-
-ratio.wk<-nyc.agg$o65/nyc.agg$u5
+combo2.sub<-combo2[, c('agec', 'MMWRyear', 'MMWRweek', 'borough', 'ili','flu.rate',"rsv.searches")]
+ili.m<-melt(combo2.sub, id.vars=c('borough','agec','MMWRyear','MMWRweek'))
+ili.a<-acast(ili.m, MMWRyear+MMWRweek ~borough~agec~variable , fun.aggregate = sum )
+clean.array.jags<-ili.a[,c('Bronx','Brooklyn','Manhattan','Queens' ,'Staten Island'),c('1','5'),]
+saveRDS(clean.array.jags,'./Data/jags.ds.rds')
 ```
 
 ```{r}
-plot(nyc.agg$weekdate, ratio.wk)
+plot(scale(ili.a[,'Citywide','1','ili']), col='blue')
+points(scale(ili.a[,'Citywide','1','flu.rate']), col='red')
+points(scale(ili.a[,'Citywide','1','rsv.searches']), col='gray')
+
+#Cross correlation
+ccf(ili.a[,'Citywide','1','ili'], ili.a[,'Citywide','1',"rsv.searches"], na.action=na.omit)
+
+
 ```
-
-```{r}
-nyc.agg$epiyr<-year(nyc.agg$weekdate)
-nyc.agg$epiyr[month(nyc.agg$weekdate)<=6] <-nyc.agg$epiyr[month(nyc.agg$weekdate)<=6]-1
-nyc.agg$jul1.date<-as.Date(paste(nyc.agg$epiyr,'07', '01', sep='-'), )
-nyc.agg$season.index<- as.numeric(difftime(nyc.agg$weekdate , nyc.agg$jul1.date, unit='weeks'))
-nyc.agg$index<-1:nrow(nyc.agg)
-
-mod2<-gam(cbind(nyc.agg$o65, nyc.agg$u5)~ s(season.index, bs='bs') , family=binomial, data=nyc.agg)
-plot(mod2)
-pred2<-predict(mod2, type='response')
-raw.ratio<-(nyc.agg$o65+0.5)/(nyc.agg$u5+nyc.agg$o65)
-plot(nyc.agg$weekdate, pred2, type='p')
-points(nyc.agg$weekdate,raw.ratio, col='red')
-
-obs.exp<-raw.ratio/pred2
-plot(nyc.agg$weekdate, obs.exp)
-abline(h=1)
-```
-
-
-
-
-
 
