@@ -211,9 +211,9 @@ for(i in 1:n.space){
       
       
       #Model of true time series 
-       true.ratio[i,t] ~ dnorm(mu[i,t] , sigma2_epsilon_inv )
-      mu[i,t] <-  beta0 + beta0_space[i] +  
-                   (beta1 + beta1_space[i])*(t - theta_space[i])*ifelse((t >= theta_space[i]), 1, 0)
+     #  true.ratio[i,t] ~ dnorm(mu[i,t] , sigma2_epsilon_inv )
+      #mu[i,t] <-  beta0 + beta0_space[i] +  
+                  # (beta1 + beta1_space[i])*(t - theta_space[i])*ifelse((t >= theta_space[i]), 1, 0)
 
 
       }
