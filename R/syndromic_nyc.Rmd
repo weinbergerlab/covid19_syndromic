@@ -13,9 +13,7 @@ knitr::opts_knit$set(root.dir = normalizePath("..")) #sets Working directory to 
 
 library(reshape2)
 library(lubridate)
-library(mgcv)
 library(INLA)
-library(inlabru)
 library(MMWRweek)
 library(cdcfluview)
 library(gtrendsR)
@@ -187,7 +185,7 @@ ccf(ili.a[,'Citywide','1','ili'], ili.a[,'Citywide','1',"rsv.searches"], na.acti
 ```
 
 
-## simple gam
+## simple gam with citywide data
 ```{r}
 clean.array.citywide<-ili.a[,c('Citywide'),c('1','5'),]
 
@@ -217,7 +215,7 @@ diff1_2<- (pp2[,'s(t)']+ pp2[,'s(weekN)']) -(pp1[,'s(t)'] + + pp2[,'s(weekN)'])
 
 ```
 
-
+setup epiyear index
 ```{r}
 date.string<-dimnames(ili.a)[[1]]
 dates<-unlist(strsplit(date.string, '_'))
