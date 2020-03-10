@@ -210,6 +210,11 @@ pp2 <- predict(mod2, type = "terms")
 
 diff1_2<- (pp2[,'s(t)']+ pp2[,'s(weekN)']) -(pp1[,'s(t)'] + + pp2[,'s(weekN)'])
   plot(diff1_2)
+  
+  jagmod1<-jagam(y.adult~ s(weekN, bs='cc', k=15), family='poisson', data=ds.glm, file='./R/jags.test.txt')
+  S1<-jagmod1$jags.data$S1
+  zero<-jagmod1$jags.data$zero
+
 ```
 
 
@@ -224,7 +229,7 @@ epiyr.index<-epiyr-min(epiyr)+1
 
 
 ## Stage 1 model: 
-Estimate variation in ILI that is not associated with RSv or flu
+Estimate variation in ILI that is not associated with RSv or flu. Simple poisson model where we have covariates for flu and RSV (with coefficients varying by year)
 ```{r}
 ###############
 #JAGS Model
@@ -238,10 +243,11 @@ for(i in 1:n.space){
    for(t in 1:n.time){
 
       y.kid[i,t] ~ dpois(lambda.kid[i,t])
-      log(lambda.kid[i,t]) <- alpha1[i] + epsilon[epiyr.index[i],1,i]*sqrt.flu[t] + epsilon[epiyr.index[i],2,i]*sqrt.rsv[t] + non.flu.kid[i,t]
+      log(lambda.kid[i,t]) <- alpha1[i] + epsilon[epiyr.index[i],1]*sqrt.flu[t] + epsilon[epiyr.index[i],2]*sqrt.rsv[t] + t/n.time*epsilon3[i] +
+      non.flu.kid[i,t]
     
       y.adult[i,t] ~ dpois(lambda.adult[i,t])
-      log(lambda.adult[i,t]) <- alpha2[i] + delta[epiyr.index[i],1,i]*sqrt.flu[t] + delta[epiyr.index[i],2,i]*sqrt.rsv[t] + non.flu.adult[i,t]
+      log(lambda.adult[i,t]) <- alpha2[i] + delta[epiyr.index[i],1]*sqrt.flu[t] + delta[epiyr.index[i],2]*sqrt.rsv[t] + t/n.time*delta3[i]+  non.flu.adult[i,t]
     
     # We are interested in CHANGES in dufference between non.flu.adult[i,t] and non.flu.kid[i,t]
       
@@ -250,25 +256,33 @@ for(i in 1:n.space){
 }
 
 for(i in 1:n.space){
+ delta3[i]~dnorm(0, tau.delta3)
+ epsilon3[i]~dnorm(0, tau.epsilon3)
   non.flu.kid[i,1]   <- 0 #t=0 is captured by intercept
   non.flu.adult[i,1] <- 0
 for(t in 2:n.time){
-  non.flu.kid[i,t]~dnorm(non.flu.kid[i,t-1], tau.kid) #note shared tau for all time series
-  non.flu.adult[i,t]~dnorm(non.flu.adult[i,t-1], tau.adult) #note shared tau for all time series
+  non.flu.kid[i,t]~dnorm(alpha.kid*non.flu.kid[i,t-1], tau.kid) #note shared tau for all time series
+  non.flu.adult[i,t]~dnorm(alpha.adult*non.flu.adult[i,t-1], tau.adult) #note shared tau for all time series
 }
 }
+alpha.kid ~ dunif(0,1)
+alpha.adult ~dunif (0,1)
+tau.delta3<-1/sd.delta3^2
+sd.delta3~dunif(0,100)
+tau.epsilon3<-1/sd.epsilon3^2
+sd.epsilon3~dunif(0,100)
 
 for(j in 1:n.space){
 alpha1[j] ~ dnorm(0,1e-4)
 alpha2[j] ~ dnorm(0, 1e-4)
-
+}
 for(k in 1:2){
 for(m in 1:n.epiyr){
- epsilon[m,k,j]~ dnorm(mu.epsilon[k], tau.epsilon[k])
- delta[m,k,j]~dnorm(mu.delta[k], tau.delta[k])
+ epsilon[m,k]~ dnorm(mu.epsilon[k], tau.epsilon[k])
+ delta[m,k]~dnorm(mu.delta[k], tau.delta[k])
   } 
  }
-}
+
 
 for(k in 1:2){
   mu.epsilon[k]~dnorm(0, 1e-4)
@@ -279,7 +293,16 @@ for(k in 1:2){
   sd.epsilon[k]~dunif(0, 100)
 }
 
-
+ ## Splines CHECK priors
+  for (i in 1:1) { b[i] ~ dnorm(0,0.00049) }
+  ## prior for s(weekN)... 
+  K1 <- S1[1:13,1:13] * lambda[1] 
+  b[2:14] ~ dmnorm(zero[2:14],K1) 
+  ## smoothing parameter priors CHECK...
+  for (i in 1:1) {
+    lambda[i] ~ dgamma(.05,.005)
+    rho[i] <- log(lambda[i])
+  }
 
 tau.kid<-1/sd.kid^2
 sd.kid~dunif(0,100)
@@ -318,11 +341,12 @@ Call model
                                    'n.space'=dim(clean.array.jags)[2],
                                    'n.time'=dim(clean.array.jags)[1],
                                    'epiyr.index'=epiyr.index,
-                                   'n.epiyr'=max(epiyr.index)
+                                   'n.epiyr'=max(epiyr.index),
+                                   'zero'=zero,'S1'=S1 
                                    ),
                          n.adapt=burnN, 
                          n.chains=3)
-  params<-c('diff_hat','non.flu.adult','non.flu.kid')
+  params<-c('diff_hat','non.flu.adult','non.flu.kid', 'lambda.kid', 'lambda.adult')
   
   ##############################################
   #Posterior Sampling
@@ -345,6 +369,34 @@ Call model
   non.flu.adult.mean<-posterior_samples.mean[grep('non.flu.adult', names(posterior_samples.mean))]
     non.flu.adult.mean<-matrix(non.flu.adult.mean,ncol=5, byrow=T)
     
+```
+
+
+```{r}
+matplot(non.flu.adult.mean)
+matplot(non.flu.kid.mean)
+matplot(diff_hat_mean)
+```
+
+## or alternatively use INLA
+```{r}
+to.test<-c('Bronx','Brooklyn','Manhattan','Queens' ,'Staten Island')
+inla.func<-function(x.test){
+clean.array.citywide<-ili.a[,x.test,c('1','5'),]
+
+y.kids = t(clean.array.citywide[,'1','ili'])
+y.adult = t(clean.array.citywide[,'5','ili'])
+        sqrt.rsv =sqrt(clean.array.citywide[,'5','rsv.searches']) #same for all ages and boroughs
+                 sqrt.flu =sqrt(clean.array.citywide[,'5','flu.rate']) #same for all ages and boroughs
+                 sqrt.flu[216]<-sqrt.flu[215]
+t<-1:length(y.kids)
+weekN<-rep(1:52, length.out=length(y.kids))
+
+ds.glm<-cbind.data.frame('weekN'=weekN,'y.kids'=y.kids[1,],'y.adult'=y.adult[1,],sqrt.rsv, sqrt.flu, t)
+mod1<-inla(y.adult~ sqrt.rsv+sqrt.flu +f(t, model = "rw2") +f(weekN, model = "rw2"), family='poisson', data=ds.glm)
+plot(mod1) 
+
+
 ```
 
 ##Stage 2 model:
