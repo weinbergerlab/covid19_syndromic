@@ -50,9 +50,13 @@ saveRDS(combo1,'./Data/ili_resp.rds')
 combo1<-readRDS('./Data/ili_resp.rds')
 ```
 
-This pulls in the NREVSS syndromic data from CDC (not currently being used)
+Pull in the EIP flu data  from https://gis.cdc.gov/GRASP/Fluview/FluHospRates.html
 ```{r}
 flu<-read.csv('./Data/FluSurveillance_EIP_New York - Albany_Data.csv', skip=2)
+```
+
+This pulls in the NREVSS syndromic data from CDC (not currently being used)
+```{r}
 #nrevss<-who_nrevss(region=c('state'))
 #clin.ny<-nrevss$clinical_labs
 #clin.ny<-clin.ny[clin.ny$region=='New York',]
@@ -294,8 +298,6 @@ matplot(all.mod.kid.mean, type='l')
 
 matplot(diff.adult.kids, type='l')
 
-#Correlation between random effect and flu
-apply( all.mod.adult.mean, 2, function(x) cor(x,ds.glm$sqrt.flu))
 
 ```
 compare to scaled data
@@ -312,28 +314,25 @@ matplot(scale.ili, type='l')
 
 sapply(colnames(diff.adult.kids), function(x){
   ds<-cbind.data.frame('id'=1:nrow(diff.adult.kids),'one'=1,  't'=1:length(diff.adult.kids[,x]), 'diff'=diff.adult.kids[,x] )
-  write.csv(ds , paste0('./satscan/data/kid.v.adult.',x, 'csv') )}  
+  write.csv(ds , paste0('./satscan/data/kid.v.adult.',x, '.csv') )}  
   )
 
 ```
 
-## Batch call SATSCAN
-
-#```{bash}
-#"C:\Program Files (x86)\SaTScan\SaTScanBatch64.exe" "C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\satscan #parameters\borough temporal.prm"
-#```
-
-#```{bash}
-#echo "Hello Bash!"
-#```
-
+## NOTES FOR RUNNING SATSCAN
+- Run a purely temporal analysis
+- Normal discrete scan statistics
+- Case file is the data from 1 region, then click the advanced tab to add additional input datasets for each region
+- On Input tab: time precision= Custom; study period ranging from 0 to N time points
+- Analysis Tab/advanced/inference: use iterative scan statistic
+- When importing data in wizard, location id can be the generated id; number of cases should be a vector of 1s, Date/time: vector from 1:N' attribute=the difference between adults and kids, as calculated above
+- When importing, tick the 'save these settings and read directly' box at the end of the wizard
 
 
 
 
 
-
-##Stage 2 model:
+## Stage 2 model: currently not being used:
 ```{r}
 ###############
 #JAGS Model
@@ -378,8 +377,8 @@ for(j in 1:n.time){
 
 ```
 
-call the 2nd stage model
-```{r}
+calls the 2nd stage model
+```{r, eval=F}
 ##############################################################
 #Model Fitting
 ##############################################################
@@ -423,7 +422,5 @@ names(post_means)<-sample.labs
 ```
 
 
-```{r}
 
-```
 
