@@ -272,26 +272,22 @@ all.mods.kids<-sapply(to.test,inla.func,outcome.var='y.kids' ,simplify=F)
 all.mods.adults<-sapply(to.test,inla.func,outcome.var='y.adult' ,simplify=F)
 ```
 
-Next extract mean and SD and resample to look at difference
+Next extract mean and SD subtract
 ```{r}
-n.sim=1000
-
 all.mod.kid.mean<-sapply(all.mods.kids, '[[', "t.mean")
 all.mod.kid.sd<-sapply(all.mods.kids, '[[', "t.sd")
 all.mod.adult.mean<-sapply(all.mods.adults, '[[', "t.mean")
 all.mod.adult.sd<-sapply(all.mods.adults, '[[', "t.sd")
-resamp.adult<-rnorm(n=length(all.mod.adult.mean)*n.sim, mean=c(all.mod.adult.mean), sd=c(all.mod.adult.sd))
-resamp.adult<-array(resamp.adult, dim=c(nrow(all.mod.adult.mean), ncol(all.mod.adult.mean), n.sim))
 
-resamp.kid<-rnorm(n=length(all.mod.kid.mean)*n.sim, mean=c(all.mod.kid.mean), sd=c(all.mod.kid.sd))
-resamp.kid<-array(resamp.kid, dim=c(nrow(all.mod.kid.mean), ncol(all.mod.kid.mean), n.sim))
-
-diff.adult.kids<-resamp.adult- resamp.kid
+#####THIS IS WHAT IS USED IN STAGE 2
+diff.adult.kids<-all.mod.adult.mean- all.mod.kid.mean
+diff.adult.kids.var<- all.mod.adult.sd^2 +all.mod.kid.sd^2
+#############
 
 matplot(all.mod.adult.mean, type='l')
 matplot(all.mod.kids.mean, type='l')
 
-matplot(all.mod.adult.mean-all.mod.kids.mean, type='l')
+matplot(diff.adult.kids, type='l')
 #matplot(diff.adult.kids.mean, type='l')
 
 ```
@@ -301,11 +297,6 @@ scale.ili<-apply(clean.array.jags[,,'5','ili'],2,scale)
 matplot(scale.ili, type='l')
 ```
 
-## Outpput from stage 1 to use in Stage 2
-```{r}
-diff.adult.kids.mean<-apply(diff.adult.kids,c(1,2), mean)
-diff.adult.kids.sd<-apply(diff.adult.kids,c(1,2), sd)
-```
 
 ##Stage 2 model:
 
