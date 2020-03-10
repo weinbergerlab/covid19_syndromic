@@ -279,16 +279,16 @@ all.mod.kid.sd<-sapply(all.mods.kids, '[[', "t.sd")
 all.mod.adult.mean<-sapply(all.mods.adults, '[[', "t.mean")
 all.mod.adult.sd<-sapply(all.mods.adults, '[[', "t.sd")
 
-#####THIS IS WHAT IS USED IN STAGE 2
+#####THIS IS WHAT IS USED IN STAGE 2 
+covar1<-cov(c(all.mod.adult.mean),c(all.mod.kid.mean))
 diff.adult.kids<-all.mod.adult.mean- all.mod.kid.mean
-diff.adult.kids.var<- all.mod.adult.sd^2 +all.mod.kid.sd^2
+diff.adult.kids.var<- all.mod.adult.sd^2 +all.mod.kid.sd^2 +2*covar1
 #############
 
 matplot(all.mod.adult.mean, type='l')
 matplot(all.mod.kids.mean, type='l')
 
 matplot(diff.adult.kids, type='l')
-#matplot(diff.adult.kids.mean, type='l')
 
 ```
 #compare to scaled data
