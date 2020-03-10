@@ -20,6 +20,7 @@ library(MMWRweek)
 library(cdcfluview)
 library(gtrendsR)
 library(rjags)
+library(HDInterval)
 ```
 
 ## Read in the data
@@ -186,130 +187,91 @@ ccf(ili.a[,'Citywide','1','ili'], ili.a[,'Citywide','1',"rsv.searches"], na.acti
 ```
 
 
+## simple gam
 ```{r}
-###############
-#JAGS Model
-###############
-model_string<-"
+clean.array.citywide<-ili.a[,c('Citywide'),c('1','5'),]
 
-model{
+y.kids = t(clean.array.citywide[,'1','ili'])
+y.adult = t(clean.array.citywide[,'5','ili'])
+        sqrt.rsv =sqrt(clean.array.citywide[,'5','rsv.searches']) #same for all ages and boroughs
+                 sqrt.flu =sqrt(clean.array.citywide[,'5','flu.rate']) #same for all ages and boroughs
+                 sqrt.flu[216]<-sqrt.flu[215]
+t<-1:length(y.kids)
+weekN<-rep(1:52, length.out=length(y.kids))
 
-for(i in 1:n.space){
+ds.glm<-cbind.data.frame('weekN'=weekN,'y.kids'=y.kids[1,],'y.adult'=y.adult[1,],sqrt.rsv, sqrt.flu, t)
+mod1<-gam(y.adult~ sqrt.rsv+sqrt.flu +s(t,bs='bs') +s(weekN, bs='cc') , family='poisson', data=ds.glm)
+  plot(mod1) 
+pp1 <- predict(mod1, type = "terms")
 
-   for(t in 1:n.time){
+mod2<-gam(y.kids~ sqrt.rsv+sqrt.flu +s(t, bs='bs') +s(weekN, bs='cc') , family='poisson', data=ds.glm)
+  plot(mod2) 
+pp2 <- predict(mod2, type = "terms")
 
-      y.kid[i,t] ~ dpois(lambda.kid[i,t])
-      log(lambda.kid[i,t]) <- alpha1[i] + epsilon[1,i]*sqrt.flu[t] + epsilon[2,i]*sqrt.rsv[t] + non.flu.kid[i,t]
-    
-      y.adult[i,t] ~ dpois(lambda.adult[i,t])
-      log(lambda.adult[i,t]) <- alpha2[i] + delta[1,i]*sqrt.flu[t] + delta[2,i]*sqrt.rsv[t] + non.flu.adult[i,t]
-    
-    # We are interested in CHANGES in dufference between non.flu.adult[i,t] and non.flu.kid[i,t]
-      
-      diff_hat[i,t] <- non.flu.adult[i,t] - non.flu.kid[i,t] #difference bc on log scale
-      
-      
-      
-      #Model of true time series 
-     #  true.ratio[i,t] ~ dnorm(mu[i,t] , sigma2_epsilon_inv )
-      #mu[i,t] <-  beta0 + beta0_space[i] +  
-                  # (beta1 + beta1_space[i])*(t - theta_space[i])*ifelse((t >= theta_space[i]), 1, 0)
-
-
-      }
-
-   beta0_space[i] ~ dnorm(0.00, 1e-4)
-   beta1_space[i] ~ dnorm(0.00, 1e-4)
-   theta_space[i] ~ dcat(pi)
-
-}
-
-for(i in 1:n.space){
-  non.flu.kid[i,1]~  dnorm(0, 1e-4)
-  non.flu.adult[i,1]~ dnorm(0, 1e-4)
-for(t in 2:n.time){
-  non.flu.kid[i,t]~dnorm(non.flu.kid[i,t-1], tau.kid) #note shared tau for all time series
-  non.flu.adult[i,t]~dnorm(non.flu.adult[i,t-1], tau.adult) #note shared tau for all time series
-}
-}
-
-for(j in 1:n.space){
-alpha1[j] ~ dnorm(0,1e-4)
-alpha2[j] ~ dnorm(0, 1e-4)
-
-#todo: could shrink these
-for(k in 1:2){
- epsilon[k,j]~ dnorm(0, 1e-4)
- delta[k,j]~dnorm(0, 1e-4)
-
-}
-}
-
-
-
-tau.kid<-1/sd.kid^2
-sd.kid~dunif(0,100)
-tau.adult<-1/sd.adult^2
-sd.adult~dunif(0,100)
-
-beta0 ~ dnorm(0.00, 1e-4)
-beta1 ~ dnorm(0.00, 1e-4)
-sigma2_epsilon_inv <- 1/sigma2_epsilon
-sigma2_epsilon ~ dgamma(0.01, 0.01)
-
-# for(j in 1:p_x){
-#    gamma[j] ~ dnorm(0.00, 0.0001)
-# }
-
- pi ~ ddirch(alpha[1:n.time])
- for(j in 1:n.time){
-    alpha[j]<-1.00
-    }
-
-}
-"
+diff1_2<- (pp2[,'s(t)']+ pp2[,'s(weekN)']) -(pp1[,'s(t)'] + + pp2[,'s(weekN)'])
+  plot(diff1_2)
+  
+  jagmod1<-jagam(y.adult~ s(weekN, bs='cc', k=15), family='poisson', data=ds.glm, file='./R/jags.test.txt')
+  S1<-jagmod1$jags.data$S1
+  zero<-jagmod1$jags.data$zero
 
 ```
 
-Call model
-```{r}
-  ##############################################################
-  #Model Fitting
-  ##############################################################
-  inits1=list(".RNG.seed"=c(123), ".RNG.name"='base::Wichmann-Hill')
-  inits2=list(".RNG.seed"=c(456), ".RNG.name"='base::Wichmann-Hill')
-  inits3=list(".RNG.seed"=c(789), ".RNG.name"='base::Wichmann-Hill')
-  burnN=5000
-  sampleN=10000
-  ##############################################
-  #Model Organization
-  ############################################
-  
 
-  model_spec<-textConnection(model_string)
-  model_jags<-jags.model(model_spec, 
-                         inits=list(inits1,inits2, inits3),
-                         data=list('y.kid' = t(clean.array.jags[,,'1','ili']),
-                                   'y.adult' = t(clean.array.jags[,,'5','ili']),
-                                   'sqrt.rsv' =sqrt(clean.array.jags[,'Bronx','5','rsv.searches']), #same for all ages and boroughs
-                                   'sqrt.flu' =sqrt(clean.array.jags[,'Bronx','5','flu.rate']), #same for all ages and boroughs
-                                   'n.space'=dim(clean.array.jags)[2],
-                                   'n.time'=dim(clean.array.jags)[1]
-                                   ),
-                         n.adapt=burnN, 
-                         n.chains=3)
-  params<-c('beta','theta','gamma','log.rr.vax', 'delta','delta.adj', 'lambda')
-  
-  ##############################################
-  #Posterior Sampling
-  ##############################################
-  posterior_samples<-coda.samples(model_jags, 
-                                  params, 
-                                  n.iter=sampleN)
-  posterior_samples.all<-do.call(rbind,posterior_samples)
-  post_means<-apply(posterior_samples.all, 2, median)
-  sample.labs<-names(post_means)
-  ci<-t(hdi(posterior_samples.all, credMass = 0.95))
-  row.names(ci)<-sample.labs
-  names(post_means)<-sample.labs
+```{r}
+date.string<-dimnames(ili.a)[[1]]
+dates<-unlist(strsplit(date.string, '_'))
+dates<-matrix(as.numeric(dates), ncol=2, byrow=T)
+epiyr<-dates[,1]
+epiyr[dates[,2]<=26] <- epiyr[dates[,2]<=26]-1
+epiyr.index<-epiyr-min(epiyr)+1
 ```
+
+
+## Stage 1 model: 
+Estimate variation in ILI that is not associated with RSv or flu. Simple poisson model where we have covariates for flu and RSV (with coefficients varying by year)
+use INLA for stage 1
+```{r}
+to.test<-c('Bronx','Brooklyn','Manhattan','Queens' ,'Staten Island')
+inla.func<-function(x.test, outcome.var){
+clean.array.citywide<-ili.a[,x.test,c('1','5'),]
+epiyr.index.f<-as.factor(epiyr.index)
+epiyr.index.f2<-as.factor(epiyr.index)
+
+y.kids = t(clean.array.citywide[,'1','ili'])
+y.adult = t(clean.array.citywide[,'5','ili'])
+        sqrt.rsv =sqrt(clean.array.citywide[,'5','rsv.searches']) #same for all ages and boroughs
+                 sqrt.flu =sqrt(clean.array.citywide[,'5','flu.rate']) #same for all ages and boroughs
+                 sqrt.flu[216]<-sqrt.flu[215]
+t<-1:length(y.kids)
+t2<-1:length(y.kids)
+
+weekN<-rep(1:52, length.out=length(y.kids))
+
+ds.glm<-cbind.data.frame('weekN'=weekN,'y.kids'=y.kids[1,],'y.adult'=y.adult[1,],sqrt.rsv, sqrt.flu, t, t2)
+form1<-as.formula(paste0(outcome.var,"~ f(epiyr.index.f,sqrt.rsv, model='iid')+  f(epiyr.index.f2,sqrt.flu, model='iid') +
+             t2+ 
+             f(t, model = 'iid') +
+             f(weekN, model = 'rw2')" ))
+mod1<-inla(form1, 
+           family='poisson', data=ds.glm, control.predictor = list(compute=TRUE, link = 1)) 
+mod1.mean.re.t<-mod1$summary.random$t$mean 
+mod1.sd.re.t<-mod1$summary.random$t$sd 
+
+out.list<-list(t.mean=mod1.mean.re.t, t.sd=mod1.sd.re.t)
+return(out.list)
+}
+all.mods.kids<-sapply(to.test,inla.func,outcome.var='y.kids' ,simplify=F)
+all.mods.adults<-sapply(to.test,inla.func,outcome.var='y.adult' ,simplify=F)
+
+all.mod.kids.mean<-sapply(all.mods.kids, '[[', "t.mean")
+matplot(all.mod.kids.mean)
+
+all.mod.adult.mean<-sapply(all.mods.adults, '[[', "t.mean")
+matplot(all.mod.adult.mean)
+
+matplot(all.mod.adult.mean-all.mod.kids.mean, type='l')
+```
+
+##Stage 2 model:
+
