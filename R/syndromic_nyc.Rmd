@@ -17,6 +17,7 @@ library(INLA)
 library(MMWRweek)
 library(cdcfluview)
 library(gtrendsR)
+library(mgcv)
 library(rjags)
 library(HDInterval)
 ```
@@ -390,5 +391,10 @@ ci<-matrix(sprintf("%.1f",round(ci,1)), ncol=2)
 row.names(ci)<-sample.labs
 post_means<-sprintf("%.1f",round(post_means,1))
 names(post_means)<-sample.labs
+```
+
+
+```{r}
+
 ```
 
