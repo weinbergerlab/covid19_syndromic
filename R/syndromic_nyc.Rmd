@@ -20,6 +20,7 @@ library(gtrendsR)
 library(mgcv)
 library(rjags)
 library(HDInterval)
+library(rsatscan)
 ```
 
 ## Read in the data
@@ -210,9 +211,9 @@ pp2 <- predict(mod2, type = "terms")
 diff1_2<- (pp2[,'s(t)']+ pp2[,'s(weekN)']) -(pp1[,'s(t)'] + + pp2[,'s(weekN)'])
   plot(diff1_2)
   
-  jagmod1<-jagam(y.adult~ s(weekN, bs='cc', k=15), family='poisson', data=ds.glm, file='./R/jags.test.txt')
-  S1<-jagmod1$jags.data$S1
-  zero<-jagmod1$jags.data$zero
+ # jagmod1<-jagam(y.adult~ s(weekN, bs='cc', k=15), family='poisson', data=ds.glm, file='./R/jags.test.txt')
+#  S1<-jagmod1$jags.data$S1
+ # zero<-jagmod1$jags.data$zero
 
 ```
 
@@ -289,7 +290,7 @@ diff.adult.kids.prec<-1/diff.adult.kids.var
 #############
 
 matplot(all.mod.adult.mean, type='l')
-matplot(all.mod.kids.mean, type='l')
+matplot(all.mod.kid.mean, type='l')
 
 matplot(diff.adult.kids, type='l')
 
@@ -302,6 +303,34 @@ compare to scaled data
 scale.ili<-apply(clean.array.jags[,,'5','ili'],2,scale)
 matplot(scale.ili, type='l')
 ```
+
+
+## Format for SATSCAN temporal analysis
+```{r}
+
+#sapply(colnames(diff.adult.kids), function(x) write.csv(cbind.data.frame('diff'=diff.adult.kids[,x], 't'=1:length(diff.adult.kids[,x])) , paste0('./satscan/data/kid.v.adult.',x, '.csv') )  )
+
+sapply(colnames(diff.adult.kids), function(x){
+  ds<-cbind.data.frame('id'=1:nrow(diff.adult.kids),'one'=1,  't'=1:length(diff.adult.kids[,x]), 'diff'=diff.adult.kids[,x] )
+  write.csv(ds , paste0('./satscan/data/kid.v.adult.',x, 'csv') )}  
+  )
+
+```
+
+## Batch call SATSCAN
+
+#```{bash}
+#"C:\Program Files (x86)\SaTScan\SaTScanBatch64.exe" "C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\satscan #parameters\borough temporal.prm"
+#```
+
+#```{bash}
+#echo "Hello Bash!"
+#```
+
+
+
+
+
 
 
 ##Stage 2 model:
