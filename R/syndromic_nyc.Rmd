@@ -240,7 +240,7 @@ y.kids = t(clean.array.citywide[,'1','ili'])
 y.adult = t(clean.array.citywide[,'5','ili'])
         sqrt.rsv =sqrt(clean.array.citywide[,'5','rsv.searches']) #same for all ages and boroughs
                  sqrt.flu =sqrt(clean.array.citywide[,'5','flu.rate']) #same for all ages and boroughs
-                 sqrt.flu[216]<-sqrt.flu[215]
+                 sqrt.flu[length(sqrt.flu)]<-sqrt.flu[length(sqrt.flu)-1] #fill in missing last observation
 t<-1:length(y.kids)
 t2<-1:length(y.kids)
 
