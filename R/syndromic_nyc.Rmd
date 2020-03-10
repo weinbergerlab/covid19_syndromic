@@ -229,7 +229,7 @@ epiyr.index<-epiyr-min(epiyr)+1
 
 
 ## Stage 1 model: 
-Estimate variation in ILI that is not associated with RSv or flu. Simple poisson model where we have covariates for flu and RSV (with coefficients varying by year)
+Estimate variation in ILI that is not associated with RSv or flu. Simple poisson model where we have covariates for flu and RSV (with coefficients varying by year). QUESTION FOR JOSH: Should we use IID or rw2(spline) to capture the unexplained piece. rw2 seems to give a more plausible picture of residual variation, while 
 use INLA for stage 1
 ```{r}
 to.test<-c('Bronx','Brooklyn','Manhattan','Queens' ,'Staten Island')
@@ -251,15 +251,23 @@ weekN<-rep(1:52, length.out=length(y.kids))
 ds.glm<-cbind.data.frame('weekN'=weekN,'y.kids'=y.kids[1,],'y.adult'=y.adult[1,],sqrt.rsv, sqrt.flu, t, t2)
 form1<-as.formula(paste0(outcome.var,"~ f(epiyr.index.f,sqrt.rsv, model='iid')+  f(epiyr.index.f2,sqrt.flu, model='iid') +
              t2+                      #linear trend 
-             f(t, model = 'iid') +    #unexplained variation
+             f(t, model = 'ar1') +    #unexplained variation
              f(weekN, model = 'rw2')" #seasonality 
              ))
 mod1<-inla(form1, 
-           family='poisson', data=ds.glm, control.predictor = list(compute=TRUE, link = 1)) 
+           family='poisson', data=ds.glm, control.predictor = list(compute=TRUE, link = 1),control.compute=list(config=TRUE)) 
+# resamp<-inla.posterior.sample(n=500,mod1,seed=123)
+# resamp2<-sapply(resamp, '[[', 'latent')
+# labs<-dimnames(resamp[[1]]$latent)[[1]]
+# resamp2<-resamp2[grep('t:', labs, fixed=T),]
+# resamp2.mean<-apply(resamp2,1,mean) #why doesn't this match below? seems to have underlying trend in there
+
 mod1.mean.re.t<-mod1$summary.random$t$mean 
+#mod1.median.re.t<-mod1$summary.random$t$`0.5quant` 
+
 mod1.sd.re.t<-mod1$summary.random$t$sd 
 
-out.list<-list(t.mean=mod1.mean.re.t, t.sd=mod1.sd.re.t)
+out.list<-list(t.mean=mod1.mean.re.t, t.sd=mod1.sd.re.t, 'mod1'=mod1)
 return(out.list)
 }
 all.mods.kids<-sapply(to.test,inla.func,outcome.var='y.kids' ,simplify=F)
@@ -282,13 +290,19 @@ resamp.kid<-array(resamp.kid, dim=c(nrow(all.mod.kid.mean), ncol(all.mod.kid.mea
 
 diff.adult.kids<-resamp.adult- resamp.kid
 
-matplot(all.mod.adult.mean)
-matplot(all.mod.kids.mean)
+matplot(all.mod.adult.mean, type='l')
+matplot(all.mod.kids.mean, type='l')
 
 matplot(all.mod.adult.mean-all.mod.kids.mean, type='l')
 #matplot(diff.adult.kids.mean, type='l')
 
 ```
+#compare to scaled data
+```{r}
+scale.ili<-apply(clean.array.jags[,,'5','ili'],2,scale)
+matplot(scale.ili, type='l')
+```
+
 ## Outpput from stage 1 to use in Stage 2
 ```{r}
 diff.adult.kids.mean<-apply(diff.adult.kids,c(1,2), mean)
