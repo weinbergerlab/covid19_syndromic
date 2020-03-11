@@ -1,0 +1,307 @@
+                                 _____________________________
+
+                                         SaTScan v9.6
+                                 _____________________________
+
+
+Program run on: Tue Mar 10 15:39:35 2020
+
+Retrospective Purely Temporal analysis
+scanning for clusters with high values
+using the Normal model.
+Multivariate scan using 5 data sets.
+Iterative analysis performed.
+_______________________________________________________________________________________________
+
+SUMMARY OF DATA
+
+Study period.................................: 0 to 216
+Total number of cases per data set...........: 216, 216, 216, 216, 216
+Mean per data set............................: 0.0032, 0.00048, 0.00067, 0.0029, -0.0045
+Variance per data set........................: 0.025, 0.019, 0.017, 0.027, 0.021
+Standard deviation per data set..............: 0.16, 0.14, 0.13, 0.16, 0.15
+_______________________________________________________________________________________________
+
+MOST LIKELY CLUSTER
+
+1.Location IDs included.: All
+  Time frame............: 133 to 136
+                          Data Set #1
+  Number of cases.......: 4
+  Mean inside...........: 0.35
+  Mean outside..........: -0.0033
+  Variance..............: 0.022
+  Standard deviation....: 0.15
+                          Data Set #2
+  Number of cases.......: 4
+  Mean inside...........: 0.25
+  Mean outside..........: -0.0042
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+                          Data Set #3
+  Number of cases.......: 4
+  Mean inside...........: 0.12
+  Mean outside..........: -0.0016
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+                          Data Set #5
+  Number of cases.......: 4
+  Mean inside...........: 0.14
+  Mean outside..........: -0.0073
+  Variance..............: 0.021
+  Standard deviation....: 0.14
+  Log likelihood ratio..: 21.205725
+  P-value...............: 0.001
+_______________________________________________________________________________________________
+
+REMAINING DATA WITH 1 CLUSTER REMOVED
+
+Total number of cases per data set...........: 212, 212, 212, 212, 212
+Mean per data set............................: -0.0033, -0.0042, -0.0016, 0.0035, -0.0073
+Variance per data set........................: 0.023, 0.018, 0.017, 0.027, 0.021
+Standard deviation per data set..............: 0.15, 0.13, 0.13, 0.16, 0.15
+_______________________________________________________________________________________________
+
+
+MOST LIKELY CLUSTER
+
+2.Location IDs included.: All
+  Time frame............: 210 to 211
+                          Data Set #1
+  Number of cases.......: 2
+  Mean inside...........: 0.41
+  Mean outside..........: -0.0072
+  Variance..............: 0.021
+  Standard deviation....: 0.14
+                          Data Set #2
+  Number of cases.......: 2
+  Mean inside...........: 0.20
+  Mean outside..........: -0.0062
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+                          Data Set #3
+  Number of cases.......: 2
+  Mean inside...........: 0.21
+  Mean outside..........: -0.0036
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+                          Data Set #4
+  Number of cases.......: 2
+  Mean inside...........: 0.41
+  Mean outside..........: -0.00034
+  Variance..............: 0.025
+  Standard deviation....: 0.16
+                          Data Set #5
+  Number of cases.......: 2
+  Mean inside...........: 0.10
+  Mean outside..........: -0.0083
+  Variance..............: 0.021
+  Standard deviation....: 0.15
+  Log likelihood ratio..: 19.967731
+  P-value...............: 0.003
+_______________________________________________________________________________________________
+
+REMAINING DATA WITH 2 CLUSTERS REMOVED
+
+Total number of cases per data set...........: 210, 210, 210, 210, 210
+Mean per data set............................: -0.0072, -0.0062, -0.0036, -0.00034, -0.0083
+Variance per data set........................: 0.021, 0.017, 0.017, 0.025, 0.021
+Standard deviation per data set..............: 0.14, 0.13, 0.13, 0.16, 0.15
+_______________________________________________________________________________________________
+
+
+MOST LIKELY CLUSTER
+
+3.Location IDs included.: All
+  Time frame............: 114 to 143
+                          Data Set #1
+  Number of cases.......: 26
+  Mean inside...........: 0.033
+  Mean outside..........: -0.013
+  Variance..............: 0.020
+  Standard deviation....: 0.14
+                          Data Set #2
+  Number of cases.......: 26
+  Mean inside...........: 0.0097
+  Mean outside..........: -0.0084
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+                          Data Set #3
+  Number of cases.......: 26
+  Mean inside...........: 0.019
+  Mean outside..........: -0.0067
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+                          Data Set #4
+  Number of cases.......: 26
+  Mean inside...........: 0.0015
+  Mean outside..........: -0.00059
+  Variance..............: 0.025
+  Standard deviation....: 0.16
+                          Data Set #5
+  Number of cases.......: 26
+  Mean inside...........: 0.11
+  Mean outside..........: -0.026
+  Variance..............: 0.019
+  Standard deviation....: 0.14
+  Log likelihood ratio..: 13.023295
+  P-value...............: 0.026
+_______________________________________________________________________________________________
+
+REMAINING DATA WITH 3 CLUSTERS REMOVED
+
+Total number of cases per data set...........: 184, 184, 184, 184, 184
+Mean per data set............................: -0.013, -0.0084, -0.0067, -0.00059, -0.026
+Variance per data set........................: 0.021, 0.018, 0.017, 0.027, 0.020
+Standard deviation per data set..............: 0.14, 0.13, 0.13, 0.16, 0.14
+_______________________________________________________________________________________________
+
+
+MOST LIKELY CLUSTER
+
+4.Location IDs included.: All
+  Time frame............: 87 to 90
+                          Data Set #1
+  Number of cases.......: 4
+  Mean inside...........: 0.17
+  Mean outside..........: -0.017
+  Variance..............: 0.020
+  Standard deviation....: 0.14
+                          Data Set #2
+  Number of cases.......: 4
+  Mean inside...........: 0.25
+  Mean outside..........: -0.014
+  Variance..............: 0.016
+  Standard deviation....: 0.13
+                          Data Set #3
+  Number of cases.......: 4
+  Mean inside...........: 0.088
+  Mean outside..........: -0.0088
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+                          Data Set #5
+  Number of cases.......: 4
+  Mean inside...........: -0.015
+  Mean outside..........: -0.026
+  Variance..............: 0.020
+  Standard deviation....: 0.14
+  Log likelihood ratio..: 12.794038
+  P-value...............: 0.026
+_______________________________________________________________________________________________
+
+REMAINING DATA WITH 4 CLUSTERS REMOVED
+
+Total number of cases per data set...........: 180, 180, 180, 180, 180
+Mean per data set............................: -0.017, -0.014, -0.0088, 0.00066, -0.026
+Variance per data set........................: 0.020, 0.017, 0.017, 0.027, 0.019
+Standard deviation per data set..............: 0.14, 0.13, 0.13, 0.17, 0.14
+_______________________________________________________________________________________________
+
+
+MOST LIKELY CLUSTER
+
+5.Location IDs included.: All
+  Time frame............: 54 to 58
+                          Data Set #1
+  Number of cases.......: 5
+  Mean inside...........: 0.027
+  Mean outside..........: -0.018
+  Variance..............: 0.020
+  Standard deviation....: 0.14
+                          Data Set #2
+  Number of cases.......: 5
+  Mean inside...........: 0.12
+  Mean outside..........: -0.018
+  Variance..............: 0.016
+  Standard deviation....: 0.13
+                          Data Set #3
+  Number of cases.......: 5
+  Mean inside...........: 0.024
+  Mean outside..........: -0.0098
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+                          Data Set #4
+  Number of cases.......: 5
+  Mean inside...........: 0.22
+  Mean outside..........: -0.0055
+  Variance..............: 0.026
+  Standard deviation....: 0.16
+                          Data Set #5
+  Number of cases.......: 5
+  Mean inside...........: 0.13
+  Mean outside..........: -0.030
+  Variance..............: 0.019
+  Standard deviation....: 0.14
+  Log likelihood ratio..: 11.110356
+  P-value...............: 0.100
+
+NOTE: The sequential Monte Carlo procedure was used to terminate the calculations after 498
+replications.
+
+_______________________________________________________________________________________________
+
+PARAMETER SETTINGS
+
+Input
+-----
+  Case File (data set 1) : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Bronx.csv
+  Time Precision         : Generic
+  Start Time             : 0
+  End Time               : 216
+
+Analysis
+--------
+  Type of Analysis        : Retrospective Purely Temporal
+  Probability Model       : Normal
+  Scan for Areas with     : High Values
+  Time Aggregation Units  : Generic
+  Time Aggregation Length : 1
+
+Output
+------
+  Main Results File : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\burrough residuals.txt
+
+Multiple Data Sets
+------------------
+  Case File (data set 2)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Brooklyn.csv
+  Case File (data set 3)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Manhattan.csv
+  Case File (data set 4)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Queens.csv
+  Case File (data set 5)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Staten Island.csv
+  Purpose of Multiple Data Sets : Multivariate Analysis
+
+Data Checking
+-------------
+  Temporal Data Check : Check to ensure that all cases and controls are within the specified temporal study period.
+
+Temporal Window
+---------------
+  Minimum Temporal Cluster Size : 1 Generic
+  Maximum Temporal Cluster Size : 50 percent of study period
+
+Space And Time Adjustments
+--------------------------
+  Adjust for Weekly Trends, Nonparametric : No
+
+Inference
+---------
+  P-Value Reporting                  : Default Combination
+  Number of Replications             : 999
+  Adjusting for More Likely Clusters : Yes
+  Maximum number of iterations       : 10
+  Stop when p-value greater          : 0.05
+
+Other Output
+------------
+  Report Critical Values  : No
+  Report Monte Carlo Rank : No
+
+Run Options
+-----------
+  Processor Usage   : All Available Processors
+  Suppress Warnings : No
+  Logging Analysis  : No
+_______________________________________________________________________________________________
+
+Program completed  : Tue Mar 10 15:39:40 2020
+Total Running Time : 5 seconds
+Processor Usage    : 8 processors

@@ -1,0 +1,209 @@
+                                 _____________________________
+
+                                         SaTScan v9.6
+                                 _____________________________
+
+
+Program run on: Tue Mar 10 16:36:08 2020
+
+Retrospective Purely Temporal analysis
+scanning for clusters with high values
+using the Normal model.
+Multivariate scan using 8 data sets.
+Iterative analysis performed.
+_______________________________________________________________________________________________
+
+SUMMARY OF DATA
+
+Study period.................................: 0 to 115
+Total number of cases per data set...........: 115, 115, 115, 115, 115, 115, 115, 115
+Mean per data set............................: 0.00067, 0.00043, -0.0034, 0.0039, 0.00018,
+                                               0.00094, -0.0038, -0.0036
+Variance per data set........................: 0.013, 0.011, 0.014, 0.0099, 0.010, 0.015,
+                                               0.0098, 0.018
+Standard deviation per data set..............: 0.11, 0.10, 0.12, 0.100, 0.10, 0.12, 0.099, 0.14
+_______________________________________________________________________________________________
+
+MOST LIKELY CLUSTER
+
+1.Location IDs included.: All
+  Time frame............: 1 to 3
+                          Data Set #1
+  Number of cases.......: 3
+  Mean inside...........: 0.14
+  Mean outside..........: -0.0032
+  Variance..............: 0.012
+  Standard deviation....: 0.11
+                          Data Set #2
+  Number of cases.......: 3
+  Mean inside...........: 0.13
+  Mean outside..........: -0.0030
+  Variance..............: 0.010
+  Standard deviation....: 0.10
+                          Data Set #3
+  Number of cases.......: 3
+  Mean inside...........: 0.12
+  Mean outside..........: -0.0066
+  Variance..............: 0.013
+  Standard deviation....: 0.11
+                          Data Set #5
+  Number of cases.......: 3
+  Mean inside...........: 0.16
+  Mean outside..........: -0.0040
+  Variance..............: 0.0098
+  Standard deviation....: 0.099
+                          Data Set #6
+  Number of cases.......: 3
+  Mean inside...........: 0.13
+  Mean outside..........: -0.0026
+  Variance..............: 0.015
+  Standard deviation....: 0.12
+                          Data Set #7
+  Number of cases.......: 3
+  Mean inside...........: 0.12
+  Mean outside..........: -0.0072
+  Variance..............: 0.0094
+  Standard deviation....: 0.097
+                          Data Set #8
+  Number of cases.......: 3
+  Mean inside...........: 0.15
+  Mean outside..........: -0.0076
+  Variance..............: 0.018
+  Standard deviation....: 0.13
+  Log likelihood ratio..: 16.786824
+  P-value...............: 0.007
+_______________________________________________________________________________________________
+
+REMAINING DATA WITH 1 CLUSTER REMOVED
+
+Total number of cases per data set...........: 112, 112, 112, 112, 112, 112, 112, 112
+Mean per data set............................: -0.0032, -0.0030, -0.0066, 0.0051, -0.0040,
+                                               -0.0026, -0.0072, -0.0076
+Variance per data set........................: 0.012, 0.010, 0.013, 0.0097, 0.010, 0.015,
+                                               0.0096, 0.018
+Standard deviation per data set..............: 0.11, 0.10, 0.12, 0.099, 0.10, 0.12, 0.098, 0.13
+_______________________________________________________________________________________________
+
+
+MOST LIKELY CLUSTER
+
+2.Location IDs included.: All
+  Time frame............: 113 to 115
+                          Data Set #1
+  Number of cases.......: 3
+  Mean inside...........: 0.11
+  Mean outside..........: -0.0064
+  Variance..............: 0.012
+  Standard deviation....: 0.11
+                          Data Set #2
+  Number of cases.......: 3
+  Mean inside...........: 0.078
+  Mean outside..........: -0.0053
+  Variance..............: 0.010
+  Standard deviation....: 0.10
+                          Data Set #3
+  Number of cases.......: 3
+  Mean inside...........: 0.22
+  Mean outside..........: -0.013
+  Variance..............: 0.012
+  Standard deviation....: 0.11
+                          Data Set #5
+  Number of cases.......: 3
+  Mean inside...........: 0.079
+  Mean outside..........: -0.0063
+  Variance..............: 0.0098
+  Standard deviation....: 0.099
+                          Data Set #6
+  Number of cases.......: 3
+  Mean inside...........: 0.023
+  Mean outside..........: -0.0033
+  Variance..............: 0.015
+  Standard deviation....: 0.12
+                          Data Set #7
+  Number of cases.......: 3
+  Mean inside...........: 0.11
+  Mean outside..........: -0.010
+  Variance..............: 0.0092
+  Standard deviation....: 0.096
+                          Data Set #8
+  Number of cases.......: 3
+  Mean inside...........: 0.055
+  Mean outside..........: -0.0093
+  Variance..............: 0.017
+  Standard deviation....: 0.13
+  Log likelihood ratio..: 13.202190
+  P-value...............: 0.061
+
+NOTE: The sequential Monte Carlo procedure was used to terminate the calculations after 816
+replications.
+
+_______________________________________________________________________________________________
+
+PARAMETER SETTINGS
+
+Input
+-----
+  Case File (data set 1) : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Fairfield.csv
+  Time Precision         : Generic
+  Start Time             : 0
+  End Time               : 115
+
+Analysis
+--------
+  Type of Analysis        : Retrospective Purely Temporal
+  Probability Model       : Normal
+  Scan for Areas with     : High Values
+  Time Aggregation Units  : Generic
+  Time Aggregation Length : 1
+
+Output
+------
+  Main Results File : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\ct residuals.txt
+
+Multiple Data Sets
+------------------
+  Case File (data set 2)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Hartford.csv
+  Case File (data set 3)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Litchfield.csv
+  Case File (data set 4)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Middlesex.csv
+  Case File (data set 5)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.New Haven.csv
+  Case File (data set 6)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.New London.csv
+  Case File (data set 7)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Tolland.csv
+  Case File (data set 8)        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\kid.v.adult.Windham.csv
+  Purpose of Multiple Data Sets : Multivariate Analysis
+
+Data Checking
+-------------
+  Temporal Data Check : Check to ensure that all cases and controls are within the specified temporal study period.
+
+Temporal Window
+---------------
+  Minimum Temporal Cluster Size : 1 Generic
+  Maximum Temporal Cluster Size : 50 percent of study period
+
+Space And Time Adjustments
+--------------------------
+  Adjust for Weekly Trends, Nonparametric : No
+
+Inference
+---------
+  P-Value Reporting                  : Default Combination
+  Number of Replications             : 999
+  Adjusting for More Likely Clusters : Yes
+  Maximum number of iterations       : 10
+  Stop when p-value greater          : 0.05
+
+Other Output
+------------
+  Report Critical Values  : No
+  Report Monte Carlo Rank : No
+
+Run Options
+-----------
+  Processor Usage   : All Available Processors
+  Suppress Warnings : No
+  Logging Analysis  : No
+_______________________________________________________________________________________________
+
+Program completed  : Tue Mar 10 16:36:09 2020
+Total Running Time : 1 second
+Processor Usage    : 8 processors

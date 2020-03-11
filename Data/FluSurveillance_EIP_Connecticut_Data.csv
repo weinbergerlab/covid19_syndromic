@@ -1,0 +1,699 @@
+"Influenza Hospitalization Rates (per 100,000 population) for the FluSurv-NET Network (downloaded on "Mar-10-2020)
+Influenza Division - Centers for Disease Control and Prevention.
+CATCHMENT,NETWORK,SEASON,MMWR-YEAR,MMWR-WEEK,AGE CATEGORY,CUMULATIVE RATE,WEEKLY RATE 
+Connecticut,EIP,2016-17,2016,40,0-4 yr,0,0
+Connecticut,EIP,2016-17,2016,41,0-4 yr,0,0
+Connecticut,EIP,2016-17,2016,42,0-4 yr,0,0
+Connecticut,EIP,2016-17,2016,43,0-4 yr,0,0
+Connecticut,EIP,2016-17,2016,44,0-4 yr,0,0
+Connecticut,EIP,2016-17,2016,45,0-4 yr,0,0
+Connecticut,EIP,2016-17,2016,46,0-4 yr,0,0
+Connecticut,EIP,2016-17,2016,47,0-4 yr,0,0
+Connecticut,EIP,2016-17,2016,48,0-4 yr,1.9,1.9
+Connecticut,EIP,2016-17,2016,49,0-4 yr,1.9,0
+Connecticut,EIP,2016-17,2016,50,0-4 yr,1.9,0
+Connecticut,EIP,2016-17,2016,51,0-4 yr,1.9,0
+Connecticut,EIP,2016-17,2016,52,0-4 yr,3.9,1.9
+Connecticut,EIP,2016-17,2017,1,0-4 yr,3.9,0
+Connecticut,EIP,2016-17,2017,2,0-4 yr,3.9,0
+Connecticut,EIP,2016-17,2017,3,0-4 yr,7.7,3.9
+Connecticut,EIP,2016-17,2017,4,0-4 yr,9.7,1.9
+Connecticut,EIP,2016-17,2017,5,0-4 yr,21.3,11.6
+Connecticut,EIP,2016-17,2017,6,0-4 yr,32.8,11.6
+Connecticut,EIP,2016-17,2017,7,0-4 yr,40.6,7.7
+Connecticut,EIP,2016-17,2017,8,0-4 yr,42.5,1.9
+Connecticut,EIP,2016-17,2017,9,0-4 yr,42.5,0
+Connecticut,EIP,2016-17,2017,10,0-4 yr,44.4,1.9
+Connecticut,EIP,2016-17,2017,11,0-4 yr,44.4,0
+Connecticut,EIP,2016-17,2017,12,0-4 yr,44.4,0
+Connecticut,EIP,2016-17,2017,13,0-4 yr,44.4,0
+Connecticut,EIP,2016-17,2017,14,0-4 yr,48.3,3.9
+Connecticut,EIP,2016-17,2017,15,0-4 yr,48.3,0
+Connecticut,EIP,2016-17,2017,16,0-4 yr,48.3,0
+Connecticut,EIP,2016-17,2017,17,0-4 yr,48.3,0
+Connecticut,EIP,2016-17,2016,40,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,41,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,42,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,43,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,44,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,45,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,46,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,47,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,48,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,49,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,50,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,51,5-17 yr,0,0
+Connecticut,EIP,2016-17,2016,52,5-17 yr,0,0
+Connecticut,EIP,2016-17,2017,1,5-17 yr,1.3,1.3
+Connecticut,EIP,2016-17,2017,2,5-17 yr,1.9,0.6
+Connecticut,EIP,2016-17,2017,3,5-17 yr,3.2,1.3
+Connecticut,EIP,2016-17,2017,4,5-17 yr,4.5,1.3
+Connecticut,EIP,2016-17,2017,5,5-17 yr,5.1,0.6
+Connecticut,EIP,2016-17,2017,6,5-17 yr,6.4,1.3
+Connecticut,EIP,2016-17,2017,7,5-17 yr,7.7,1.3
+Connecticut,EIP,2016-17,2017,8,5-17 yr,8.4,0.6
+Connecticut,EIP,2016-17,2017,9,5-17 yr,8.4,0
+Connecticut,EIP,2016-17,2017,10,5-17 yr,8.4,0
+Connecticut,EIP,2016-17,2017,11,5-17 yr,9.7,1.3
+Connecticut,EIP,2016-17,2017,12,5-17 yr,9.7,0
+Connecticut,EIP,2016-17,2017,13,5-17 yr,9.7,0
+Connecticut,EIP,2016-17,2017,14,5-17 yr,10.9,1.3
+Connecticut,EIP,2016-17,2017,15,5-17 yr,10.9,0
+Connecticut,EIP,2016-17,2017,16,5-17 yr,10.9,0
+Connecticut,EIP,2016-17,2017,17,5-17 yr,10.9,0
+Connecticut,EIP,2016-17,2016,40,18-49 yr,0,0
+Connecticut,EIP,2016-17,2016,41,18-49 yr,0,0
+Connecticut,EIP,2016-17,2016,42,18-49 yr,0.2,0.2
+Connecticut,EIP,2016-17,2016,43,18-49 yr,0.2,0
+Connecticut,EIP,2016-17,2016,44,18-49 yr,0.2,0
+Connecticut,EIP,2016-17,2016,45,18-49 yr,0.2,0
+Connecticut,EIP,2016-17,2016,46,18-49 yr,0.2,0
+Connecticut,EIP,2016-17,2016,47,18-49 yr,0.5,0.2
+Connecticut,EIP,2016-17,2016,48,18-49 yr,0.5,0
+Connecticut,EIP,2016-17,2016,49,18-49 yr,0.5,0
+Connecticut,EIP,2016-17,2016,50,18-49 yr,0.7,0.2
+Connecticut,EIP,2016-17,2016,51,18-49 yr,1.2,0.5
+Connecticut,EIP,2016-17,2016,52,18-49 yr,1.2,0
+Connecticut,EIP,2016-17,2017,1,18-49 yr,1.7,0.5
+Connecticut,EIP,2016-17,2017,2,18-49 yr,2.1,0.5
+Connecticut,EIP,2016-17,2017,3,18-49 yr,4.3,2.1
+Connecticut,EIP,2016-17,2017,4,18-49 yr,5.7,1.4
+Connecticut,EIP,2016-17,2017,5,18-49 yr,10.2,4.5
+Connecticut,EIP,2016-17,2017,6,18-49 yr,13.3,3.1
+Connecticut,EIP,2016-17,2017,7,18-49 yr,15.9,2.6
+Connecticut,EIP,2016-17,2017,8,18-49 yr,18.3,2.4
+Connecticut,EIP,2016-17,2017,9,18-49 yr,19.7,1.4
+Connecticut,EIP,2016-17,2017,10,18-49 yr,20.6,0.9
+Connecticut,EIP,2016-17,2017,11,18-49 yr,22.1,1.4
+Connecticut,EIP,2016-17,2017,12,18-49 yr,23.7,1.7
+Connecticut,EIP,2016-17,2017,13,18-49 yr,24.4,0.7
+Connecticut,EIP,2016-17,2017,14,18-49 yr,26.1,1.7
+Connecticut,EIP,2016-17,2017,15,18-49 yr,26.8,0.7
+Connecticut,EIP,2016-17,2017,16,18-49 yr,27.3,0.5
+Connecticut,EIP,2016-17,2017,17,18-49 yr,28.2,0.9
+Connecticut,EIP,2016-17,2016,40,50-64 yr,0.9,0.9
+Connecticut,EIP,2016-17,2016,41,50-64 yr,0.9,0
+Connecticut,EIP,2016-17,2016,42,50-64 yr,0.9,0
+Connecticut,EIP,2016-17,2016,43,50-64 yr,1.4,0.5
+Connecticut,EIP,2016-17,2016,44,50-64 yr,1.4,0
+Connecticut,EIP,2016-17,2016,45,50-64 yr,2.3,0.9
+Connecticut,EIP,2016-17,2016,46,50-64 yr,2.7,0.5
+Connecticut,EIP,2016-17,2016,47,50-64 yr,2.7,0
+Connecticut,EIP,2016-17,2016,48,50-64 yr,2.7,0
+Connecticut,EIP,2016-17,2016,49,50-64 yr,4.1,1.4
+Connecticut,EIP,2016-17,2016,50,50-64 yr,4.5,0.5
+Connecticut,EIP,2016-17,2016,51,50-64 yr,6.3,1.8
+Connecticut,EIP,2016-17,2016,52,50-64 yr,9,2.7
+Connecticut,EIP,2016-17,2017,1,50-64 yr,12.2,3.2
+Connecticut,EIP,2016-17,2017,2,50-64 yr,18.1,5.9
+Connecticut,EIP,2016-17,2017,3,50-64 yr,26.7,8.6
+Connecticut,EIP,2016-17,2017,4,50-64 yr,36.6,9.9
+Connecticut,EIP,2016-17,2017,5,50-64 yr,42.1,5.4
+Connecticut,EIP,2016-17,2017,6,50-64 yr,50.2,8.1
+Connecticut,EIP,2016-17,2017,7,50-64 yr,60.6,10.4
+Connecticut,EIP,2016-17,2017,8,50-64 yr,72.8,12.2
+Connecticut,EIP,2016-17,2017,9,50-64 yr,76,3.2
+Connecticut,EIP,2016-17,2017,10,50-64 yr,79.6,3.6
+Connecticut,EIP,2016-17,2017,11,50-64 yr,85.9,6.3
+Connecticut,EIP,2016-17,2017,12,50-64 yr,89.5,3.6
+Connecticut,EIP,2016-17,2017,13,50-64 yr,92.3,2.7
+Connecticut,EIP,2016-17,2017,14,50-64 yr,97.2,5
+Connecticut,EIP,2016-17,2017,15,50-64 yr,101.7,4.5
+Connecticut,EIP,2016-17,2017,16,50-64 yr,105.8,4.1
+Connecticut,EIP,2016-17,2017,17,50-64 yr,107.2,1.4
+Connecticut,EIP,2016-17,2016,40,65+ yr,0.6,0.6
+Connecticut,EIP,2016-17,2016,41,65+ yr,1.2,0.6
+Connecticut,EIP,2016-17,2016,42,65+ yr,1.2,0
+Connecticut,EIP,2016-17,2016,43,65+ yr,1.2,0
+Connecticut,EIP,2016-17,2016,44,65+ yr,3.5,2.4
+Connecticut,EIP,2016-17,2016,45,65+ yr,4.7,1.2
+Connecticut,EIP,2016-17,2016,46,65+ yr,7.1,2.4
+Connecticut,EIP,2016-17,2016,47,65+ yr,8.2,1.2
+Connecticut,EIP,2016-17,2016,48,65+ yr,10.6,2.4
+Connecticut,EIP,2016-17,2016,49,65+ yr,12.3,1.8
+Connecticut,EIP,2016-17,2016,50,65+ yr,15.3,2.9
+Connecticut,EIP,2016-17,2016,51,65+ yr,20,4.7
+Connecticut,EIP,2016-17,2016,52,65+ yr,31.1,11.2
+Connecticut,EIP,2016-17,2017,1,65+ yr,44.7,13.5
+Connecticut,EIP,2016-17,2017,2,65+ yr,62.3,17.6
+Connecticut,EIP,2016-17,2017,3,65+ yr,91.7,29.4
+Connecticut,EIP,2016-17,2017,4,65+ yr,118.7,27
+Connecticut,EIP,2016-17,2017,5,65+ yr,149.8,31.1
+Connecticut,EIP,2016-17,2017,6,65+ yr,185.1,35.3
+Connecticut,EIP,2016-17,2017,7,65+ yr,225,40
+Connecticut,EIP,2016-17,2017,8,65+ yr,265.6,40.5
+Connecticut,EIP,2016-17,2017,9,65+ yr,290.3,24.7
+Connecticut,EIP,2016-17,2017,10,65+ yr,308.5,18.2
+Connecticut,EIP,2016-17,2017,11,65+ yr,320.8,12.3
+Connecticut,EIP,2016-17,2017,12,65+ yr,334.3,13.5
+Connecticut,EIP,2016-17,2017,13,65+ yr,344.3,10
+Connecticut,EIP,2016-17,2017,14,65+ yr,364.9,20.6
+Connecticut,EIP,2016-17,2017,15,65+ yr,377.2,12.3
+Connecticut,EIP,2016-17,2017,16,65+ yr,390.2,12.9
+Connecticut,EIP,2016-17,2017,17,65+ yr,394.9,4.7
+Connecticut,EIP,2016-17,2016,40,Overall,0.3,0.3
+Connecticut,EIP,2016-17,2016,41,Overall,0.4,0.1
+Connecticut,EIP,2016-17,2016,42,Overall,0.5,0.1
+Connecticut,EIP,2016-17,2016,43,Overall,0.6,0.1
+Connecticut,EIP,2016-17,2016,44,Overall,1,0.4
+Connecticut,EIP,2016-17,2016,45,Overall,1.4,0.4
+Connecticut,EIP,2016-17,2016,46,Overall,1.9,0.5
+Connecticut,EIP,2016-17,2016,47,Overall,2.2,0.3
+Connecticut,EIP,2016-17,2016,48,Overall,2.6,0.5
+Connecticut,EIP,2016-17,2016,49,Overall,3.2,0.6
+Connecticut,EIP,2016-17,2016,50,Overall,3.9,0.7
+Connecticut,EIP,2016-17,2016,51,Overall,5.3,1.4
+Connecticut,EIP,2016-17,2016,52,Overall,7.8,2.5
+Connecticut,EIP,2016-17,2017,1,Overall,11.2,3.3
+Connecticut,EIP,2016-17,2017,2,Overall,15.7,4.5
+Connecticut,EIP,2016-17,2017,3,Overall,23.7,8
+Connecticut,EIP,2016-17,2017,4,Overall,31.3,7.5
+Connecticut,EIP,2016-17,2017,5,Overall,40.2,8.9
+Connecticut,EIP,2016-17,2017,6,Overall,49.9,9.7
+Connecticut,EIP,2016-17,2017,7,Overall,60.5,10.6
+Connecticut,EIP,2016-17,2017,8,Overall,71.1,10.6
+Connecticut,EIP,2016-17,2017,9,Overall,76.5,5.4
+Connecticut,EIP,2016-17,2017,10,Overall,80.8,4.3
+Connecticut,EIP,2016-17,2017,11,Overall,85,4.2
+Connecticut,EIP,2016-17,2017,12,Overall,88.7,3.7
+Connecticut,EIP,2016-17,2017,13,Overall,91.3,2.5
+Connecticut,EIP,2016-17,2017,14,Overall,96.8,5.6
+Connecticut,EIP,2016-17,2017,15,Overall,100.2,3.3
+Connecticut,EIP,2016-17,2017,16,Overall,103.4,3.2
+Connecticut,EIP,2016-17,2017,17,Overall,104.9,1.5
+Connecticut,EIP,2017-18,2017,40,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,41,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,42,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,43,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,44,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,45,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,46,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,47,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,48,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,49,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,50,0-4 yr,0,0
+Connecticut,EIP,2017-18,2017,51,0-4 yr,1.9,1.9
+Connecticut,EIP,2017-18,2017,52,0-4 yr,1.9,0
+Connecticut,EIP,2017-18,2018,1,0-4 yr,3.9,1.9
+Connecticut,EIP,2017-18,2018,2,0-4 yr,9.7,5.8
+Connecticut,EIP,2017-18,2018,3,0-4 yr,9.7,0
+Connecticut,EIP,2017-18,2018,4,0-4 yr,11.7,1.9
+Connecticut,EIP,2017-18,2018,5,0-4 yr,19.4,7.8
+Connecticut,EIP,2017-18,2018,6,0-4 yr,21.4,1.9
+Connecticut,EIP,2017-18,2018,7,0-4 yr,21.4,0
+Connecticut,EIP,2017-18,2018,8,0-4 yr,25.3,3.9
+Connecticut,EIP,2017-18,2018,9,0-4 yr,29.2,3.9
+Connecticut,EIP,2017-18,2018,10,0-4 yr,29.2,0
+Connecticut,EIP,2017-18,2018,11,0-4 yr,31.1,1.9
+Connecticut,EIP,2017-18,2018,12,0-4 yr,35,3.9
+Connecticut,EIP,2017-18,2018,13,0-4 yr,36.9,1.9
+Connecticut,EIP,2017-18,2018,14,0-4 yr,38.9,1.9
+Connecticut,EIP,2017-18,2018,15,0-4 yr,40.8,1.9
+Connecticut,EIP,2017-18,2018,16,0-4 yr,40.8,0
+Connecticut,EIP,2017-18,2018,17,0-4 yr,42.8,1.9
+Connecticut,EIP,2017-18,2017,40,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,41,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,42,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,43,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,44,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,45,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,46,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,47,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,48,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,49,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,50,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,51,5-17 yr,0,0
+Connecticut,EIP,2017-18,2017,52,5-17 yr,0.7,0.7
+Connecticut,EIP,2017-18,2018,1,5-17 yr,0.7,0
+Connecticut,EIP,2017-18,2018,2,5-17 yr,1.3,0.7
+Connecticut,EIP,2017-18,2018,3,5-17 yr,1.3,0
+Connecticut,EIP,2017-18,2018,4,5-17 yr,3.3,2
+Connecticut,EIP,2017-18,2018,5,5-17 yr,3.9,0.7
+Connecticut,EIP,2017-18,2018,6,5-17 yr,5.2,1.3
+Connecticut,EIP,2017-18,2018,7,5-17 yr,7.2,2
+Connecticut,EIP,2017-18,2018,8,5-17 yr,8.5,1.3
+Connecticut,EIP,2017-18,2018,9,5-17 yr,8.5,0
+Connecticut,EIP,2017-18,2018,10,5-17 yr,8.5,0
+Connecticut,EIP,2017-18,2018,11,5-17 yr,8.5,0
+Connecticut,EIP,2017-18,2018,12,5-17 yr,9.8,1.3
+Connecticut,EIP,2017-18,2018,13,5-17 yr,10.4,0.7
+Connecticut,EIP,2017-18,2018,14,5-17 yr,10.4,0
+Connecticut,EIP,2017-18,2018,15,5-17 yr,10.4,0
+Connecticut,EIP,2017-18,2018,16,5-17 yr,10.4,0
+Connecticut,EIP,2017-18,2018,17,5-17 yr,10.4,0
+Connecticut,EIP,2017-18,2017,40,18-49 yr,0,0
+Connecticut,EIP,2017-18,2017,41,18-49 yr,0,0
+Connecticut,EIP,2017-18,2017,42,18-49 yr,0.2,0.2
+Connecticut,EIP,2017-18,2017,43,18-49 yr,0.2,0
+Connecticut,EIP,2017-18,2017,44,18-49 yr,0.2,0
+Connecticut,EIP,2017-18,2017,45,18-49 yr,0.2,0
+Connecticut,EIP,2017-18,2017,46,18-49 yr,0.5,0.2
+Connecticut,EIP,2017-18,2017,47,18-49 yr,0.5,0
+Connecticut,EIP,2017-18,2017,48,18-49 yr,0.5,0
+Connecticut,EIP,2017-18,2017,49,18-49 yr,0.7,0.2
+Connecticut,EIP,2017-18,2017,50,18-49 yr,1.7,1
+Connecticut,EIP,2017-18,2017,51,18-49 yr,2.4,0.7
+Connecticut,EIP,2017-18,2017,52,18-49 yr,3.3,1
+Connecticut,EIP,2017-18,2018,1,18-49 yr,4,0.7
+Connecticut,EIP,2017-18,2018,2,18-49 yr,6.4,2.4
+Connecticut,EIP,2017-18,2018,3,18-49 yr,9.5,3.1
+Connecticut,EIP,2017-18,2018,4,18-49 yr,12.6,3.1
+Connecticut,EIP,2017-18,2018,5,18-49 yr,13.8,1.2
+Connecticut,EIP,2017-18,2018,6,18-49 yr,18.8,5
+Connecticut,EIP,2017-18,2018,7,18-49 yr,21.6,2.9
+Connecticut,EIP,2017-18,2018,8,18-49 yr,24.2,2.6
+Connecticut,EIP,2017-18,2018,9,18-49 yr,26.1,1.9
+Connecticut,EIP,2017-18,2018,10,18-49 yr,28,1.9
+Connecticut,EIP,2017-18,2018,11,18-49 yr,29,1
+Connecticut,EIP,2017-18,2018,12,18-49 yr,30.9,1.9
+Connecticut,EIP,2017-18,2018,13,18-49 yr,31.1,0.2
+Connecticut,EIP,2017-18,2018,14,18-49 yr,32.3,1.2
+Connecticut,EIP,2017-18,2018,15,18-49 yr,33,0.7
+Connecticut,EIP,2017-18,2018,16,18-49 yr,33.5,0.5
+Connecticut,EIP,2017-18,2018,17,18-49 yr,34.5,1
+Connecticut,EIP,2017-18,2017,40,50-64 yr,0,0
+Connecticut,EIP,2017-18,2017,41,50-64 yr,0,0
+Connecticut,EIP,2017-18,2017,42,50-64 yr,0,0
+Connecticut,EIP,2017-18,2017,43,50-64 yr,0,0
+Connecticut,EIP,2017-18,2017,44,50-64 yr,0,0
+Connecticut,EIP,2017-18,2017,45,50-64 yr,0,0
+Connecticut,EIP,2017-18,2017,46,50-64 yr,0,0
+Connecticut,EIP,2017-18,2017,47,50-64 yr,0.5,0.5
+Connecticut,EIP,2017-18,2017,48,50-64 yr,0.5,0
+Connecticut,EIP,2017-18,2017,49,50-64 yr,0.5,0
+Connecticut,EIP,2017-18,2017,50,50-64 yr,3.2,2.7
+Connecticut,EIP,2017-18,2017,51,50-64 yr,5.9,2.7
+Connecticut,EIP,2017-18,2017,52,50-64 yr,9.5,3.6
+Connecticut,EIP,2017-18,2018,1,50-64 yr,15.4,5.9
+Connecticut,EIP,2017-18,2018,2,50-64 yr,24.9,9.5
+Connecticut,EIP,2017-18,2018,3,50-64 yr,35.8,10.9
+Connecticut,EIP,2017-18,2018,4,50-64 yr,49.4,13.6
+Connecticut,EIP,2017-18,2018,5,50-64 yr,65.2,15.9
+Connecticut,EIP,2017-18,2018,6,50-64 yr,79.7,14.5
+Connecticut,EIP,2017-18,2018,7,50-64 yr,92.9,13.1
+Connecticut,EIP,2017-18,2018,8,50-64 yr,100.1,7.2
+Connecticut,EIP,2017-18,2018,9,50-64 yr,107.8,7.7
+Connecticut,EIP,2017-18,2018,10,50-64 yr,114.6,6.8
+Connecticut,EIP,2017-18,2018,11,50-64 yr,116.9,2.3
+Connecticut,EIP,2017-18,2018,12,50-64 yr,120.5,3.6
+Connecticut,EIP,2017-18,2018,13,50-64 yr,123.2,2.7
+Connecticut,EIP,2017-18,2018,14,50-64 yr,128.2,5
+Connecticut,EIP,2017-18,2018,15,50-64 yr,130,1.8
+Connecticut,EIP,2017-18,2018,16,50-64 yr,131.4,1.4
+Connecticut,EIP,2017-18,2018,17,50-64 yr,133.6,2.3
+Connecticut,EIP,2017-18,2017,40,65+ yr,0.6,0.6
+Connecticut,EIP,2017-18,2017,41,65+ yr,0.6,0
+Connecticut,EIP,2017-18,2017,42,65+ yr,0.6,0
+Connecticut,EIP,2017-18,2017,43,65+ yr,1.1,0.6
+Connecticut,EIP,2017-18,2017,44,65+ yr,2.3,1.1
+Connecticut,EIP,2017-18,2017,45,65+ yr,3.4,1.1
+Connecticut,EIP,2017-18,2017,46,65+ yr,3.9,0.6
+Connecticut,EIP,2017-18,2017,47,65+ yr,5.6,1.7
+Connecticut,EIP,2017-18,2017,48,65+ yr,6.2,0.6
+Connecticut,EIP,2017-18,2017,49,65+ yr,10.7,4.5
+Connecticut,EIP,2017-18,2017,50,65+ yr,16.9,6.2
+Connecticut,EIP,2017-18,2017,51,65+ yr,26.4,9.6
+Connecticut,EIP,2017-18,2017,52,65+ yr,40.5,14.1
+Connecticut,EIP,2017-18,2018,1,65+ yr,79.9,39.4
+Connecticut,EIP,2017-18,2018,2,65+ yr,119.3,39.4
+Connecticut,EIP,2017-18,2018,3,65+ yr,171.6,52.3
+Connecticut,EIP,2017-18,2018,4,65+ yr,240.2,68.6
+Connecticut,EIP,2017-18,2018,5,65+ yr,292.5,52.3
+Connecticut,EIP,2017-18,2018,6,65+ yr,337.5,45
+Connecticut,EIP,2017-18,2018,7,65+ yr,383.1,45.6
+Connecticut,EIP,2017-18,2018,8,65+ yr,425.8,42.8
+Connecticut,EIP,2017-18,2018,9,65+ yr,452.3,26.4
+Connecticut,EIP,2017-18,2018,10,65+ yr,466.9,14.6
+Connecticut,EIP,2017-18,2018,11,65+ yr,488.8,21.9
+Connecticut,EIP,2017-18,2018,12,65+ yr,497.3,8.4
+Connecticut,EIP,2017-18,2018,13,65+ yr,510.2,12.9
+Connecticut,EIP,2017-18,2018,14,65+ yr,522.6,12.4
+Connecticut,EIP,2017-18,2018,15,65+ yr,532.7,10.1
+Connecticut,EIP,2017-18,2018,16,65+ yr,538.3,5.6
+Connecticut,EIP,2017-18,2018,17,65+ yr,547.3,9
+Connecticut,EIP,2017-18,2017,40,Overall,0.1,0.1
+Connecticut,EIP,2017-18,2017,41,Overall,0.1,0
+Connecticut,EIP,2017-18,2017,42,Overall,0.2,0.1
+Connecticut,EIP,2017-18,2017,43,Overall,0.3,0.1
+Connecticut,EIP,2017-18,2017,44,Overall,0.5,0.2
+Connecticut,EIP,2017-18,2017,45,Overall,0.7,0.2
+Connecticut,EIP,2017-18,2017,46,Overall,0.9,0.2
+Connecticut,EIP,2017-18,2017,47,Overall,1.3,0.4
+Connecticut,EIP,2017-18,2017,48,Overall,1.4,0.1
+Connecticut,EIP,2017-18,2017,49,Overall,2.2,0.9
+Connecticut,EIP,2017-18,2017,50,Overall,4.3,2.1
+Connecticut,EIP,2017-18,2017,51,Overall,6.9,2.6
+Connecticut,EIP,2017-18,2017,52,Overall,10.6,3.7
+Connecticut,EIP,2017-18,2018,1,Overall,19.1,8.5
+Connecticut,EIP,2017-18,2018,2,Overall,29.4,10.3
+Connecticut,EIP,2017-18,2018,3,Overall,42.1,12.7
+Connecticut,EIP,2017-18,2018,4,Overall,58.6,16.5
+Connecticut,EIP,2017-18,2018,5,Overall,72.1,13.5
+Connecticut,EIP,2017-18,2018,6,Overall,85.4,13.3
+Connecticut,EIP,2017-18,2018,7,Overall,97.6,12.2
+Connecticut,EIP,2017-18,2018,8,Overall,108,10.5
+Connecticut,EIP,2017-18,2018,9,Overall,115.3,7.2
+Connecticut,EIP,2017-18,2018,10,Overall,120,4.8
+Connecticut,EIP,2017-18,2018,11,Overall,124.8,4.8
+Connecticut,EIP,2017-18,2018,12,Overall,128.2,3.4
+Connecticut,EIP,2017-18,2018,13,Overall,131.4,3.1
+Connecticut,EIP,2017-18,2018,14,Overall,135.2,3.8
+Connecticut,EIP,2017-18,2018,15,Overall,137.7,2.5
+Connecticut,EIP,2017-18,2018,16,Overall,139.2,1.5
+Connecticut,EIP,2017-18,2018,17,Overall,141.7,2.5
+Connecticut,EIP,2018-19,2018,40,0-4 yr,0,0
+Connecticut,EIP,2018-19,2018,41,0-4 yr,0,0
+Connecticut,EIP,2018-19,2018,42,0-4 yr,0,0
+Connecticut,EIP,2018-19,2018,43,0-4 yr,0,0
+Connecticut,EIP,2018-19,2018,44,0-4 yr,2,2
+Connecticut,EIP,2018-19,2018,45,0-4 yr,2,0
+Connecticut,EIP,2018-19,2018,46,0-4 yr,2,0
+Connecticut,EIP,2018-19,2018,47,0-4 yr,2,0
+Connecticut,EIP,2018-19,2018,48,0-4 yr,2,0
+Connecticut,EIP,2018-19,2018,49,0-4 yr,2,0
+Connecticut,EIP,2018-19,2018,50,0-4 yr,2,0
+Connecticut,EIP,2018-19,2018,51,0-4 yr,2,0
+Connecticut,EIP,2018-19,2018,52,0-4 yr,7.9,5.9
+Connecticut,EIP,2018-19,2019,1,0-4 yr,13.8,5.9
+Connecticut,EIP,2018-19,2019,2,0-4 yr,17.7,3.9
+Connecticut,EIP,2018-19,2019,3,0-4 yr,23.6,5.9
+Connecticut,EIP,2018-19,2019,4,0-4 yr,29.5,5.9
+Connecticut,EIP,2018-19,2019,5,0-4 yr,43.2,13.8
+Connecticut,EIP,2018-19,2019,6,0-4 yr,47.2,3.9
+Connecticut,EIP,2018-19,2019,7,0-4 yr,53.1,5.9
+Connecticut,EIP,2018-19,2019,8,0-4 yr,60.9,7.9
+Connecticut,EIP,2018-19,2019,9,0-4 yr,64.8,3.9
+Connecticut,EIP,2018-19,2019,10,0-4 yr,72.7,7.9
+Connecticut,EIP,2018-19,2019,11,0-4 yr,72.7,0
+Connecticut,EIP,2018-19,2019,12,0-4 yr,72.7,0
+Connecticut,EIP,2018-19,2019,13,0-4 yr,76.6,3.9
+Connecticut,EIP,2018-19,2019,14,0-4 yr,78.6,2
+Connecticut,EIP,2018-19,2019,15,0-4 yr,78.6,0
+Connecticut,EIP,2018-19,2019,16,0-4 yr,80.6,2
+Connecticut,EIP,2018-19,2019,17,0-4 yr,80.6,0
+Connecticut,EIP,2018-19,2018,40,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,41,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,42,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,43,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,44,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,45,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,46,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,47,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,48,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,49,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,50,5-17 yr,0,0
+Connecticut,EIP,2018-19,2018,51,5-17 yr,2,2
+Connecticut,EIP,2018-19,2018,52,5-17 yr,2,0
+Connecticut,EIP,2018-19,2019,1,5-17 yr,2,0
+Connecticut,EIP,2018-19,2019,2,5-17 yr,3.3,1.3
+Connecticut,EIP,2018-19,2019,3,5-17 yr,6,2.7
+Connecticut,EIP,2018-19,2019,4,5-17 yr,6,0
+Connecticut,EIP,2018-19,2019,5,5-17 yr,11.3,5.3
+Connecticut,EIP,2018-19,2019,6,5-17 yr,11.9,0.7
+Connecticut,EIP,2018-19,2019,7,5-17 yr,13.3,1.3
+Connecticut,EIP,2018-19,2019,8,5-17 yr,13.9,0.7
+Connecticut,EIP,2018-19,2019,9,5-17 yr,15.2,1.3
+Connecticut,EIP,2018-19,2019,10,5-17 yr,15.9,0.7
+Connecticut,EIP,2018-19,2019,11,5-17 yr,15.9,0
+Connecticut,EIP,2018-19,2019,12,5-17 yr,15.9,0
+Connecticut,EIP,2018-19,2019,13,5-17 yr,16.6,0.7
+Connecticut,EIP,2018-19,2019,14,5-17 yr,18.6,2
+Connecticut,EIP,2018-19,2019,15,5-17 yr,19.2,0.7
+Connecticut,EIP,2018-19,2019,16,5-17 yr,19.2,0
+Connecticut,EIP,2018-19,2019,17,5-17 yr,19.2,0
+Connecticut,EIP,2018-19,2018,40,18-49 yr,0,0
+Connecticut,EIP,2018-19,2018,41,18-49 yr,0.2,0.2
+Connecticut,EIP,2018-19,2018,42,18-49 yr,0.2,0
+Connecticut,EIP,2018-19,2018,43,18-49 yr,0.2,0
+Connecticut,EIP,2018-19,2018,44,18-49 yr,0.7,0.5
+Connecticut,EIP,2018-19,2018,45,18-49 yr,0.7,0
+Connecticut,EIP,2018-19,2018,46,18-49 yr,0.7,0
+Connecticut,EIP,2018-19,2018,47,18-49 yr,0.7,0
+Connecticut,EIP,2018-19,2018,48,18-49 yr,0.7,0
+Connecticut,EIP,2018-19,2018,49,18-49 yr,1,0.2
+Connecticut,EIP,2018-19,2018,50,18-49 yr,2.4,1.4
+Connecticut,EIP,2018-19,2018,51,18-49 yr,4.3,1.9
+Connecticut,EIP,2018-19,2018,52,18-49 yr,7.2,2.9
+Connecticut,EIP,2018-19,2019,1,18-49 yr,9.8,2.6
+Connecticut,EIP,2018-19,2019,2,18-49 yr,11.5,1.7
+Connecticut,EIP,2018-19,2019,3,18-49 yr,13.9,2.4
+Connecticut,EIP,2018-19,2019,4,18-49 yr,17.7,3.8
+Connecticut,EIP,2018-19,2019,5,18-49 yr,20.4,2.6
+Connecticut,EIP,2018-19,2019,6,18-49 yr,24.9,4.5
+Connecticut,EIP,2018-19,2019,7,18-49 yr,27.1,2.2
+Connecticut,EIP,2018-19,2019,8,18-49 yr,29.9,2.9
+Connecticut,EIP,2018-19,2019,9,18-49 yr,31.4,1.4
+Connecticut,EIP,2018-19,2019,10,18-49 yr,33.3,1.9
+Connecticut,EIP,2018-19,2019,11,18-49 yr,34.7,1.4
+Connecticut,EIP,2018-19,2019,12,18-49 yr,37.1,2.4
+Connecticut,EIP,2018-19,2019,13,18-49 yr,39,1.9
+Connecticut,EIP,2018-19,2019,14,18-49 yr,40.5,1.4
+Connecticut,EIP,2018-19,2019,15,18-49 yr,41.9,1.4
+Connecticut,EIP,2018-19,2019,16,18-49 yr,42.9,1
+Connecticut,EIP,2018-19,2019,17,18-49 yr,43.8,1
+Connecticut,EIP,2018-19,2018,40,50-64 yr,0,0
+Connecticut,EIP,2018-19,2018,41,50-64 yr,0.5,0.5
+Connecticut,EIP,2018-19,2018,42,50-64 yr,0.5,0
+Connecticut,EIP,2018-19,2018,43,50-64 yr,0.9,0.5
+Connecticut,EIP,2018-19,2018,44,50-64 yr,0.9,0
+Connecticut,EIP,2018-19,2018,45,50-64 yr,0.9,0
+Connecticut,EIP,2018-19,2018,46,50-64 yr,0.9,0
+Connecticut,EIP,2018-19,2018,47,50-64 yr,1.4,0.5
+Connecticut,EIP,2018-19,2018,48,50-64 yr,1.8,0.5
+Connecticut,EIP,2018-19,2018,49,50-64 yr,1.8,0
+Connecticut,EIP,2018-19,2018,50,50-64 yr,4.1,2.3
+Connecticut,EIP,2018-19,2018,51,50-64 yr,6.4,2.3
+Connecticut,EIP,2018-19,2018,52,50-64 yr,15.1,8.7
+Connecticut,EIP,2018-19,2019,1,50-64 yr,21,5.9
+Connecticut,EIP,2018-19,2019,2,50-64 yr,29.7,8.7
+Connecticut,EIP,2018-19,2019,3,50-64 yr,37.5,7.8
+Connecticut,EIP,2018-19,2019,4,50-64 yr,46.2,8.7
+Connecticut,EIP,2018-19,2019,5,50-64 yr,60.3,14.2
+Connecticut,EIP,2018-19,2019,6,50-64 yr,79.1,18.7
+Connecticut,EIP,2018-19,2019,7,50-64 yr,91.8,12.8
+Connecticut,EIP,2018-19,2019,8,50-64 yr,101.4,9.6
+Connecticut,EIP,2018-19,2019,9,50-64 yr,107.4,5.9
+Connecticut,EIP,2018-19,2019,10,50-64 yr,115.2,7.8
+Connecticut,EIP,2018-19,2019,11,50-64 yr,120.2,5
+Connecticut,EIP,2018-19,2019,12,50-64 yr,123.4,3.2
+Connecticut,EIP,2018-19,2019,13,50-64 yr,130.2,6.9
+Connecticut,EIP,2018-19,2019,14,50-64 yr,135.3,5
+Connecticut,EIP,2018-19,2019,15,50-64 yr,139.4,4.1
+Connecticut,EIP,2018-19,2019,16,50-64 yr,143.5,4.1
+Connecticut,EIP,2018-19,2019,17,50-64 yr,145.3,1.8
+Connecticut,EIP,2018-19,2018,40,65+ yr,0.5,0.5
+Connecticut,EIP,2018-19,2018,41,65+ yr,0.5,0
+Connecticut,EIP,2018-19,2018,42,65+ yr,0.5,0
+Connecticut,EIP,2018-19,2018,43,65+ yr,0.5,0
+Connecticut,EIP,2018-19,2018,44,65+ yr,1.1,0.5
+Connecticut,EIP,2018-19,2018,45,65+ yr,1.1,0
+Connecticut,EIP,2018-19,2018,46,65+ yr,1.6,0.5
+Connecticut,EIP,2018-19,2018,47,65+ yr,2.7,1.1
+Connecticut,EIP,2018-19,2018,48,65+ yr,3.3,0.5
+Connecticut,EIP,2018-19,2018,49,65+ yr,4.4,1.1
+Connecticut,EIP,2018-19,2018,50,65+ yr,4.4,0
+Connecticut,EIP,2018-19,2018,51,65+ yr,9.3,4.9
+Connecticut,EIP,2018-19,2018,52,65+ yr,18.7,9.3
+Connecticut,EIP,2018-19,2019,1,65+ yr,34.6,15.9
+Connecticut,EIP,2018-19,2019,2,65+ yr,47.8,13.2
+Connecticut,EIP,2018-19,2019,3,65+ yr,61.6,13.7
+Connecticut,EIP,2018-19,2019,4,65+ yr,71.4,9.9
+Connecticut,EIP,2018-19,2019,5,65+ yr,92.9,21.4
+Connecticut,EIP,2018-19,2019,6,65+ yr,116,23.1
+Connecticut,EIP,2018-19,2019,7,65+ yr,139.6,23.6
+Connecticut,EIP,2018-19,2019,8,65+ yr,158.8,19.2
+Connecticut,EIP,2018-19,2019,9,65+ yr,178.6,19.8
+Connecticut,EIP,2018-19,2019,10,65+ yr,200.1,21.4
+Connecticut,EIP,2018-19,2019,11,65+ yr,227,26.9
+Connecticut,EIP,2018-19,2019,12,65+ yr,244.6,17.6
+Connecticut,EIP,2018-19,2019,13,65+ yr,269.8,25.3
+Connecticut,EIP,2018-19,2019,14,65+ yr,287.4,17.6
+Connecticut,EIP,2018-19,2019,15,65+ yr,300.6,13.2
+Connecticut,EIP,2018-19,2019,16,65+ yr,311.6,11
+Connecticut,EIP,2018-19,2019,17,65+ yr,318.8,7.1
+Connecticut,EIP,2018-19,2018,40,Overall,0.1,0.1
+Connecticut,EIP,2018-19,2018,41,Overall,0.3,0.2
+Connecticut,EIP,2018-19,2018,42,Overall,0.3,0
+Connecticut,EIP,2018-19,2018,43,Overall,0.4,0.1
+Connecticut,EIP,2018-19,2018,44,Overall,0.8,0.4
+Connecticut,EIP,2018-19,2018,45,Overall,0.8,0
+Connecticut,EIP,2018-19,2018,46,Overall,0.9,0.1
+Connecticut,EIP,2018-19,2018,47,Overall,1.2,0.3
+Connecticut,EIP,2018-19,2018,48,Overall,1.4,0.2
+Connecticut,EIP,2018-19,2018,49,Overall,1.7,0.3
+Connecticut,EIP,2018-19,2018,50,Overall,2.7,1.1
+Connecticut,EIP,2018-19,2018,51,Overall,5.2,2.5
+Connecticut,EIP,2018-19,2018,52,Overall,10.2,5
+Connecticut,EIP,2018-19,2019,1,Overall,15.7,5.5
+Connecticut,EIP,2018-19,2019,2,Overall,21,5.3
+Connecticut,EIP,2018-19,2019,3,Overall,26.8,5.8
+Connecticut,EIP,2018-19,2019,4,Overall,32.2,5.5
+Connecticut,EIP,2018-19,2019,5,Overall,41.7,9.4
+Connecticut,EIP,2018-19,2019,6,Overall,51.9,10.3
+Connecticut,EIP,2018-19,2019,7,Overall,60.3,8.3
+Connecticut,EIP,2018-19,2019,8,Overall,67.4,7.2
+Connecticut,EIP,2018-19,2019,9,Overall,73.2,5.8
+Connecticut,EIP,2018-19,2019,10,Overall,80,6.8
+Connecticut,EIP,2018-19,2019,11,Overall,86.4,6.5
+Connecticut,EIP,2018-19,2019,12,Overall,91.2,4.8
+Connecticut,EIP,2018-19,2019,13,Overall,98.3,7.1
+Connecticut,EIP,2018-19,2019,14,Overall,103.5,5.2
+Connecticut,EIP,2018-19,2019,15,Overall,107.4,3.9
+Connecticut,EIP,2018-19,2019,16,Overall,110.8,3.3
+Connecticut,EIP,2018-19,2019,17,Overall,112.8,2.1
+Connecticut,EIP,2019-20,2019,40,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,41,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,42,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,43,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,44,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,45,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,46,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,47,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,48,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,49,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,50,0-4 yr,0,0
+Connecticut,EIP,2019-20,2019,51,0-4 yr,2,2
+Connecticut,EIP,2019-20,2019,52,0-4 yr,2,0
+Connecticut,EIP,2019-20,2020,1,0-4 yr,7.9,5.9
+Connecticut,EIP,2019-20,2020,2,0-4 yr,9.8,2
+Connecticut,EIP,2019-20,2020,3,0-4 yr,15.7,5.9
+Connecticut,EIP,2019-20,2020,4,0-4 yr,27.5,11.8
+Connecticut,EIP,2019-20,2020,5,0-4 yr,29.5,2
+Connecticut,EIP,2019-20,2020,6,0-4 yr,33.4,3.9
+Connecticut,EIP,2019-20,2020,7,0-4 yr,39.3,5.9
+Connecticut,EIP,2019-20,2020,8,0-4 yr,45.2,5.9
+Connecticut,EIP,2019-20,2020,9,0-4 yr,45.2,0
+Connecticut,EIP,2019-20,2020,10,0-4 yr,null,null
+Connecticut,EIP,2019-20,2019,40,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,41,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,42,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,43,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,44,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,45,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,46,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,47,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,48,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,49,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,50,5-17 yr,0,0
+Connecticut,EIP,2019-20,2019,51,5-17 yr,1.3,1.3
+Connecticut,EIP,2019-20,2019,52,5-17 yr,2.7,1.3
+Connecticut,EIP,2019-20,2020,1,5-17 yr,3.3,0.7
+Connecticut,EIP,2019-20,2020,2,5-17 yr,4,0.7
+Connecticut,EIP,2019-20,2020,3,5-17 yr,8.6,4.6
+Connecticut,EIP,2019-20,2020,4,5-17 yr,13.9,5.3
+Connecticut,EIP,2019-20,2020,5,5-17 yr,16.6,2.7
+Connecticut,EIP,2019-20,2020,6,5-17 yr,21.9,5.3
+Connecticut,EIP,2019-20,2020,7,5-17 yr,23.9,2
+Connecticut,EIP,2019-20,2020,8,5-17 yr,24.5,0.7
+Connecticut,EIP,2019-20,2020,9,5-17 yr,25.2,0.7
+Connecticut,EIP,2019-20,2020,10,5-17 yr,null,null
+Connecticut,EIP,2019-20,2019,40,18-49 yr,0,0
+Connecticut,EIP,2019-20,2019,41,18-49 yr,0,0
+Connecticut,EIP,2019-20,2019,42,18-49 yr,0,0
+Connecticut,EIP,2019-20,2019,43,18-49 yr,0,0
+Connecticut,EIP,2019-20,2019,44,18-49 yr,0,0
+Connecticut,EIP,2019-20,2019,45,18-49 yr,0.5,0.5
+Connecticut,EIP,2019-20,2019,46,18-49 yr,0.5,0
+Connecticut,EIP,2019-20,2019,47,18-49 yr,0.7,0.2
+Connecticut,EIP,2019-20,2019,48,18-49 yr,1,0.2
+Connecticut,EIP,2019-20,2019,49,18-49 yr,1.2,0.2
+Connecticut,EIP,2019-20,2019,50,18-49 yr,2.2,1
+Connecticut,EIP,2019-20,2019,51,18-49 yr,3.4,1.2
+Connecticut,EIP,2019-20,2019,52,18-49 yr,5.3,1.9
+Connecticut,EIP,2019-20,2020,1,18-49 yr,10.3,5
+Connecticut,EIP,2019-20,2020,2,18-49 yr,13.4,3.1
+Connecticut,EIP,2019-20,2020,3,18-49 yr,16.3,2.9
+Connecticut,EIP,2019-20,2020,4,18-49 yr,21.3,5
+Connecticut,EIP,2019-20,2020,5,18-49 yr,28.5,7.2
+Connecticut,EIP,2019-20,2020,6,18-49 yr,36.6,8.1
+Connecticut,EIP,2019-20,2020,7,18-49 yr,41.9,5.3
+Connecticut,EIP,2019-20,2020,8,18-49 yr,45,3.1
+Connecticut,EIP,2019-20,2020,9,18-49 yr,46.2,1.2
+Connecticut,EIP,2019-20,2020,10,18-49 yr,null,null
+Connecticut,EIP,2019-20,2019,40,50-64 yr,0.9,0.9
+Connecticut,EIP,2019-20,2019,41,50-64 yr,1.4,0.5
+Connecticut,EIP,2019-20,2019,42,50-64 yr,1.4,0
+Connecticut,EIP,2019-20,2019,43,50-64 yr,1.4,0
+Connecticut,EIP,2019-20,2019,44,50-64 yr,1.4,0
+Connecticut,EIP,2019-20,2019,45,50-64 yr,1.8,0.5
+Connecticut,EIP,2019-20,2019,46,50-64 yr,1.8,0
+Connecticut,EIP,2019-20,2019,47,50-64 yr,2.3,0.5
+Connecticut,EIP,2019-20,2019,48,50-64 yr,2.3,0
+Connecticut,EIP,2019-20,2019,49,50-64 yr,2.7,0.5
+Connecticut,EIP,2019-20,2019,50,50-64 yr,4.6,1.8
+Connecticut,EIP,2019-20,2019,51,50-64 yr,9.1,4.6
+Connecticut,EIP,2019-20,2019,52,50-64 yr,12.3,3.2
+Connecticut,EIP,2019-20,2020,1,50-64 yr,22.4,10.1
+Connecticut,EIP,2019-20,2020,2,50-64 yr,30.6,8.2
+Connecticut,EIP,2019-20,2020,3,50-64 yr,36.1,5.5
+Connecticut,EIP,2019-20,2020,4,50-64 yr,48.4,12.3
+Connecticut,EIP,2019-20,2020,5,50-64 yr,62.6,14.2
+Connecticut,EIP,2019-20,2020,6,50-64 yr,82.3,19.6
+Connecticut,EIP,2019-20,2020,7,50-64 yr,92.8,10.5
+Connecticut,EIP,2019-20,2020,8,50-64 yr,101.4,8.7
+Connecticut,EIP,2019-20,2020,9,50-64 yr,103.3,1.8
+Connecticut,EIP,2019-20,2020,10,50-64 yr,null,null
+Connecticut,EIP,2019-20,2019,40,65+ yr,0,0
+Connecticut,EIP,2019-20,2019,41,65+ yr,0.5,0.5
+Connecticut,EIP,2019-20,2019,42,65+ yr,2.2,1.6
+Connecticut,EIP,2019-20,2019,43,65+ yr,2.2,0
+Connecticut,EIP,2019-20,2019,44,65+ yr,2.2,0
+Connecticut,EIP,2019-20,2019,45,65+ yr,3.8,1.6
+Connecticut,EIP,2019-20,2019,46,65+ yr,4.4,0.5
+Connecticut,EIP,2019-20,2019,47,65+ yr,4.9,0.5
+Connecticut,EIP,2019-20,2019,48,65+ yr,6.6,1.6
+Connecticut,EIP,2019-20,2019,49,65+ yr,7.7,1.1
+Connecticut,EIP,2019-20,2019,50,65+ yr,11.5,3.8
+Connecticut,EIP,2019-20,2019,51,65+ yr,14.8,3.3
+Connecticut,EIP,2019-20,2019,52,65+ yr,29.1,14.3
+Connecticut,EIP,2019-20,2020,1,65+ yr,46.2,17
+Connecticut,EIP,2019-20,2020,2,65+ yr,65.4,19.2
+Connecticut,EIP,2019-20,2020,3,65+ yr,78.6,13.2
+Connecticut,EIP,2019-20,2020,4,65+ yr,100,21.4
+Connecticut,EIP,2019-20,2020,5,65+ yr,124.2,24.2
+Connecticut,EIP,2019-20,2020,6,65+ yr,153.3,29.1
+Connecticut,EIP,2019-20,2020,7,65+ yr,177.5,24.2
+Connecticut,EIP,2019-20,2020,8,65+ yr,189.6,12.1
+Connecticut,EIP,2019-20,2020,9,65+ yr,196.2,6.6
+Connecticut,EIP,2019-20,2020,10,65+ yr,null,null
+Connecticut,EIP,2019-20,2019,40,Overall,0.2,0.2
+Connecticut,EIP,2019-20,2019,41,Overall,0.4,0.2
+Connecticut,EIP,2019-20,2019,42,Overall,0.7,0.3
+Connecticut,EIP,2019-20,2019,43,Overall,0.7,0
+Connecticut,EIP,2019-20,2019,44,Overall,0.7,0
+Connecticut,EIP,2019-20,2019,45,Overall,1.3,0.6
+Connecticut,EIP,2019-20,2019,46,Overall,1.4,0.1
+Connecticut,EIP,2019-20,2019,47,Overall,1.7,0.3
+Connecticut,EIP,2019-20,2019,48,Overall,2.1,0.4
+Connecticut,EIP,2019-20,2019,49,Overall,2.5,0.4
+Connecticut,EIP,2019-20,2019,50,Overall,3.9,1.5
+Connecticut,EIP,2019-20,2019,51,Overall,6.3,2.4
+Connecticut,EIP,2019-20,2019,52,Overall,10.5,4.2
+Connecticut,EIP,2019-20,2020,1,Overall,18.1,7.6
+Connecticut,EIP,2019-20,2020,2,Overall,24.8,6.7
+Connecticut,EIP,2019-20,2020,3,Overall,30.5,5.7
+Connecticut,EIP,2019-20,2020,4,Overall,40.4,9.9
+Connecticut,EIP,2019-20,2020,5,Overall,51.2,10.8
+Connecticut,EIP,2019-20,2020,6,Overall,64.9,13.7
+Connecticut,EIP,2019-20,2020,7,Overall,74.2,9.3
+Connecticut,EIP,2019-20,2020,8,Overall,79.9,5.7
+Connecticut,EIP,2019-20,2020,9,Overall,82,2.2
+Connecticut,EIP,2019-20,2020,10,Overall,null,null
+
+Disclaimer:
+The Influenza Hospitalization Surveillance Network (FluSurv-NET) data are preliminary and subject
+to change as more data become available. All incidence rates are unadjusted.  FluSurv-NET conducts
+population-based surveillance for laboratory-confirmed influenza related hospitalizations in
+children <18 years of age (since 2003-2004 influenza season) and adults (since 2005-2006 influenza
+season).  The FluSurv-NET covers over 70 counties in the 10 Emerging Infections Program (EIP)
+"states (CA, CO, CT, GA, MD, MN, NM, NY, OR, TN) and additional Influenza Hospitalization"
+Surveillance Project (IHSP) states.   The IHSP began during the 2009-2010 season to enhance
+"surveillance during the 2009 H1N1 pandemic.  IHSP sites included IA, ID, MI, OK and SD during"
+"2009-2010 season; ID, MI, OH, OK, RI, and UT during the 2010-2011 season; MI, OH, RI, and UT during"
+"the 2011-2012 season; IA, MI, OH, RI, and UT during the 2012-2013 season; and MI, OH, and UT during"
+"the 2013-2014 , 2014-2015 and 2015-2016 seasons.  Cumulative and weekly unadjusted incidence rates"
+"(per 100,000 population) are calculated using the National Center for Health Statistics' (NCHS)"
+population estimates for the counties included in the surveillance catchment area.  The rates
+"provided are likely to be underestimated as influenza-related hospitalizations can be missed,"
+"either because testing is not performed, or because cases may be attributed to other causes of"
+pneumonia or other common influenza-related complications.
