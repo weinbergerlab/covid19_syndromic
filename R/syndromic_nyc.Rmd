@@ -38,8 +38,8 @@ Import the data and remove the unnecesary rows. Note that the file downloads as 
 
 This pulls in the ILI syndromic data from Epiquery in NYC
 ```{r, eval=F}
-ili1<- read.table('./Data/ILI_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
-resp1<-read.table('./Data/resp_2020_3_8.csv',sep="\t", header=TRUE, skipNul = T) 
+ili1<- read.table('./Data/ILI_2020_3_8_nyc.csv',sep="\t", header=TRUE, skipNul = T) 
+resp1<-read.table('./Data/resp_2020_3_8_nyc.csv',sep="\t", header=TRUE, skipNul = T) 
 combo1<-rbind.data.frame(ili1, resp1)
 
 names(combo1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'count')
@@ -118,7 +118,7 @@ nyc<-combo1.a[combo1.a$borough=='Citywide',]
 ```
 
 ```{r}
-plot(nyc$date.index,nyc$"Ages 18-64 years", type='l', bty='l', main='ILI all ages in NYC')
+plot(nyc$date.index,nyc$"All age groups", type='l', bty='l', main='ILI all ages in NYC')
 ```
 
 ```{r, fig.width=4, fig.height=6}
@@ -145,6 +145,27 @@ Disaggregated boroughs data.
 ```{r}
 bur1<- combo1.a[combo1.a$borough != 'Citywide',]
 bur1$borough<-factor(bur1$borough)
+```
+
+
+
+## Daily data
+```{r}
+select.syndrome<-"Respiratory"
+#select.syndrome<-"Influenza-like illness (ILI)"
+
+combo1<-readRDS('./Data/ili_resp.rds')
+combo1$MMWRday<-NULL
+combo1.m<-melt(combo1[combo1$syndrome==select.syndrome,c('syndrome', 'borough','age_group','date', 'count')], id.vars=c('syndrome', 'borough','age_group','date'))
+combo1.a<-dcast(combo1.m, date +borough+syndrome~age_group, fun.aggregate = sum )
+combo1.a$"o65"<-combo1.a$`Ages 65+ years`
+combo1.a$"u5"<-combo1.a$`Ages 0-4 years`
+
+citywide<-combo1.a[combo1.a$borough=='Citywide',]
+plot(citywide$date, citywide$`All age groups`, type='l')
+plot(citywide$date, citywide$`Ages 0-4 years`, type='l')
+plot(citywide$date, citywide$`Ages 65+ years`, type='l')
+plot(citywide$date, citywide$`Ages 65+ years`/citywide$`Ages 0-4 years`, type='l')
 ```
 
 
