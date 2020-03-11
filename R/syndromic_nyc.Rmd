@@ -37,6 +37,8 @@ library(rsatscan)
 Import the data and remove the unnecesary rows. Note that the file downloads as a .csv format, but it is actually a tab-separated file.
 
 This pulls in the ILI syndromic data from Epiquery in NYC
+
+NOTE: Data For Jan 1-Jan 29 seems to be missing from the epiquery pull
 ```{r, eval=F}
 ili1<- read.table('../Data/ILI_2020_3_8_nyc.csv',sep="\t", header=TRUE, skipNul = T) 
 resp1<-read.table('../Data/resp_2020_3_8_nyc.csv',sep="\t", header=TRUE, skipNul = T) 
@@ -58,6 +60,17 @@ saveRDS(combo1,'../Data/ili_resp.rds')
 ```{r}
 combo1<-readRDS('../Data/ili_resp.rds')
 ```
+
+Plot of ILI by age group and day
+```{r}
+par(mfrow=c(2,3))
+for(age.select in unique(combo1$age_group)){
+plot.ds<-combo1[combo1$age_group==age.select & combo1$borough=='Citywide' & combo1$syndrome=='Influenza-like illness (ILI)', ]
+plot(plot.ds$date, plot.ds$count, type='l', bty='l', main=age.select)
+}
+
+```
+
 
 Pull in the EIP flu data  from https://gis.cdc.gov/GRASP/Fluview/FluHospRates.html
 ```{r}
@@ -117,14 +130,17 @@ nyc<-combo1.a[combo1.a$borough=='Citywide',]
 
 ```
 
+Weekly data from NYC. Not last week often drops off because of incomplete data for the week
 ```{r}
 plot(nyc$date.index,nyc$"All age groups", type='l', bty='l', main='ILI all ages in NYC')
 ```
 
-```{r, fig.width=4, fig.height=6}
-par(mfrow=c(2,1), mar=c(2,2,2,1))
-plot(nyc$date.index,nyc$`Ages 0-4 years`, type='l', bty='l', main='ILI <5 years in NYC')
-plot(nyc$date.index,nyc$`Ages 65+ years`, type='l', bty='l', main='ILI 65+ years in NYC')
+```{r, fig.width=8, fig.height=6}
+par(mfrow=c(2,3))
+for(age.select in c("Ages 0-4 years" ,  "Ages 18-64 years" ,"Ages 5-17 years" , "Ages 65+ years", "All age groups")){
+plot.ds<-combo1[combo1$age_group==age.select & combo1$borough=='Citywide' & combo1$syndrome=='Influenza-like illness (ILI)', ]
+plot(nyc$date.index, nyc[,age.select], type='l', bty='l', main=age.select)
+}
 ```
 
 Plot ratio of 65+ to younger age groups for ILI
@@ -165,7 +181,7 @@ citywide<-combo1.a[combo1.a$borough=='Citywide',]
 plot(citywide$date, citywide$`All age groups`, type='l')
 plot(citywide$date, citywide$`Ages 0-4 years`, type='l')
 plot(citywide$date, citywide$`Ages 65+ years`, type='l')
-plot(citywide$date, citywide$`Ages 65+ years`/citywide$`Ages 0-4 years`, type='l')
+plot(citywide$date, citywide$`Ages 18-64 years`/citywide$`Ages 65+ years`, type='l')
 ```
 
 
