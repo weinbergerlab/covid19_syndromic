@@ -250,65 +250,69 @@ sapply(colnames(ili.diff.adults.kids$diff.adult.kids), function(x){
 - When importing, tick the 'save these settings and read directly' box at the end of the wizard
 
 
-## As an alternative, try a space-time cluster detection
+## As an alternative, try a space-time permutation cluster detection.
+Doesn't seem to work too well due to underlying trends?. Both permutation and case-control (using kids as controls) suffer from issue with flagging overly-large clusters
 
 ```{r}
+totest<-c('ili2','respiratory','cough')
+
+satscan.fun<-function(syndrome){
 coord1<-read.csv('./Data/CT_ZIPs_2010_centroids.csv')
 coord1$zipcode<-paste0('0', coord1$site)
 
-ili.ag5 <- ds2[ds2$agec==5 & ds2$ili2==T,c('zipcode','adate','ili2')]
+ili.ag5 <- ds2[ds2$agec==5 & ds2[,syndrome]==T,c('zipcode','adate',syndrome)]
 ili.ag5<-ili.ag5[!is.na(ili.ag5$zipcode),]
 ili.ag5<-merge(ili.ag5, coord1, by='zipcode') #lose ~100 cases due to missing ZIP
 ili.ag5<-ili.ag5[!is.na(ili.ag5$lat),]
-ili.ag5$ili2<-ili.ag5$ili2*1
+ili.ag5[,syndrome]<-ili.ag5[,syndrome]*1
 ili.ag5<-ili.ag5[ili.ag5$adate!=max(ili.ag5$adate),] #remove last date
 
-mycas = data.frame(locid=ili.ag5$zipcode,basecas=ili.ag5$ili2, day=ili.ag5$adate)
+ili.ag1 <- ds2[ds2$agec==1 & ds2[,syndrome]==T,c('zipcode','adate',syndrome)]
+ili.ag1<-ili.ag1[!is.na(ili.ag1$zipcode),]
+ili.ag1<-merge(ili.ag1, coord1, by='zipcode') #lose ~100 cases due to missing ZIP
+ili.ag1<-ili.ag1[!is.na(ili.ag1$lat),]
+ili.ag1[,syndrome]<-ili.ag1[,syndrome]*1
+ili.ag1<-ili.ag1[ili.ag1$adate !=max(ili.ag1$adate),] #remove last date
+
+mycas = data.frame(locid=ili.ag5$zipcode,basecas=ili.ag5[,syndrome], day=ili.ag5$adate)
+mycon<- data.frame(locid=ili.ag1$zipcode,basecas=ili.ag1[,syndrome], day=ili.ag1$adate)
 mygeo = data.frame(locid=ili.ag5$zipcode,lat=ili.ag5$lat, long=ili.ag5$long)
 
-```
+#Write satscan files
 
-Write satscan files
-```{r}
 td = tempdir()
 write.geo(mygeo, location = td, file = "mygeo", userownames=F)
 write.cas(mycas, location = td, file = "mycas")
+write.cas(mycon, location = td, file = "mycon")
 
-write.geo(mygeo, location = './satscan/data/', file = "geo.spacetime.ct", userownames=F)
-write.cas(mycas, location = './satscan/data/', file = "ili.spacetime")
-```
+#write.geo(mygeo, location = './satscan/data/', file = "geo.spacetime.ct", userownames=F)
+#write.cas(mycas, location = './satscan/data/', file = "ili.spacetime")
 
+#Parameter files
 
-Parameter files
-```{r}
 first.date<-as.character(min(mycas$day))
 first.date<-gsub('-', '/',first.date)
 last.date<-as.character(max(mycas$day))
 last.date<-gsub('-', '/',last.date)
 invisible(ss.options(reset=TRUE))
-ss.options(list(CaseFile="mycas.cas", PrecisionCaseTimes=3))
+ss.options(list(CaseFile="mycas.cas", ControlFile="mycon.cas", PrecisionCaseTimes=3))
 ss.options(list(StartDate=first.date, CoordinatesType=1, TimeAggregationUnits=3,TimeAggregationLength=1))
-ss.options(list(EndDate=last.date, CoordinatesFile="mygeo.geo", AnalysisType=4, ModelType=2)) 
+ss.options(list(EndDate=last.date, CoordinatesFile="mygeo.geo", AnalysisType=4, ModelType=1)) 
 ss.options(list(ProspectiveStartDate="2020/01/01", ReportGiniClusters="n", LogRunToHistoryFile="n"))
-```
 
-```{r}
 write.ss.prm(td, "mybase")
-write.ss.prm('./satscan/satscan parameters', "spacetime")
+#write.ss.prm('./satscan/satscan parameters', "spacetime")
 
-```
-
-```{r}
 mybase = satscan(td, "mybase")
+return(mybase)
+}
+
+satscan.res<-lapply(totest, satscan.fun)
+
+summary(satscan.res[[1]])
 ```
 
-```{r}
-summary(mybase)
-```
 
-```{r}
-#sp::plot(mybase$shapeclust)
-```
 
 
 
