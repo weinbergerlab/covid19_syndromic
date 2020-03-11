@@ -202,7 +202,7 @@ names(all.gam.res)<-syndromes
 
 
 Next extract residuals and fitted values
-```{r}
+```{r, fig.width=8, fig.height=12}
 
 #Residuals for all age groups for ILI
 ili2.resid<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','resid1'), simplify='array')
@@ -218,9 +218,15 @@ for(i in 1:5){
 
 par(mfrow=c(2,3), mar=c(3,2,1,1))
 for(i in 1:5){
-  matplot(ili2.pred[,,i], type='l', bty='l', ylab='Fitted')
-  matplot(obs[,,i], type='l', bty='l', ylab='Fitted', add=T)
+  matplot(obs[,,i], pch=16, bty='l', ylab='Fitted')
+  matplot(ili2.pred[,,i], type='l', bty='l', ylab='Fitted', add=T)
+}
 
+
+par(mfrow=c(5,1), mar=c(3,2,1,1))
+for(i in 1:5){
+  plot(obs[,1,i], type='l', bty='l', ylab='Fitted')
+  points(ili2.pred[,1,i], type='l', col='red' )
 }
 
 
