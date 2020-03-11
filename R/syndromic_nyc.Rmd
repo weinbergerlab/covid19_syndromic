@@ -18,7 +18,7 @@ The approach is:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = normalizePath("..")) #sets Working directory to be 1 folder up
+#knitr::opts_knit$set(root.dir = normalizePath("..")) #sets Working directory to be 1 folder up
 
 library(reshape2)
 library(lubridate)
@@ -38,8 +38,8 @@ Import the data and remove the unnecesary rows. Note that the file downloads as 
 
 This pulls in the ILI syndromic data from Epiquery in NYC
 ```{r, eval=F}
-ili1<- read.table('./Data/ILI_2020_3_8_nyc.csv',sep="\t", header=TRUE, skipNul = T) 
-resp1<-read.table('./Data/resp_2020_3_8_nyc.csv',sep="\t", header=TRUE, skipNul = T) 
+ili1<- read.table('../Data/ILI_2020_3_8_nyc.csv',sep="\t", header=TRUE, skipNul = T) 
+resp1<-read.table('../Data/resp_2020_3_8_nyc.csv',sep="\t", header=TRUE, skipNul = T) 
 combo1<-rbind.data.frame(ili1, resp1)
 
 names(combo1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'count')
@@ -51,17 +51,17 @@ combo1<-cbind.data.frame(combo1, mmwr.week)
 combo1$count<-gsub(',', '', combo1$count) #remove commas from number
 combo1$count<-as.numeric(as.character(combo1$count))
 
-saveRDS(combo1,'./Data/ili_resp.rds')
+saveRDS(combo1,'../Data/ili_resp.rds')
 ```
 
 
 ```{r}
-combo1<-readRDS('./Data/ili_resp.rds')
+combo1<-readRDS('../Data/ili_resp.rds')
 ```
 
 Pull in the EIP flu data  from https://gis.cdc.gov/GRASP/Fluview/FluHospRates.html
 ```{r}
-flu<-read.csv('./Data/FluSurveillance_EIP_New York - Albany_Data.csv', skip=2)
+flu<-read.csv('../Data/FluSurveillance_EIP_New York - Albany_Data.csv', skip=2)
 ```
 
 This pulls in the NREVSS syndromic data from CDC (not currently being used)
@@ -81,7 +81,7 @@ Pulls in google searches for RSV in NYC. can get 5 years of historical data at w
 ```{r}
 rsv.down<-gtrends(keyword = 'RSV', geo="US-NY-501", time = "today+5-y",
 gprop = c("web") , category = 0,  low_search_volume = FALSE)
-saveRDS(rsv.down,'./Data/rsv_searches_nyc.rds')
+saveRDS(rsv.down,'../Data/rsv_searches_nyc.rds')
 rsv<-rsv.down$interest_over_time[,c('date','hits')]
 rsv$date<-as.Date(rsv$date)
 mmwr.week.rsv<-MMWRweek(rsv$date)[,c('MMWRyear','MMWRweek')]
@@ -154,7 +154,7 @@ bur1$borough<-factor(bur1$borough)
 select.syndrome<-"Respiratory"
 #select.syndrome<-"Influenza-like illness (ILI)"
 
-combo1<-readRDS('./Data/ili_resp.rds')
+combo1<-readRDS('../Data/ili_resp.rds')
 combo1$MMWRday<-NULL
 combo1.m<-melt(combo1[combo1$syndrome==select.syndrome,c('syndrome', 'borough','age_group','date', 'count')], id.vars=c('syndrome', 'borough','age_group','date'))
 combo1.a<-dcast(combo1.m, date +borough+syndrome~age_group, fun.aggregate = sum )
@@ -208,7 +208,7 @@ ili.m<-melt(combo2.sub, id.vars=c('borough','agec','MMWRyear','MMWRweek'))
 ili.a<-acast(ili.m, MMWRyear+MMWRweek ~borough~agec~variable , fun.aggregate = sum )
 clean.array.jags<-ili.a[,c('Bronx','Brooklyn','Manhattan','Queens' ,'Staten Island'),c('1','5'),]
 clean.array.jags[216,,,"flu.rate"]<-clean.array.jags[215,,,"flu.rate"] #patch for now to deal with missing last week of 
-saveRDS(clean.array.jags,'./Data/jags.ds.rds')
+saveRDS(clean.array.jags,'../Data/jags.ds.rds')
 ```
 
 ```{r}
@@ -245,7 +245,7 @@ pp2 <- predict(mod2, type = "terms")
 diff1_2<- (pp2[,'s(t)']+ pp2[,'s(weekN)']) -(pp1[,'s(t)'] + + pp2[,'s(weekN)'])
   plot(diff1_2)
   
- # jagmod1<-jagam(y.adult~ s(weekN, bs='cc', k=15), family='poisson', data=ds.glm, file='./R/jags.test.txt')
+ # jagmod1<-jagam(y.adult~ s(weekN, bs='cc', k=15), family='poisson', data=ds.glm, file='../R/jags.test.txt')
 #  S1<-jagmod1$jags.data$S1
  # zero<-jagmod1$jags.data$zero
 
@@ -340,11 +340,11 @@ matplot(scale.ili, type='l')
 ## Format for SATSCAN temporal analysis
 ```{r}
 
-#sapply(colnames(diff.adult.kids), function(x) write.csv(cbind.data.frame('diff'=diff.adult.kids[,x], 't'=1:length(diff.adult.kids[,x])) , paste0('./satscan/data/kid.v.adult.',x, '.csv') )  )
+#sapply(colnames(diff.adult.kids), function(x) write.csv(cbind.data.frame('diff'=diff.adult.kids[,x], 't'=1:length(diff.adult.kids[,x])) , paste0('../satscan/data/kid.v.adult.',x, '.csv') )  )
 
 sapply(colnames(diff.adult.kids), function(x){
   ds<-cbind.data.frame('id'=1:nrow(diff.adult.kids),'one'=1,  't'=1:length(diff.adult.kids[,x]), 'diff'=diff.adult.kids[,x] )
-  write.csv(ds , paste0('./satscan/data/kid.v.adult.',x, '.csv') )}  
+  write.csv(ds , paste0('../satscan/data/kid.v.adult.',x, '.csv') )}  
   )
 
 ```
