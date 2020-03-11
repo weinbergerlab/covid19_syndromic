@@ -7,6 +7,15 @@ output: html_document
 
 The goal of these analyses is to detect increases in syndromic disease activity associated with  COVID-19. As a test, we are using syndromic disease data from New York City. Data are stratified by day, borrough, age group. the data were downloaded from the [Epiquery website](https://a816-health.nyc.gov/hdi/epiquery/visualizations?PageType=ps&PopulationSource=Syndromic)
 
+The approach is:
+1) Create weekly time series for ILI, respiratory, etc
+2) Get flu activity data from EIP for Albany (download online)
+3) Get RSV activity data for NYC from Google trends (we have done some validation of this..)
+4) Fit a regression model where the outcome is ILI (or other syndrome), and we adjust for flu, RSV, and seasonality. This is done separately for <5 year olds and 65+ year old and for each of the 5 boroughs
+5) Extract residuals from the model. This tells us how much unexplained variability is in the data in each week. We could stop here and look for unusual activity. or we can continue on to step 6
+6) Take the difference of the residuals for 65+ year olds and <5 year olds. 
+7) Use SATSCAN to detect temporal clusters in the residuals from steps 5 or the difference in residuals from 6. 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = normalizePath("..")) #sets Working directory to be 1 folder up

@@ -168,15 +168,7 @@ inla.func<-function(x.test, outcome.var, syndrome){
                    ))
       mod1<-inla(form1, 
                  family='poisson', data=ds.glm, control.predictor = list(compute=TRUE, link = 1),control.compute=list(config=TRUE)) 
-      # resamp<-inla.posterior.sample(n=500,mod1,seed=123)
-      # resamp2<-sapply(resamp, '[[', 'latent')
-      # labs<-dimnames(resamp[[1]]$latent)[[1]]
-      # resamp2<-resamp2[grep('t:', labs, fixed=T),]
-      # resamp2.mean<-apply(resamp2,1,mean) #why doesn't this match below? seems to have underlying trend in there
-      
       mod1.mean.re.t<-mod1$summary.random$t$mean 
-      #mod1.median.re.t<-mod1$summary.random$t$`0.5quant` 
-      
       mod1.sd.re.t<-mod1$summary.random$t$sd 
       
       out.list<-list(t.mean=mod1.mean.re.t, t.sd=mod1.sd.re.t, 'mod1'=mod1)
@@ -184,44 +176,71 @@ inla.func<-function(x.test, outcome.var, syndrome){
 }
 all.mods.kids<-sapply(to.test,inla.func,outcome.var='y.kids' , syndrome='ili2', simplify=F)
 all.mods.adults<-sapply(to.test,inla.func,outcome.var='y.adult' ,syndrome='ili2',simplify=F)
+
+all.mods.kids.resp<-sapply(to.test,inla.func,outcome.var='y.kids' , syndrome='respiratory', simplify=F)
+all.mods.adults.resp<-sapply(to.test,inla.func,outcome.var='y.adult' ,syndrome='respiratory',simplify=F)
+
+all.mods.kids.cough<-sapply(to.test,inla.func,outcome.var='y.kids' , syndrome='cough', simplify=F)
+all.mods.adults.cough<-sapply(to.test,inla.func,outcome.var='y.adult' ,syndrome='cough',simplify=F)
 ```
 
 
 Next extract mean and SD subtract
 ```{r}
-all.mod.kid.mean<-sapply(all.mods.kids, '[[', "t.mean")
-all.mod.kid.sd<-sapply(all.mods.kids, '[[', "t.sd")
-all.mod.adult.mean<-sapply(all.mods.adults, '[[', "t.mean")
-all.mod.adult.sd<-sapply(all.mods.adults, '[[', "t.sd")
-covar1<-cov(c(all.mod.adult.mean),c(all.mod.kid.mean))
+inla.extract.fun<-function(adult.ds, kid.ds){
+  all.mod.kid.mean<-sapply(kid.ds, '[[', "t.mean")
+  all.mod.kid.sd<-sapply(kid.ds, '[[', "t.sd")
+  all.mod.adult.mean<-sapply(adult.ds, '[[', "t.mean")
+  all.mod.adult.sd<-sapply(adult.ds, '[[', "t.sd")
+  covar1<-cov(c(all.mod.adult.mean),c(all.mod.kid.mean))
+  
+  #####THIS IS WHAT IS USED IN STAGE 2 
+  diff.adult.kids<-all.mod.adult.mean- all.mod.kid.mean
+  diff.adult.kids.var<- all.mod.adult.sd^2 +all.mod.kid.sd^2 +2*covar1
+  diff.adult.kids.prec<-1/diff.adult.kids.var
+  
+  out.list<-list('kid.resid'=all.mod.kid.mean,'adult.resid'=all.mod.adult.mean,'diff.adult.kids'=diff.adult.kids)
+  return(out.list)
+  #############
+}
 
-#####THIS IS WHAT IS USED IN STAGE 2 
-diff.adult.kids<-all.mod.adult.mean- all.mod.kid.mean
-diff.adult.kids.var<- all.mod.adult.sd^2 +all.mod.kid.sd^2 +2*covar1
-diff.adult.kids.prec<-1/diff.adult.kids.var
-#############
+ili.diff.adults.kids<-inla.extract.fun(adult.ds=all.mods.adults, kid.ds=all.mods.kids)
+resp.diff.adults.kids<-inla.extract.fun(all.mods.adults.resp, all.mods.kids.resp)
+cough.diff.adults.kids<-inla.extract.fun(all.mods.adults.cough, all.mods.kids.cough)
 
-matplot(all.mod.adult.mean, type='l')
-matplot(all.mod.kid.mean, type='l')
 
-matplot(diff.adult.kids, type='l')
 
-#Correlation between random effect and flu
-apply( all.mod.adult.mean, 2, function(x) cor(x,ds.glm$sqrt.flu))
+#matplot(all.mod.adult.mean, type='l')
+#matplot(all.mod.kid.mean, type='l')
+
+matplot(ili.diff.adults.kids$diff.adult.kids, type='l')
+matplot(resp.diff.adults.kids$diff.adult.kids, type='l')
+matplot(cough.diff.adults.kids$diff.adult.kids, type='l')
+
+
+matplot(ili.diff.adults.kids$kid.resid, type='l')
+matplot(ili.diff.adults.kids$adult.resid, type='l')
+
+
+matplot(resp.diff.adults.kids$kid.resid, type='l')
+matplot(resp.diff.adults.kids$adult.resid, type='l')
+
+matplot(cough.diff.adults.kids$kid.resid, type='l')
+matplot(cough.diff.adults.kids$adult.resid, type='l')
 
 ```
 
 ```{r}
 
 #sapply(colnames(diff.adult.kids), function(x) write.csv(cbind.data.frame('diff'=diff.adult.kids[,x], 't'=1:length(diff.adult.kids[,x])) , paste0('./satscan/data/kid.v.adult.',x, '.csv') )  )
-colnames(diff.adult.kids)<-as.character(to.test)
-sapply(colnames(diff.adult.kids), function(x){
-  ds<-cbind.data.frame('id'=1:nrow(diff.adult.kids),'one'=1,  't'=1:length(diff.adult.kids[,x]), 'diff'=diff.adult.kids[,x] )
+colnames(ili.diff.adults.kids$diff.adult.kids)<-as.character(to.test)
+sapply(colnames(ili.diff.adults.kids$diff.adult.kids), function(x){
+  ds<-cbind.data.frame('id'=1:nrow(ili.diff.adults.kids$diff.adult.kids),'one'=1,  't'=1:length(ili.diff.adults.kids$diff.adult.kids[,x]), 'diff'=ili.diff.adults.kids$diff.adult.kids[,x] )
   write.csv(ds , paste0('./satscan/data/kid.v.adult.',x, '.csv') )}  
   )
 
 ```
-## NOTES FOR RUNNING SATSCAN
+## NOTES FOR RUNNING SATSCAN TO DETECT CLUSTERS OF RESIDUALS
 - Run a purely tmporal analysis
 - Normal discrete scan statistics
 - Case file is the data from 1 region, then click the advanced tab to add additional input datasets for each region
@@ -229,5 +248,67 @@ sapply(colnames(diff.adult.kids), function(x){
 - Analysis Tab/advanced/inference: use iterative scan statistic
 - When importing data in wizard, location id can be the generated id; number of cases should be a vector of 1s, Date/time: vector from 1:N' attribute=the difference between adults and kids, as calculated above
 - When importing, tick the 'save these settings and read directly' box at the end of the wizard
+
+
+## As an alternative, try a space-time cluster detection
+
+```{r}
+coord1<-read.csv('./Data/CT_ZIPs_2010_centroids.csv')
+coord1$zipcode<-paste0('0', coord1$site)
+
+ili.ag5 <- ds2[ds2$agec==5 & ds2$ili2==T,c('zipcode','adate','ili2')]
+ili.ag5<-ili.ag5[!is.na(ili.ag5$zipcode),]
+ili.ag5<-merge(ili.ag5, coord1, by='zipcode') #lose ~100 cases due to missing ZIP
+ili.ag5<-ili.ag5[!is.na(ili.ag5$lat),]
+ili.ag5$ili2<-ili.ag5$ili2*1
+ili.ag5<-ili.ag5[ili.ag5$adate!=max(ili.ag5$adate),] #remove last date
+
+mycas = data.frame(locid=ili.ag5$zipcode,basecas=ili.ag5$ili2, day=ili.ag5$adate)
+mygeo = data.frame(locid=ili.ag5$zipcode,lat=ili.ag5$lat, long=ili.ag5$long)
+
+```
+
+Write satscan files
+```{r}
+td = tempdir()
+write.geo(mygeo, location = td, file = "mygeo", userownames=F)
+write.cas(mycas, location = td, file = "mycas")
+
+write.geo(mygeo, location = './satscan/data/', file = "geo.spacetime.ct", userownames=F)
+write.cas(mycas, location = './satscan/data/', file = "ili.spacetime")
+```
+
+
+Parameter files
+```{r}
+first.date<-as.character(min(mycas$day))
+first.date<-gsub('-', '/',first.date)
+last.date<-as.character(max(mycas$day))
+last.date<-gsub('-', '/',last.date)
+invisible(ss.options(reset=TRUE))
+ss.options(list(CaseFile="mycas.cas", PrecisionCaseTimes=3))
+ss.options(list(StartDate=first.date, CoordinatesType=1, TimeAggregationUnits=3,TimeAggregationLength=1))
+ss.options(list(EndDate=last.date, CoordinatesFile="mygeo.geo", AnalysisType=4, ModelType=2)) 
+ss.options(list(ProspectiveStartDate="2020/01/01", ReportGiniClusters="n", LogRunToHistoryFile="n"))
+```
+
+```{r}
+write.ss.prm(td, "mybase")
+write.ss.prm('./satscan/satscan parameters', "spacetime")
+
+```
+
+```{r}
+mybase = satscan(td, "mybase")
+```
+
+```{r}
+summary(mybase)
+```
+
+```{r}
+#sp::plot(mybase$shapeclust)
+```
+
 
 
