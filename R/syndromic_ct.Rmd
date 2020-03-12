@@ -20,6 +20,7 @@ library(HDInterval)
 library(shiny)
 library(pbapply)
 library(zoo)
+library(ciTools)
 ```
 
 ##Import and clean the data
@@ -152,35 +153,56 @@ day.of.year<-yday(date.string)
 ```{r}
 counties.to.test<-dimnames(ili.a)[[2]]
 
-gam.func<-function(x.test, age.test, syndrome){
+gam.func<-function(x.test, age.test, syndrome, all.cause.name){
 clean.array.citywide<-ili.a[,x.test,,]
       epiyr.index.f<-as.factor(epiyr.index)
       epiyr.index.f2<-as.factor(epiyr.index)
       
       y.age = t(clean.array.citywide[,age.test,syndrome])
+      offset.age = t(clean.array.citywide[,age.test,all.cause.name])
+
       y.age.fit<-y.age[1,]
       y.age.fit[epiyr.index==2019 & day.of.year>=60] <- NA #extrapolate after day 60
      
-            sqrt.rsv =sqrt(clean.array.citywide[,'5','rsv.searches']) #same for all ages and boroughs
-            sqrt.flu =sqrt(clean.array.citywide[,'5','flu.rate']) #same for all ages and boroughs
+            sqrt.rsv =sqrt(clean.array.citywide[,age.test,'rsv.searches']) #same for all ages and boroughs
+            sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu.rate']) #same for all ages and boroughs
             
             
             sqrt.flu<- na.locf(sqrt.flu)  #fill in missing observations for flu at end of TS with most recent observed values
       t2<-1:length(y.age)
-      
+      # 
+      # sin1<-sin(2*pi*t2/365.25)
+      # cos1<-cos(2*pi*t2/365.25)
+      # sin2<-sin(2*pi*t2*2/365.25)
+      # cos2<-cos(2*pi*t2*2/365.25)
+      # sin3<-sin(2*pi*t2*3/365.25)
+      # cos3<-cos(2*pi*t2*3/365.25)
+      # 
 
+      
       ds.glm<-cbind.data.frame('day.of.year'=day.of.year,'y.age'=y.age[1,],sqrt.rsv, sqrt.flu,  t2,epiyr.index.f)
+      # form1<-as.formula(paste0('y.age',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
+      #              epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
+      #              t2+                      #linear trend
+      #              s(day.of.year, bs='cc', k=6)" #seasonality
+      #              ))
+      #  mod1<-gam(form1,
+      #         family='poisson', data=ds.glm,offset=log(offset.age[1,]+0.5))
+      # pred1<-predict(mod1, type='response', newdata = ds.glm)*(offset.age[1,]+0.5)
       form1<-as.formula(paste0('y.age',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
                    epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
-                   t2+                      #linear trend   
-                   s(day.of.year, bs='cc')" #seasonality 
+                   #t2+                      #linear trend
+                   sin1+cos1 +sin2+cos2+sin3+cos2 +log(offset.age[1,]+0.5) "
                    ))
-      mod1<-gam(form1, 
-                 family='poisson', data=ds.glm) 
-    pred1<-predict(mod1, type='response', newdata = ds.glm)
-    resid1<-y.age[1,]/pred1
+        mod1<-glm(form1,
+                    family='poisson', data=ds.glm)
+      pred1<-predict(mod1, type='response', newdata = ds.glm)
+
+     my_data_with_pi <- add_pi(ds.glm, mod1, names = c("lpb", "upb"))
+
+      resid1<-log((y.age[1,]+0.5)/(pred1+0.5))
       
-      out.list<-list(y=y.age[1,], pred=pred1, resid1=resid1)
+      out.list<-list(y=y.age[1,], pred=my_data_with_pi$pred, resid1=resid1, upi=my_data_with_pi$upb, lpi=my_data_with_pi$lpb)
       return(out.list)
 }
 
@@ -190,7 +212,7 @@ ages <-   c('1','2','3','4','5','NA')
 
 all.gam.res<- pblapply(syndromes, function(x){
   ww<- lapply(ages, function(y){
-    lapply(counties.to.test, gam.func, age.test=y, syndrome=x)
+    lapply(counties.to.test, gam.func, age.test=y, syndrome=x, all.cause.name='all.visits')
   }
   ) 
   names(ww)<- ages
@@ -203,77 +225,59 @@ names(all.gam.res)<-syndromes
 
 
 Next extract residuals and fitted values
-```{r, fig.width=8, fig.height=12}
+```{r, fig.width=8, fig.height=6}
 
 #Residuals for all age groups for ILI
 ili2.resid<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','resid1'), simplify='array')
 dimnames(ili2.resid)[[2]]<-counties.to.test
 ili2.pred<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','pred'), simplify='array')
 dimnames(ili2.pred)[[2]]<-counties.to.test
+
+ili2.pred.lcl<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','lpi'), simplify='array')
+dimnames(ili2.pred.lcl)[[2]]<-counties.to.test
+
+ili2.pred.ucl<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','upi'), simplify='array')
+dimnames(ili2.pred.ucl)[[2]]<-counties.to.test
+
 obs<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','y'), simplify='array')
 dimnames(obs)[[2]]<-counties.to.test
-
-ili.diff.adults.kids<-ili2.resid
+dates<-as.Date(dimnames(ili.a)[[1]])
 
 par(mfrow=c(2,3), mar=c(3,2,1,1))
 for(i in 1:5){
-  matplot(ili2.resid[,1,i], type='l', bty='l', ylab='Residual')
+  matplot(dates,ili2.resid[,1,i], type='l', bty='l', ylab='Residual')
   abline(h=1)
 }
 
 par(mfrow=c(2,3), mar=c(3,2,1,1))
 for(i in 1:5){
-  matplot(obs[,,i], pch=16, bty='l', ylab='Fitted')
-  matplot(ili2.pred[,,i], type='l', bty='l', ylab='Fitted', add=T)
+  matplot(dates[dates>=as.Date('2020-01-01')],obs[dates>=as.Date('2020-01-01'),,i], pch=16, bty='l', ylab='Fitted')
+  matplot(dates[dates>=as.Date('2020-01-01')],ili2.pred[dates>=as.Date('2020-01-01'),,i], type='l', bty='l', ylab='Fitted', add=T)
 }
 
-
-par(mfrow=c(5,1), mar=c(3,2,1,1))
+pdf(file='./private_data/ct_county_age.pdf')
+for(j in counties.to.test){
+par(mfrow=c(2,3), mar=c(3,2,1,1))
 for(i in 1:5){
-  plot(obs[,1,i], type='l', bty='l', ylab='Fitted')
-  points(ili2.pred[,1,i], type='l', col='red' )
+  plot(dates[dates>=as.Date('2020-01-01')],obs[dates>=as.Date('2020-01-01'),j,i], type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[i]), ylim=range(c(ili2.pred.lcl[,j,i],ili2.pred.ucl[,j,i],ili2.pred[,j,i])))
+  points(dates[dates>=as.Date('2020-01-01')],ili2.pred[dates>=as.Date('2020-01-01'),j,i], type='l', col='red', lty=3 )
+    points(dates[dates>=as.Date('2020-01-01')],ili2.pred.lcl[dates>=as.Date('2020-01-01'),j,i], type='l', col='red', lty=3 )
+    points(dates[dates>=as.Date('2020-01-01')],ili2.pred.ucl[dates>=as.Date('2020-01-01'),j,i], type='l', col='red', lty=3 )
   abline(v=790)
+ }
 }
+dev.off()
 
-
-
-# all.pred<- lapply(all.gam.res, function(x){ 
-#               lapply(x, function(y) sapply(y,'[[','pred'))
-# }
-#               )
-# all.pred<-array(unlist(all.pred) ,dim=dim(ds1.c))
-# 
-# par(mfrow=c(5,1), mar=c(3,2,1,1))
-# for(i in 1:5){
-#   plot(obs[,1,i], type='l', bty='l', ylab='Fitted')
-#   points(all.pred[,1,i,1], type='l', col='red' )
-# }
-
-
+```
+Age difference in residuals 40-64 vs 65+
+```{r, fig.width=12, fig.height=8}
+diff.resid<-ili2.resid[,,4] - ili2.resid[,,1]
+par(mfrow=c(2,4))
+lapply(counties.to.test, function(x) plot(diff.resid[,x], type='l', bty='l', main=x))
 ```
 
 
 
-
-
-```{r}
-
-#sapply(colnames(diff.adult.kids), function(x) write.csv(cbind.data.frame('diff'=diff.adult.kids[,x], 't'=1:length(diff.adult.kids[,x])) , paste0('../satscan/data/kid.v.adult.',x, '.csv') )  )
-colnames(ili.diff.adults.kids$diff.adult.kids)<-as.character(to.test)
-sapply(colnames(ili.diff.adults.kids$diff.adult.kids), function(x){
-  ds<-cbind.data.frame('id'=1:nrow(ili.diff.adults.kids$diff.adult.kids),'one'=1,  't'=1:length(ili.diff.adults.kids$diff.adult.kids[,x]), 'diff'=ili.diff.adults.kids$diff.adult.kids[,x] )
-  write.csv(ds , paste0('../satscan/data/kid.v.adult.',x, '.csv') )}  
-  )
-
-```
-## NOTES FOR RUNNING SATSCAN TO DETECT CLUSTERS OF RESIDUALS
-- Run a purely tmporal analysis
-- Normal discrete scan statistics
-- Case file is the data from 1 region, then click the advanced tab to add additional input datasets for each region
-- On Input tab: time precision= Custom; study period ranging from 0 to N time points
-- Analysis Tab/advanced/inference: use iterative scan statistic
-- When importing data in wizard, location id can be the generated id; number of cases should be a vector of 1s, Date/time: vector from 1:N' attribute=the difference between adults and kids, as calculated above
-- When importing, tick the 'save these settings and read directly' box at the end of the wizard
 
 
 ##Temporal SATSCAN by county and syndrome
@@ -315,9 +319,9 @@ last.date<-as.character(max(mycas$day))
 last.date<-gsub('-', '/',last.date)
 invisible(ss.options(reset=TRUE))
 ss.options(list(CaseFile="mycas.cas",PopulationFile='mypop.pop', CoordinatesFile="mygeo.geo", PrecisionCaseTimes=3))
-ss.options(list(StartDate=first.date, CoordinatesType=1, TimeAggregationUnits=3,TimeAggregationLength=1))
+ss.options(list(StartDate=first.date, CoordinatesType=1, TimeAggregationUnits=3,TimeAggregationLength=5))
 ss.options(list(EndDate=last.date,  AnalysisType=6, ModelType=0,ScanAreas=1)) 
-ss.options(list(ProspectiveStartDate="2020/01/01", ReportGiniClusters="n", LogRunToHistoryFile="n"))
+ss.options(list(ProspectiveStartDate="2019/01/01", ReportGiniClusters="n", LogRunToHistoryFile="n"))
 
 write.ss.prm(td, "mybase")
 #write.ss.prm('../satscan/satscan parameters', "temporal adjust rsatscan")
@@ -344,4 +348,9 @@ all.ages.ili<-lapply(all.satscan.res[['ili2']], function(y) sapply(y, function(x
 
 ```
 
+
+## Do a Normal SATSCAN for difference in residuals
+```{r}
+
+```
 
