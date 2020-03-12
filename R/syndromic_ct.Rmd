@@ -56,6 +56,8 @@ ds2<-merge(ds1, zip.cw, by.x='zipcode', by.y='Zip.Code')
 
 ```{r, eval=F}
 ds1.m<-melt(ds2[,c('adate', 'County','agec','ili','cough','respiratory','circulatory','ili2','all.visits')], id.vars=c('adate','County','agec'))
+last.date<- max(ds1.m$adate)
+ds1.m<-ds1.m[ds1.m$adate != last.date,] #remove last day from the dataset,assuming it is incomplete
 saveRDS(ds1.m, '../DO_NOT_SYNC/county_ts_ct.rds')
 ds1.c<-acast(ds1.m, agec~adate ~County~variable, fun.aggregate = sum)
 ```
@@ -63,9 +65,6 @@ ds1.c<-acast(ds1.m, agec~adate ~County~variable, fun.aggregate = sum)
 ```{r}
 ds1.m<-readRDS('../DO_NOT_SYNC/county_ts_ct.rds')
 ds1.c<-acast(ds1.m, agec~adate ~County~variable, fun.aggregate = sum)
-
-n.dates<-dim(ds1.c)[2]
-ds1.c<-ds1.c[,-n.dates,,] #remove last time point
 saveRDS(ds1.c,'./private_data/shiny_data.rds') #save data for the shiny app
 
 ```
@@ -151,7 +150,7 @@ day.of.year<-yday(date.string)
 
 ## Evaluate results after controlling for flu and RSV
 ```{r}
-counties.to.test<-unique(combo2$County)
+counties.to.test<-dimnames(ili.a)[[2]]
 
 gam.func<-function(x.test, age.test, syndrome){
 clean.array.citywide<-ili.a[,x.test,,]
@@ -159,6 +158,8 @@ clean.array.citywide<-ili.a[,x.test,,]
       epiyr.index.f2<-as.factor(epiyr.index)
       
       y.age = t(clean.array.citywide[,age.test,syndrome])
+      y.age.fit<-y.age[1,]
+      y.age.fit[epiyr.index==2019 & day.of.year>=60] <- NA #extrapolate after day 60
      
             sqrt.rsv =sqrt(clean.array.citywide[,'5','rsv.searches']) #same for all ages and boroughs
             sqrt.flu =sqrt(clean.array.citywide[,'5','flu.rate']) #same for all ages and boroughs
@@ -185,7 +186,7 @@ clean.array.citywide<-ili.a[,x.test,,]
 
 
 syndromes<- c('ili2', 'respiratory','cough') 
-ages <-   c('1','2','3','4','5')
+ages <-   c('1','2','3','4','5','NA')
 
 all.gam.res<- pblapply(syndromes, function(x){
   ww<- lapply(ages, function(y){
@@ -206,14 +207,18 @@ Next extract residuals and fitted values
 
 #Residuals for all age groups for ILI
 ili2.resid<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','resid1'), simplify='array')
+dimnames(ili2.resid)[[2]]<-counties.to.test
 ili2.pred<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','pred'), simplify='array')
+dimnames(ili2.pred)[[2]]<-counties.to.test
 obs<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','y'), simplify='array')
+dimnames(obs)[[2]]<-counties.to.test
 
 ili.diff.adults.kids<-ili2.resid
 
 par(mfrow=c(2,3), mar=c(3,2,1,1))
 for(i in 1:5){
-  matplot(ili2.resid[1,,i], type='l', bty='l', ylab='Residual')
+  matplot(ili2.resid[,1,i], type='l', bty='l', ylab='Residual')
+  abline(h=1)
 }
 
 par(mfrow=c(2,3), mar=c(3,2,1,1))
@@ -227,12 +232,29 @@ par(mfrow=c(5,1), mar=c(3,2,1,1))
 for(i in 1:5){
   plot(obs[,1,i], type='l', bty='l', ylab='Fitted')
   points(ili2.pred[,1,i], type='l', col='red' )
+  abline(v=790)
 }
 
 
 
+# all.pred<- lapply(all.gam.res, function(x){ 
+#               lapply(x, function(y) sapply(y,'[[','pred'))
+# }
+#               )
+# all.pred<-array(unlist(all.pred) ,dim=dim(ds1.c))
+# 
+# par(mfrow=c(5,1), mar=c(3,2,1,1))
+# for(i in 1:5){
+#   plot(obs[,1,i], type='l', bty='l', ylab='Fitted')
+#   points(all.pred[,1,i,1], type='l', col='red' )
+# }
+
 
 ```
+
+
+
+
 
 ```{r}
 
@@ -254,43 +276,36 @@ sapply(colnames(ili.diff.adults.kids$diff.adult.kids), function(x){
 - When importing, tick the 'save these settings and read directly' box at the end of the wizard
 
 
-## As an alternative, try a space-time permutation cluster detection.
-Doesn't seem to work too well due to underlying trends?. Both permutation and case-control (using kids as controls) suffer from issue with flagging overly-large clusters
-
+##Temporal SATSCAN by county and syndrome
+Do a Poisson temporal satscan, adjusting for fitted values as the population file
 ```{r}
-totest<-c('ili2','respiratory','cough')
 
-satscan.fun<-function(syndrome){
-coord1<-read.csv('../Data/CT_ZIPs_2010_centroids.csv')
-coord1$zipcode<-paste0('0', coord1$site)
+syndromes<- c('ili2', 'respiratory','cough') 
+ages <-   c('1','2','3','4','5')
+counties.to.test<-dimnames(ili.a)[[2]]
 
-ili.ag5 <- ds2[ds2$agec==5 & ds2[,syndrome]==T,c('zipcode','adate',syndrome)]
-ili.ag5<-ili.ag5[!is.na(ili.ag5$zipcode),]
-ili.ag5<-merge(ili.ag5, coord1, by='zipcode') #lose ~100 cases due to missing ZIP
-ili.ag5<-ili.ag5[!is.na(ili.ag5$lat),]
-ili.ag5[,syndrome]<-ili.ag5[,syndrome]*1
-ili.ag5<-ili.ag5[ili.ag5$adate!=max(ili.ag5$adate),] #remove last date
+satscan.fun<-function(syndrome, county.select,age.select){
 
-ili.ag1 <- ds2[ds2$agec==1 & ds2[,syndrome]==T,c('zipcode','adate',syndrome)]
-ili.ag1<-ili.ag1[!is.na(ili.ag1$zipcode),]
-ili.ag1<-merge(ili.ag1, coord1, by='zipcode') #lose ~100 cases due to missing ZIP
-ili.ag1<-ili.ag1[!is.na(ili.ag1$lat),]
-ili.ag1[,syndrome]<-ili.ag1[,syndrome]*1
-ili.ag1<-ili.ag1[ili.ag1$adate !=max(ili.ag1$adate),] #remove last date
+obs<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','y'), simplify='array')
+dimnames(obs)[[2]]<-counties.to.test
 
-mycas = data.frame(locid=ili.ag5$zipcode,basecas=ili.ag5[,syndrome], day=ili.ag5$adate)
-mycon<- data.frame(locid=ili.ag1$zipcode,basecas=ili.ag1[,syndrome], day=ili.ag1$adate)
-mygeo = data.frame(locid=ili.ag5$zipcode,lat=ili.ag5$lat, long=ili.ag5$long)
+case.pred<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','pred'), simplify='array')
+dimnames(case.pred)[[2]]<-counties.to.test
+
+mycas = data.frame(locid=1:dim(case.pred)[[1]] ,basecas=obs[,county.select,age.select], day=as.Date(dimnames(case.pred)[[1]]))
+mypop<- data.frame(locid=1:dim(case.pred)[[1]] ,day=as.Date(dimnames(case.pred)[[1]]),basepop=case.pred[,county.select,age.select] )
+mygeo<- data.frame(locid=1:dim(case.pred)[[1]] ,lat=1:dim(case.pred)[[1]], long=1:dim(case.pred)[[1]])
 
 #Write satscan files
 
 td = tempdir()
-write.geo(mygeo, location = td, file = "mygeo", userownames=F)
 write.cas(mycas, location = td, file = "mycas")
-write.cas(mycon, location = td, file = "mycon")
+write.pop(mypop, location = td, file = "mypop")
+write.geo(mygeo, location = td, file = "mygeo")
 
 #write.geo(mygeo, location = '../satscan/data/', file = "geo.spacetime.ct", userownames=F)
-#write.cas(mycas, location = '../satscan/data/', file = "ili.spacetime")
+#write.cas(mycas, location = '../satscan/data/', file = "ili.temporal")
+#write.pop(mypop, location = '../satscan/data/', file = "ili.expected")
 
 #Parameter files
 
@@ -299,21 +314,34 @@ first.date<-gsub('-', '/',first.date)
 last.date<-as.character(max(mycas$day))
 last.date<-gsub('-', '/',last.date)
 invisible(ss.options(reset=TRUE))
-ss.options(list(CaseFile="mycas.cas", ControlFile="mycon.cas", PrecisionCaseTimes=3))
+ss.options(list(CaseFile="mycas.cas",PopulationFile='mypop.pop', CoordinatesFile="mygeo.geo", PrecisionCaseTimes=3))
 ss.options(list(StartDate=first.date, CoordinatesType=1, TimeAggregationUnits=3,TimeAggregationLength=1))
-ss.options(list(EndDate=last.date, CoordinatesFile="mygeo.geo", AnalysisType=4, ModelType=1)) 
+ss.options(list(EndDate=last.date,  AnalysisType=6, ModelType=0,ScanAreas=1)) 
 ss.options(list(ProspectiveStartDate="2020/01/01", ReportGiniClusters="n", LogRunToHistoryFile="n"))
 
 write.ss.prm(td, "mybase")
-#write.ss.prm('../satscan/satscan parameters', "spacetime")
+#write.ss.prm('../satscan/satscan parameters', "temporal adjust rsatscan")
 
 mybase = satscan(td, "mybase")
 return(mybase)
 }
 
-satscan.res<-lapply(totest, satscan.fun)
+all.satscan.res<- pblapply(syndromes, function(x){
+  ww<- lapply(ages, function(y){
+    lapply(counties.to.test, satscan.fun, age.select=y, syndrome=x)
+  }
+  ) 
+  names(ww)<- ages
+  return(ww)
+  }
+)
+names(all.satscan.res)<-syndromes
 
-summary(satscan.res[[1]])
+#Extract results
+ili.satscan<- sapply(all.satscan.res[['ili2']], function(x) sapply(x,'[[','col', simplify=F), simplify='F')
+all.ages.ili<-lapply(all.satscan.res[['ili2']], function(y) sapply(y, function(x) apply(x$col,2,function(z) as.character(z))))
+
+
 ```
 
 
