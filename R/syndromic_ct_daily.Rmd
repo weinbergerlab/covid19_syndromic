@@ -269,16 +269,6 @@ for(i in 1:5){
 dev.off()
 
 ```
-Age difference in residuals 40-64 vs 65+
-```{r, fig.width=12, fig.height=8}
-diff.resid<-ili2.resid[,,4] - ili2.resid[,,1]
-par(mfrow=c(2,4))
-lapply(counties.to.test, function(x) plot(diff.resid[,x], type='l', bty='l', main=x))
-```
-
-
-
-
 
 ##Temporal SATSCAN by county and syndrome
 Do a Poisson temporal satscan, adjusting for fitted values as the population file
@@ -287,47 +277,48 @@ Do a Poisson temporal satscan, adjusting for fitted values as the population fil
 syndromes<- c('ili2', 'respiratory','cough') 
 ages <-   c('1','2','3','4','5')
 counties.to.test<-dimnames(ili.a)[[2]]
+dates<-as.Date(dimnames(ili.a)[[1]])
 
 satscan.fun<-function(syndrome, county.select,age.select){
 
-obs<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','y'), simplify='array')
-dimnames(obs)[[2]]<-counties.to.test
-
-case.pred<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','pred'), simplify='array')
-dimnames(case.pred)[[2]]<-counties.to.test
-
-mycas = data.frame(locid=1:dim(case.pred)[[1]] ,basecas=obs[,county.select,age.select], day=as.Date(dimnames(case.pred)[[1]]))
-mypop<- data.frame(locid=1:dim(case.pred)[[1]] ,day=as.Date(dimnames(case.pred)[[1]]),basepop=case.pred[,county.select,age.select] )
-mygeo<- data.frame(locid=1:dim(case.pred)[[1]] ,lat=1:dim(case.pred)[[1]], long=1:dim(case.pred)[[1]])
-
-#Write satscan files
-
-td = tempdir()
-write.cas(mycas, location = td, file = "mycas")
-write.pop(mypop, location = td, file = "mypop")
-write.geo(mygeo, location = td, file = "mygeo")
-
-#write.geo(mygeo, location = '../satscan/data/', file = "geo.spacetime.ct", userownames=F)
-#write.cas(mycas, location = '../satscan/data/', file = "ili.temporal")
-#write.pop(mypop, location = '../satscan/data/', file = "ili.expected")
-
-#Parameter files
-
-first.date<-as.character(min(mycas$day))
-first.date<-gsub('-', '/',first.date)
-last.date<-as.character(max(mycas$day))
-last.date<-gsub('-', '/',last.date)
-invisible(ss.options(reset=TRUE))
-ss.options(list(CaseFile="mycas.cas",PopulationFile='mypop.pop', CoordinatesFile="mygeo.geo", PrecisionCaseTimes=3))
-ss.options(list(StartDate=first.date, CoordinatesType=1, TimeAggregationUnits=3,TimeAggregationLength=5))
-ss.options(list(EndDate=last.date,  AnalysisType=6, ModelType=0,ScanAreas=1)) 
-ss.options(list(ProspectiveStartDate="2019/01/01", ReportGiniClusters="n", LogRunToHistoryFile="n"))
-
-write.ss.prm(td, "mybase")
-#write.ss.prm('../satscan/satscan parameters', "temporal adjust rsatscan")
-
-mybase = satscan(td, "mybase")
-return(mybase)
+    obs<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','y'), simplify='array')
+    dimnames(obs)[[2]]<-counties.to.test
+    
+    case.pred<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','pred'), simplify='array')
+    dimnames(case.pred)[[2]]<-counties.to.test
+    
+    mycas = data.frame(locid=1:dim(case.pred)[[1]] ,basecas=obs[,county.select,age.select], day=dates)
+    mypop<- data.frame(locid=1:dim(case.pred)[[1]] ,day=dates,basepop=case.pred[,county.select,age.select] )
+    mygeo<- data.frame(locid=1:dim(case.pred)[[1]] ,lat=1:dim(case.pred)[[1]], long=1:dim(case.pred)[[1]])
+    
+    #Write satscan files
+    
+    td = tempdir()
+    write.cas(mycas, location = td, file = "mycas")
+    write.pop(mypop, location = td, file = "mypop")
+    write.geo(mygeo, location = td, file = "mygeo")
+    
+    #write.geo(mygeo, location = '../satscan/data/', file = "geo.spacetime.ct", userownames=F)
+    #write.cas(mycas, location = '../satscan/data/', file = "ili.temporal")
+    #write.pop(mypop, location = '../satscan/data/', file = "ili.expected")
+    
+    #Parameter files
+    
+    first.date<-as.character(min(mycas$day))
+    first.date<-gsub('-', '/',first.date)
+    last.date<-as.character(max(mycas$day))
+    last.date<-gsub('-', '/',last.date)
+    invisible(ss.options(reset=TRUE))
+    ss.options(list(CaseFile="mycas.cas",PopulationFile='mypop.pop', CoordinatesFile="mygeo.geo", PrecisionCaseTimes=3))
+    ss.options(list(StartDate=first.date, CoordinatesType=1, TimeAggregationUnits=3,TimeAggregationLength=5))
+    ss.options(list(EndDate=last.date,  AnalysisType=6, ModelType=0,ScanAreas=1)) 
+    ss.options(list(ProspectiveStartDate="2019/01/01", ReportGiniClusters="n", LogRunToHistoryFile="n"))
+    
+    write.ss.prm(td, "mybase")
+    #write.ss.prm('../satscan/satscan parameters', "temporal adjust rsatscan")
+    
+    mybase = satscan(td, "mybase")
+    return(mybase)
 }
 
 all.satscan.res<- pblapply(syndromes, function(x){
@@ -340,17 +331,32 @@ all.satscan.res<- pblapply(syndromes, function(x){
   }
 )
 names(all.satscan.res)<-syndromes
+```
 
+```{r}
 #Extract results
 ili.satscan<- sapply(all.satscan.res[['ili2']], function(x) sapply(x,'[[','col', simplify=F), simplify='F')
 all.ages.ili<-lapply(all.satscan.res[['ili2']], function(y) sapply(y, function(x) apply(x$col,2,function(z) as.character(z))))
+all.ages.ili<-lapply(all.ages.ili, function(x){ 
+  colnames(x)=counties.to.test
+  return(x)})
+names(all.ages.ili)<-age.labels[1:length(all.ages.ili)]
+all.ages.ili
 
-
+pdf(file='./private_data/ct_county_age_satscan.pdf')
+print(all.ages.ili)
+dev.off()
 ```
 
 
-## Do a Normal SATSCAN for difference in residuals
-```{r}
 
+## Age difference in residuals 40-64 vs 65+
+```{r, fig.width=12, fig.height=8}
+diff.resid<-ili2.resid[,,5] - ili2.resid[,,1]
+par(mfrow=c(2,4))
+lapply(counties.to.test, function(x){
+  plot(diff.resid[dates>=as.Date("2020-01-01"),x], type='l', bty='l', main=x)
+  abline(h=0, lty=2, col='gray')
+  })
 ```
 
