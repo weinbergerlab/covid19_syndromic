@@ -171,13 +171,13 @@ clean.array.citywide<-ili.a[,x.test,,]
             sqrt.flu<- na.locf(sqrt.flu)  #fill in missing observations for flu at end of TS with most recent observed values
       t2<-1:length(y.age)
       # 
-      # sin1<-sin(2*pi*t2/365.25)
-      # cos1<-cos(2*pi*t2/365.25)
-      # sin2<-sin(2*pi*t2*2/365.25)
-      # cos2<-cos(2*pi*t2*2/365.25)
-      # sin3<-sin(2*pi*t2*3/365.25)
-      # cos3<-cos(2*pi*t2*3/365.25)
-      # 
+      sin1<-sin(2*pi*t2/365.25)
+      cos1<-cos(2*pi*t2/365.25)
+      sin2<-sin(2*pi*t2*2/365.25)
+      cos2<-cos(2*pi*t2*2/365.25)
+      sin3<-sin(2*pi*t2*3/365.25)
+      cos3<-cos(2*pi*t2*3/365.25)
+
 
       
       ds.glm<-cbind.data.frame('day.of.year'=day.of.year,'y.age'=y.age[1,],sqrt.rsv, sqrt.flu,  t2,epiyr.index.f)
@@ -350,12 +350,12 @@ dev.off()
 
 
 
-## Age difference in residuals 40-64 vs 65+
+## Age difference in residuals 65+ vs <5 year olds
 ```{r, fig.width=12, fig.height=8}
 diff.resid<-ili2.resid[,,5] - ili2.resid[,,1]
 par(mfrow=c(2,4))
 lapply(counties.to.test, function(x){
-  plot(diff.resid[dates>=as.Date("2020-01-01"),x], type='l', bty='l', main=x)
+  plot(dates[dates>=as.Date("2020-01-01")],diff.resid[dates>=as.Date("2020-01-01"),x], type='l', bty='l', main=x)
   abline(h=0, lty=2, col='gray')
   })
 ```
