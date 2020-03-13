@@ -242,18 +242,37 @@ dimnames(ili2.pred.ucl)[[2]]<-counties.to.test
 obs<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','y'), simplify='array')
 dimnames(obs)[[2]]<-counties.to.test
 dates<-as.Date(dimnames(ili.a)[[1]])
+```
 
-par(mfrow=c(2,3), mar=c(3,2,1,1))
-for(i in 1:5){
-  matplot(dates,ili2.resid[,1,i], type='l', bty='l', ylab='Residual')
-  abline(h=1)
-}
 
+Observed vs expected by county and age group
+```{r}
 par(mfrow=c(2,3), mar=c(3,2,1,1))
 for(i in 1:5){
   matplot(dates[dates>=as.Date('2020-01-01')],obs[dates>=as.Date('2020-01-01'),,i], pch=16, bty='l', ylab='Fitted')
   matplot(dates[dates>=as.Date('2020-01-01')],ili2.pred[dates>=as.Date('2020-01-01'),,i], type='l', bty='l', ylab='Fitted', add=T)
 }
+```
+
+Residuals by age group, for fairfield
+```{r}
+par(mfrow=c(2,3), mar=c(3,2,1,1))
+for(i in 1:5){
+  matplot(dates,ili2.resid[,'Fairfield',i], type='l', bty='l', ylab='Residual', main=age.labels[i])
+  abline(h=1)
+}
+
+```
+
+```{r}
+par(mfrow=c(2,3), mar=c(3,2,1,1))
+for(i in 1:5){
+  plot(dates[dates>=as.Date('2020-01-01')],obs[dates>=as.Date('2020-01-01'),j,i], type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[i]), ylim=range(c(ili2.pred.lcl[,j,i],ili2.pred.ucl[,j,i],ili2.pred[,j,i])))
+  points(dates[dates>=as.Date('2020-01-01')],ili2.pred[dates>=as.Date('2020-01-01'),j,i], type='l', col='red', lty=3 )
+    points(dates[dates>=as.Date('2020-01-01')],ili2.pred.lcl[dates>=as.Date('2020-01-01'),j,i], type='l', col='red', lty=3 )
+    points(dates[dates>=as.Date('2020-01-01')],ili2.pred.ucl[dates>=as.Date('2020-01-01'),j,i], type='l', col='red', lty=3 )
+  abline(v=790)
+ }
 
 pdf(file='./private_data/ct_county_age.pdf')
 for(j in counties.to.test){
@@ -270,7 +289,7 @@ dev.off()
 
 ```
 
-##Temporal SATSCAN by county and syndrome
+## Temporal SATSCAN by county and syndrome
 Do a Poisson temporal satscan, adjusting for fitted values as the population file
 ```{r}
 
@@ -333,6 +352,7 @@ all.satscan.res<- pblapply(syndromes, function(x){
 names(all.satscan.res)<-syndromes
 ```
 
+Results from SATSCAN
 ```{r}
 #Extract results
 ili.satscan<- sapply(all.satscan.res[['ili2']], function(x) sapply(x,'[[','col', simplify=F), simplify='F')
@@ -343,9 +363,9 @@ all.ages.ili<-lapply(all.ages.ili, function(x){
 names(all.ages.ili)<-age.labels[1:length(all.ages.ili)]
 all.ages.ili
 
-pdf(file='./private_data/ct_county_age_satscan.pdf')
-print(all.ages.ili)
-dev.off()
+# pdf(file='./private_data/ct_county_age_satscan.pdf')
+# print(all.ages.ili)
+# dev.off()
 ```
 
 
