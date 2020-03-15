@@ -49,7 +49,10 @@ ui<-fluidPage(
          hr(),
          span("The black line shows the observed number of ED visits per day in the indicated stratum, and the red lines denote the mean and 95% prediction intervals for a model adjusting for seasonality, influenza activity, and RSV activity"),
          hr(),
-         span("These plots summarize the NYC syndromic surveillance data, which were downloaded from the Epiquery website of the NYC Department of Health and Mental Hygiene. The models and plots were done by Dr. Dan Weinberger from Yale School of Public Health. Underlying analysis code can be found at https://github.com/weinbergerlab/covid19_syndromic")
+         span("These plots summarize the NYC syndromic surveillance data, which were downloaded from the Epiquery website of the NYC Department of Health and Mental Hygiene. The models and plots were done by Dr. Dan Weinberger from Yale School of Public Health. Underlying analysis code can be found at https://github.com/weinbergerlab/covid19_syndromic"),
+         hr(),
+         span("CAVEATS: Syndromic data can be hard to interpret. Any increases above baseline could be due to viral activity or due to changes in healthcare seeking behavior (people might be more likely to go to the ED now with less severe symptoms because they are aware of the COVID-19 epidemic). This shows the daily count of ED visits and is not adjusted for overall ED volume (as is typically done, and mainly because a denominator is not readily available from the web interface. ")
+
 )
 )
 
