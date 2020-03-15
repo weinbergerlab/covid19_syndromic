@@ -2,6 +2,10 @@ library(shiny)
 all.glm.res<-readRDS('./nyc_shiny_data/glm.results.rds')
 counties.to.test<-c("Bronx","Brooklyn", "Manhattan","Queens","Staten Island", "Citywide" )
 syndromes<-c('ili','resp')
+dates<-as.Date(names(all.glm.res[[1]][[1]][[1]]$resid1))
+n.times<-length(dates)
+
+
 server<-function(input, output){
   output$countyPlot = renderPlot({
     ili2.resid<- sapply(all.glm.res[[input$set.syndrome]], function(x) sapply(x,'[[','resid1'), simplify='array')
@@ -16,10 +20,9 @@ server<-function(input, output){
     dimnames(obs.ili)[[2]]<-counties.to.test
     #dates<-as.Date(dimnames(ili.a)[[1]])
     age.labels = c("Ages 0-4 years", "Ages 5-17 years", "Ages 18-64 years", "Ages 65+ years", "All age groups")
-    
-    dates<-as.Date(dimnames(ili2.resid)[[1]])
-    n.times<-length(dates)
-    dates.select<-(n.times-360):n.times
+
+    plot.min<-which(input$display.dates==dates)
+    dates.select<-plot.min:n.times
     par(mfrow=c(2,3), mar=c(3,2,1,1))
     for(i in c('1','2','3','4','5')){
       for( j in input$set.borough){
@@ -40,6 +43,7 @@ ui<-fluidPage(
               choice=counties.to.test, selected ="Citywide" ),
   selectInput("set.syndrome", "Syndrome:",
               choice=syndromes, selected ="ili" ),
+  sliderInput('display.dates', 'Earliest date to display', min=min(dates), max=max(dates)-30, value=max(dates)-365),
   plotOutput("countyPlot"),
   column(8, align = 'justify',
          hr(),
