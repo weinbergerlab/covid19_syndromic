@@ -1,0 +1,370 @@
+---
+title: "nyc_syndromic_daily"
+author: "Dan Weinberger, kelsie Cassell"
+date: "3/10/2020 - KC edits:3/13/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reshape2)
+library(lubridate)
+# library(INLA)
+library(MMWRweek)
+library(cdcfluview)
+library(gtrendsR)
+library(HDInterval)
+library(shiny)
+library(pbapply)
+library(zoo)
+library(ciTools)
+library(MASS)
+library(tidyr)
+library(rsatscan)
+```
+
+##Import and clean the data
+```{r, eval=F}
+ili1<- read.table('../Data/ili_2020_3_12_nyc.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
+ili1$date<-as.Date(ili1$Date, '%m/%d/%y')
+names(ili1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'ili', 'ddate')
+ili1<-ili1[,c('ddate', 'borough','age_group', 'ili')]
+
+ili1.prop<- read.table('../Data/ili_2020_3_12_nyc_prop.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
+ili1.prop$date<-as.Date(ili1.prop$Date, '%m/%d/%y')
+names(ili1.prop)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'ili.prop', 'ddate')
+ili1.prop<-ili1.prop[,c('ddate', 'borough','age_group', 'ili.prop')]
+
+resp1<-read.table('../Data/resp_2020_3_12_nyc.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
+resp1$date<-as.Date(resp1$Date, '%m/%d/%y')
+names(resp1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'resp', 'ddate')
+resp1<-resp1[,c('ddate', 'borough','age_group', 'resp')]
+
+resp1.prop<-read.table('../Data/resp_2020_3_12_nyc_prop.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
+resp1.prop$date<-as.Date(resp1.prop$Date, '%m/%d/%y')
+names(resp1.prop)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'resp.prop', 'ddate')
+resp1.prop<-resp1.prop[,c('ddate', 'borough','age_group', 'resp.prop')]
+
+ds.list<-list(resp1,resp1.prop, ili1, ili1.prop)
+combo1 <- Reduce(
+  function(x, y, ...) merge(x, y,by = c('ddate', 'borough', 'age_group'), all = TRUE, ...),
+  ds.list
+)
+combo1 = combo1[,c('ddate', 'borough','age_group', 'ili', 'resp', 'ili.prop', 'resp.prop')]
+combo1$ili<-gsub(',', '', combo1$ili) #remove commas from number
+combo1$resp<-gsub(',', '', combo1$resp) #remove commas from number
+combo1$ili = as.numeric(as.character(combo1$ili))
+combo1$resp = as.numeric(as.character(combo1$resp))
+combo1$ili.prop = as.numeric(as.character(combo1$ili.prop))
+combo1$resp.prop = as.numeric(as.character(combo1$resp.prop))
+combo1$resp.denom<-combo1$resp/combo1$resp.prop
+combo1$ili.denom<-combo1$ili/combo1$ili.prop
+combo1$denom<-apply(cbind(combo1$resp.denom,combo1$ili.denom),1,mean, na.rm=T)
+
+combo1$agec[combo1$age_group == 'Ages 0-4 years']<-1
+combo1$agec[combo1$age_group == 'Ages 5-17 years']<-2
+combo1$agec[combo1$age_group == 'Ages 18-64 years']<-3
+combo1$agec[combo1$age_group == 'Ages 65+ years']<-4
+combo1$agec[combo1$age_group == 'All age groups']<-5 # here is all age groups! 
+combo1<-combo1[combo1$agec %in% c(1,2,3,4,5),]
+#Esnure all dates represented in the data
+combo1<-complete(combo1, ddate = seq.Date(from=min(combo1$ddate), to=max(combo1$ddate), by='day'))
+combo1<-combo1[,c('ddate', 'borough', 'agec','ili','resp','denom')]
+saveRDS(combo1, '../Data/NYC_resp_ili_combo.rds')
+
+```
+
+
+```{r, eval=F}
+
+ili.df = combo1[,c('ddate','borough', 'agec', 'ili')]
+names(ili.df) = c('ddate','borough', 'agec', 'value')
+ili.df$variable = 'ili'
+ili.df$value = ili.df$value
+
+resp.df = combo1[,c('ddate','borough', 'agec', 'resp')]
+names(resp.df) = c('ddate','borough', 'agec', 'value')
+resp.df$variable = 'resp'
+resp.df$value = resp.df$value
+
+combo1.m<-melt(combo1[,c('ddate','borough', 'agec','ili','resp','denom')], id.vars = c('ddate','borough', 'agec'))
+ds1.c<-acast(combo1.m,agec~ddate ~borough~variable)
+#ds1.c[is.na(ds1.c)]<-0
+#saveRDS(ds1.c,'../Data/nyc_shiny_data.rds') #save data for the shiny app
+
+```
+
+## View data
+
+```{r}
+boroughs<-dimnames(ds1.c)[[3]]
+boroughs<-boroughs[boroughs!='NA']
+ages<-dimnames(ds1.c)[[1]]
+ages<-ages[ages %in% c('1','2','3','4')]
+n.times<-dim(ds1.c)[2]
+Age.labels<-c('<5y','5-17y','18-64y','65+y', 'All ages')
+#syndromes<- dimnames(ds1.c)[[4]]
+syndromes<-c('ili','resp') # can also plot 'resp'
+for(j in syndromes){
+  for(i in boroughs){
+    par(mfrow=c(2,2))  
+    for(k in ages){
+      plot(ds1.c[k,((n.times-365):n.times),i,j], type='l', bty='l', main=paste(j,i,Age.labels[as.numeric(k)] ) )
+    }
+  }
+}
+```
+
+
+
+
+##Import auxillary data
+Pulls in google searches for RSV in CT can get 5 years of historical data at weekly reslution (switches to monthly for >5 years)
+```{r}
+rsv.down<-gtrends(keyword = 'RSV', geo="US-NY-501", time = "today+5-y",
+                  gprop = c("web") , category = 0,  low_search_volume = FALSE)
+saveRDS(rsv.down,'../rsv_searches_nyc.rds')
+# saveRDS(rsv.down,'../Data/rsv_searches_nyc.rds')
+rsv<-rsv.down$interest_over_time[,c('date','hits')]
+rsv$date<-as.Date(rsv$date)
+mmwr.week.rsv<-MMWRweek(rsv$date)[,c('MMWRyear','MMWRweek')]
+rsv<-cbind.data.frame(rsv,mmwr.week.rsv)
+names(rsv)<-c('date','rsv.searches','MMWRyear','MMWRweek')
+```
+
+flusurvnet data
+https://gis.cdc.gov/GRASP/Fluview/FluHospRates.html
+
+```{r}
+flu<-read.csv('../Data/FluSurveillance_EIP_New York - Albany_Data.csv', skip=2)
+flu2<-flu[flu$AGE.CATEGORY %in% c('Overall'),]
+flu2<-flu2[,c('SEASON', 'MMWR.YEAR', 'MMWR.WEEK', 'WEEKLY.RATE')]
+names(flu2)<-c('season', 'MMWRyear', 'MMWRweek','flu.rate')
+flu2$flu.rate<-as.numeric(as.character(flu2$flu.rate))
+flu2$flu.rate[is.na(flu2$flu.rate)]<-9999
+```
+
+Aggregate by week and merge auxillary variables
+```{r}
+combo1 = readRDS('../Data/NYC_resp_ili_combo.rds')
+
+mmwr.date<-MMWRweek(combo1$ddate)
+ds1.df<-cbind.data.frame(combo1,mmwr.date)
+combo2<-merge(ds1.df, flu2, by=c('MMWRyear','MMWRweek'), all.x=T)
+combo2<-merge(combo2, rsv, by=c('MMWRyear','MMWRweek'), all.x=T)
+combo2$flu.rate[is.na(combo2$flu.rate)]<-0
+combo2$flu.rate[combo2$flu.rate==9999]<-NA #last few weeks
+combo2.sub<-combo2[, c('agec', 'ddate','MMWRyear', 'MMWRweek', 'borough', 'ili','resp','flu.rate',"rsv.searches")]
+ili.m<-melt(combo2.sub, id.vars=c('borough','agec','ddate','MMWRyear','MMWRweek'))
+ili.a<-acast(ili.m, ddate+MMWRyear+MMWRweek ~borough~agec~variable , fun.aggregate = sum )
+dimnames(ili.a)[[1]]<-substr(dimnames(ili.a)[[1]],1,10)
+
+# ili.a.df = as.data.frame(ili.a)
+```
+
+
+setup epiyear index
+```{r}
+date.string<-as.Date(dimnames(ili.a)[[1]])
+month<-month(date.string)
+epiyr<-year(date.string)
+epiyr[month<=6] <- epiyr[month<=6]-1
+epiyr.index<-epiyr-min(epiyr)+1
+weekN<-MMWRweek(date.string)[,'MMWRweek']
+day.of.year<-yday(date.string)
+```
+
+## Evaluate results after controlling for flu and RSV
+```{r}
+glm.func<-function(x.test, age.test, syndrome){
+  clean.array.citywide<-ili.a[,x.test,,]
+  epiyr.index.f<-as.factor(epiyr.index)
+  epiyr.index.f2<-as.factor(epiyr.index)
+  
+  n.dates<-length(y.age)
+    y.age = t(clean.array.citywide[,age.test,syndrome])
+  y.age.fit<-y.age[1,]
+  #y.age.fit[(n.dates-30):n.dates] <- NA #extrapolate last 1 months
+  
+  sqrt.rsv =sqrt(clean.array.citywide[,age.test,'rsv.searches']) #same for all ages and boroughs
+  sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu.rate']) #same for all ages and boroughs
+  
+  
+  sqrt.flu<- na.locf(sqrt.flu)  #fill in missing observations for flu at end of TS with most recent observed values
+  t2<-1:length(y.age)
+  # 
+  sin1<-sin(2*pi*t2/365.25)
+  cos1<-cos(2*pi*t2/365.25)
+  sin2<-sin(2*pi*t2*2/365.25)
+  cos2<-cos(2*pi*t2*2/365.25)
+  sin3<-sin(2*pi*t2*3/365.25)
+  cos3<-cos(2*pi*t2*3/365.25)
+  
+  ds.glm<-cbind.data.frame('day.of.year'=day.of.year,'y.age'=y.age[1,],'y.age.fit'=y.age.fit,sqrt.rsv, sqrt.flu,  t2,epiyr.index.f, sin1, sin2, cos1, cos2, sin3, cos3)
+  #ds.glm<-ds.glm[complete.cases(ds.glm),]
+
+  form1<-as.formula(paste0('y.age.fit',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
+                   epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
+                   sin1+cos1 +sin2+cos2+ sin3+cos3 "
+  ))
+  mod1<-glm(form1, data=ds.glm, family=poisson(link='log'))
+  pred1<-predict(mod1, type='response', newdata = ds.glm)
+  my_data_with_pi <- add_pi(ds.glm, mod1, names = c("lpb", "upb"))
+  resid1<- log((ds.glm$y.age+0.5) /(pred1+0.5))
+  
+  out.list<-list(y=y.age[1,], pred=my_data_with_pi$pred, resid1=resid1, upi=my_data_with_pi$upb, lpi=my_data_with_pi$lpb)
+  return(out.list)
+}
+syndromes<- c('ili', 'resp') 
+ages <-   c('1','2','3','4','5')
+counties.to.test<-c('Bronx','Brooklyn','Manhattan','Queens','Staten Island','Citywide')
+
+all.glm.res<- pblapply(syndromes, function(x){
+  ww<- lapply(ages, function(y){
+    lapply(counties.to.test, glm.func, age.test=y, syndrome=x)
+    }
+  ) 
+  names(ww)<- ages
+  return(ww)
+}
+)
+names(all.glm.res)<-syndromes
+saveRDS(all.glm.res, './nyc_shiny_data/glm.results.rds')
+```
+
+
+Next extract residuals and fitted values
+```{r, fig.width=8, fig.height=6}
+#Residuals for all age groups for ILI
+ili2.resid<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','resid1'), simplify='array')
+dimnames(ili2.resid)[[2]]<-counties.to.test
+ili2.pred<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','pred'), simplify='array')
+dimnames(ili2.pred)[[2]]<-counties.to.test
+ili2.pred.lcl<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','lpi'), simplify='array')
+dimnames(ili2.pred.lcl)[[2]]<-counties.to.test
+ili2.pred.ucl<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','upi'), simplify='array')
+dimnames(ili2.pred.ucl)[[2]]<-counties.to.test
+obs.ili<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','y'), simplify='array')
+
+dimnames(obs.ili)[[2]]<-counties.to.test
+dates<-as.Date(dimnames(ili.a)[[1]])
+```
+
+
+Observed vs expected by county and age group
+```{r}
+age.labels = c("Ages 0-4 years", "Ages 5-17 years", "Ages 18-64 years", "Ages 65+ years", "All age groups")
+
+n.times<-length(dates)
+dates.select<-(n.times-360):n.times
+par(mfrow=c(2,3), mar=c(3,2,1,1))
+for(i in 1:5){
+  for( j in counties.to.test){
+  plot(dates[dates.select],obs.ili[dates.select,j,i], type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[i]), ylim=range(c(ili2.pred.lcl[dates.select,j,i],ili2.pred.ucl[dates.select,j,i],ili2.pred[dates.select,j,i])))
+  points(dates[dates.select],ili2.pred[dates.select,j,i], type='l', col='red', lty=3 )
+  points(dates[dates.select],ili2.pred.lcl[dates.select,j,i], type='l', col='red', lty=3 )
+  points(dates[dates.select],ili2.pred.ucl[dates.select,j,i], type='l', col='red', lty=3 )
+  abline(v=790)
+  }
+}
+pdf(file='../Results/nyc_borough_age.pdf', width=10, height=5)
+par(mfrow=c(2,3), mar=c(3,2,2,1))
+for(i in 1:5){
+  for( j in counties.to.test){
+  plot(dates[dates.select],obs.ili[dates.select,j,i], type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[i]), ylim=range(c(ili2.pred.lcl[dates.select,j,i],ili2.pred.ucl[dates.select,j,i],ili2.pred[dates.select,j,i])))
+  points(dates[dates.select],ili2.pred[dates.select,j,i], type='l', col='red', lty=2, lwd=2 )
+  points(dates[dates.select],ili2.pred.lcl[dates.select,j,i], type='l', col='red', lty=3 , lwd=2)
+  points(dates[dates.select],ili2.pred.ucl[dates.select,j,i], type='l', col='red', lty=3 ,lwd=2)
+  abline(v=790)
+  }
+}
+dev.off()
+```
+
+## Temporal SATSCAN by county and syndrome
+Do a Poisson temporal satscan, adjusting for fitted values as the population file
+-NOTE: this ONLY works if you have SATSCAN installed on your machine
+```{r}
+syndromes<- c('ili', 'resp') 
+ages <-   c('1','2','3','4','5')
+counties.to.test<-dimnames(ili.a)[[2]]
+dates<-as.Date(dimnames(ili.a)[[1]])
+satscan.fun<-function(syndrome, county.select,age.select){
+  obs<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','y'), simplify='array')
+  dimnames(obs)[[2]]<-counties.to.test
+  
+  case.pred<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','pred'), simplify='array')
+  dimnames(case.pred)[[2]]<-counties.to.test
+  
+  mycas = data.frame(locid=1:dim(case.pred)[[1]] ,basecas=obs[,county.select,age.select], day=dates)
+  mypop<- data.frame(locid=1:dim(case.pred)[[1]] ,day=dates,basepop=case.pred[,county.select,age.select] )
+  mygeo<- data.frame(locid=1:dim(case.pred)[[1]] ,lat=1:dim(case.pred)[[1]], long=1:dim(case.pred)[[1]])
+  
+  #Write satscan files
+  
+  td = tempdir()
+  write.cas(mycas, location = td, file = "mycas")
+  write.pop(mypop, location = td, file = "mypop")
+  write.geo(mygeo, location = td, file = "mygeo")
+  
+  #write.geo(mygeo, location = '../satscan/data/', file = "geo.spacetime.ct", userownames=F)
+  #write.cas(mycas, location = '../satscan/data/', file = "ili.temporal")
+  #write.pop(mypop, location = '../satscan/data/', file = "ili.expected")
+  
+  #Parameter files
+  
+  first.date<-as.character(min(mycas$day))
+  first.date<-gsub('-', '/',first.date)
+  last.date<-as.character(max(mycas$day))
+  last.date<-gsub('-', '/',last.date)
+  invisible(ss.options(reset=TRUE))
+  ss.options(list(CaseFile="mycas.cas",PopulationFile='mypop.pop', CoordinatesFile="mygeo.geo", PrecisionCaseTimes=3))
+  ss.options(list(StartDate=first.date, CoordinatesType=1, TimeAggregationUnits=3,TimeAggregationLength=5))
+  ss.options(list(EndDate=last.date,  AnalysisType=6, ModelType=0,ScanAreas=1)) 
+  ss.options(list(ProspectiveStartDate="2019/01/01", ReportGiniClusters="n", LogRunToHistoryFile="n"))
+  
+  write.ss.prm(td, "mybase")
+  #write.ss.prm('../satscan/satscan parameters', "temporal adjust rsatscan")
+  
+  mybase = satscan(td, "mybase")
+  return(mybase)
+}
+
+
+all.satscan.res<- pblapply(syndromes, function(x){
+  ww<- lapply(ages, function(y){
+    lapply(counties.to.test, satscan.fun, age.select=y, syndrome=x)
+  }
+  ) 
+  names(ww)<- ages
+  return(ww)
+}
+)
+names(all.satscan.res)<-syndromes
+```
+# Results from SATSCAN
+
+```{r}
+#Extract results
+ili.satscan<- sapply(all.satscan.res[['ili']], function(x) sapply(x,'[[','col', simplify=F), simplify='F')
+
+all.ages.ili<-lapply(all.satscan.res[['ili']], function(y) sapply(y, function(x) apply(x$col,2,function(z) as.character(z))))
+
+all.ages.ili<-lapply(all.ages.ili, function(x){ 
+  colnames(x)=counties.to.test
+  return(x)})
+names(all.ages.ili)<-age.labels[1:length(all.ages.ili)]
+all.ages.ili
+
+```
+
+
+```{r, fig.width=12, fig.height=8}
+diff.resid<-ili2.resid[,,'4'] - ili2.resid[,,'1']
+par(mfrow=c(2,4))
+lapply(counties.to.test, function(x){
+  plot(dates[dates>=as.Date("2020-01-01")],diff.resid[dates>=as.Date("2020-01-01"),x], type='l', bty='l', main=x)
+  abline(h=0, lty=2, col='gray')
+  })
+```
+```
