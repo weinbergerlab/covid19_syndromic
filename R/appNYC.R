@@ -1,7 +1,7 @@
 library(shiny)
 all.glm.res<-readRDS('./nyc_shiny_data/glm.results.rds')
 counties.to.test<-c("Bronx","Brooklyn", "Manhattan","Queens","Staten Island", "Citywide" )
-
+syndromes<-c('ili','resp')
 server<-function(input, output){
   output$countyPlot = renderPlot({
     ili2.resid<- sapply(all.glm.res[[input$set.syndrome]], function(x) sapply(x,'[[','resid1'), simplify='array')

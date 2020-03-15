@@ -96,7 +96,7 @@ ds1.c<-acast(combo1.m,agec~ddate ~borough~variable)
 
 ## View data
 
-```{r}
+```{r, eval=F}
 boroughs<-dimnames(ds1.c)[[3]]
 boroughs<-boroughs[boroughs!='NA']
 ages<-dimnames(ds1.c)[[1]]
@@ -172,6 +172,7 @@ epiyr[month<=6] <- epiyr[month<=6]-1
 epiyr.index<-epiyr-min(epiyr)+1
 weekN<-MMWRweek(date.string)[,'MMWRweek']
 day.of.year<-yday(date.string)
+day.of.week<-as.factor(day(date.string))
 ```
 
 ## Evaluate results after controlling for flu and RSV
@@ -181,8 +182,9 @@ glm.func<-function(x.test, age.test, syndrome){
   epiyr.index.f<-as.factor(epiyr.index)
   epiyr.index.f2<-as.factor(epiyr.index)
   
-  n.dates<-length(y.age)
     y.age = t(clean.array.citywide[,age.test,syndrome])
+      n.dates<-length(y.age)
+
   y.age.fit<-y.age[1,]
   #y.age.fit[(n.dates-30):n.dates] <- NA #extrapolate last 1 months
   
@@ -200,11 +202,13 @@ glm.func<-function(x.test, age.test, syndrome){
   sin3<-sin(2*pi*t2*3/365.25)
   cos3<-cos(2*pi*t2*3/365.25)
   
-  ds.glm<-cbind.data.frame('day.of.year'=day.of.year,'y.age'=y.age[1,],'y.age.fit'=y.age.fit,sqrt.rsv, sqrt.flu,  t2,epiyr.index.f, sin1, sin2, cos1, cos2, sin3, cos3)
+  
+  ds.glm<-cbind.data.frame('day.of.year'=day.of.year,'y.age'=y.age[1,],'y.age.fit'=y.age.fit,sqrt.rsv, sqrt.flu, day.of.week, t2,epiyr.index.f, sin1, sin2, cos1, cos2, sin3, cos3)
   #ds.glm<-ds.glm[complete.cases(ds.glm),]
 
   form1<-as.formula(paste0('y.age.fit',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
                    epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
+                   day.of.week+
                    sin1+cos1 +sin2+cos2+ sin3+cos3 "
   ))
   mod1<-glm(form1, data=ds.glm, family=poisson(link='log'))
