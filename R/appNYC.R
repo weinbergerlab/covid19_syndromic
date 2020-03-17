@@ -52,10 +52,11 @@ server<-function(input, output){
           pred<-rep(NA, length(y))
           pred.lcl<-rep(NA, length(y))
           pred.ucl<-rep(NA, length(y))
-          if(input$set.axis==F){
-          y.range<-c(0,max(y), na.rm=T)
+          
+         if(input$set.axis==F){
+          y.range<-c(0,max(y,na.rm=T))
           }else{
-            y.range<-c(0, max(plot.prop[dates.select,j,]))
+            y.range<-c(0, max(plot.prop[dates.select,j,], na.rm=T))
           }
         }
         plot(dates[dates.select],y, type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[as.numeric(i)]), ylim=y.range)
