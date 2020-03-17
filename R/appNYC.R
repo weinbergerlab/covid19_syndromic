@@ -41,13 +41,22 @@ server<-function(input, output){
           pred<-ili2.pred[dates.select,j,i]
           pred.lcl<-ili2.pred.lcl[dates.select,j,i]
           pred.ucl<-ili2.pred.ucl[dates.select,j,i]
-          y.range<-c(0,max(c(ili2.pred.lcl[dates.select,j,i],ili2.pred.ucl[dates.select,j,i],ili2.pred[dates.select,j,i],obs.ili[dates.select,j,i])))
+          if(input$set.axis==F){
+          y.range<-c(0,max(c(ili2.pred.lcl[dates.select,j,i],ili2.pred.ucl[dates.select,j,i],ili2.pred[dates.select,j,i],obs.ili[dates.select,j,i]), na.rm=T))
+          }else{
+          y.range<-c(0,max(c(ili2.pred.lcl[dates.select,j,],ili2.pred.ucl[dates.select,j,],ili2.pred[dates.select,j,],obs.ili[dates.select,j,]), na.rm=T))
+          }
+          
         }else{
           y=plot.prop[dates.select,j,i]
           pred<-rep(NA, length(y))
           pred.lcl<-rep(NA, length(y))
           pred.ucl<-rep(NA, length(y))
-          y.range<-c(0,max(y))
+          if(input$set.axis==F){
+          y.range<-c(0,max(y), na.rm=T)
+          }else{
+            y.range<-c(0, max(plot.prop[dates.select,j,]))
+          }
         }
         plot(dates[dates.select],y, type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[as.numeric(i)]), ylim=y.range)
         points(dates[dates.select],pred, type='l', col='red', lty=3 )
@@ -61,7 +70,7 @@ server<-function(input, output){
   width = "auto", height = "auto")
 }
 ui<-fluidPage(
-  titlePanel('NYC ED syndromic surveillance'),
+  titlePanel('NYC ED syndromic surveillance through March 15, 2020'),
   span("CAUTION: Syndromic surveillance data can be hard to interpret. Any increases above expected could be due to changes in healthcare seeking behavior (people might be more likely to go to the ED now with less severe symptoms because they are aware of the COVID-19 epidemic), or it could be due to actual viral illness, or a combination. For a deep dive of the data produced by NYC Department of Health and Mental Hygiene see https://www1.nyc.gov/assets/doh/downloads/pdf/hcp/weekly-surveillance03072020.pdf . This app shows the daily count of ED visits and is not adjusted for overall ED volume (as is typically done, and mainly because a denominator is not readily available from the web interface. "),
   selectInput("set.prop", "Proportion of ED visits or count:",
               choice=c('Proportion','Count'), selected ="Count" ),
@@ -69,6 +78,8 @@ ui<-fluidPage(
               choice=counties.to.test, selected ="Citywide" ),
   selectInput("set.syndrome", "Syndrome:",
               choice=syndromes, selected ="ili" ),
+  checkboxInput("set.axis", "Uniform axis for all plots?:",
+               value =F ),
   sliderInput('display.dates', 'Earliest date to display', min=min(dates), max=max(dates)-30, value=max(dates)-365),
   plotOutput("countyPlot"),
   column(8, align = 'justify',
