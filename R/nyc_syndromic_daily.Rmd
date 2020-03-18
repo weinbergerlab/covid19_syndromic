@@ -198,7 +198,7 @@ glm.func<-function(x.test, age.test, syndrome){
       n.dates<-length(y.age)
 
   y.age.fit<-y.age[1,]
-  #y.age.fit[(n.dates-30):n.dates] <- NA #extrapolate last 1 months
+  #y.age.fit[date.string>=as.Date("2020-03-01")] <- NA #extrapolate last 1 months
   
   sqrt.rsv =sqrt(clean.array.citywide[,age.test,'rsv.searches']) #same for all ages and boroughs
   sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu.rate']) #same for all ages and boroughs
