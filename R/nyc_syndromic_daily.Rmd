@@ -26,7 +26,7 @@ library(readxl)
 
 last date for which data are available (as specificed on folder name of data) YYYY_MM_DD
 ```{r, setdate}
-last.date<-'2020_03_16'
+last.date<-'2020_03_17'
 ```
 
 
@@ -143,7 +143,7 @@ flusurvnet data
 https://gis.cdc.gov/GRASP/Fluview/FluHospRates.html
 
 ```{r}
-flu<-read.csv('../Data/FluSurveillance_EIP_New York - Albany_Data 2020_3_16.csv', skip=2)
+flu<-read.csv('../Data/FluSurveillance_EIP_New York - Albany_Data.csv', skip=2)
 flu2<-flu[flu$AGE.CATEGORY %in% c('Overall'),]
 flu2<-flu2[,c('SEASON', 'MMWR.YEAR', 'MMWR.WEEK', 'WEEKLY.RATE')]
 names(flu2)<-c('season', 'MMWRyear', 'MMWRweek','flu.rate')

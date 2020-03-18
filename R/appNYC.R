@@ -51,6 +51,7 @@ server<-function(input, output){
           y=plot.prop[dates.select,j,i]
           pred<-rep(NA, length(y))
           pred.lcl<-rep(NA, length(y))
+          pred.ucl<-rep(NA, length(y))
         if(input$set.axis==F){
             y.range<-c(0,max(y,na.rm=T))
           }else{
