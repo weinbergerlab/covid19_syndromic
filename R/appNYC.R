@@ -47,24 +47,33 @@ server<-function(input, output){
           }else{
           y.range<-c(0,max(c(ili2.pred.lcl[dates.select,j,],ili2.pred.ucl[dates.select,j,],ili2.pred[dates.select,j,],obs.ili[dates.select,j,]), na.rm=T))
           }
-          
-        }else{
+        }else if (input$set.prop=='Proportion'){
           y=plot.prop[dates.select,j,i]
           pred<-rep(NA, length(y))
           pred.lcl<-rep(NA, length(y))
-          pred.ucl<-rep(NA, length(y))
-          
-         if(input$set.axis==F){
-          y.range<-c(0,max(y,na.rm=T))
+        if(input$set.axis==F){
+            y.range<-c(0,max(y,na.rm=T))
           }else{
             y.range<-c(0, max(plot.prop[dates.select,j,], na.rm=T))
           }
+        }else{
+          y=obs.ili[dates.select,j,i]/ili2.pred[dates.select,j,i]
+          pred<-obs.ili[dates.select,j,i]/ili2.pred[dates.select,j,i]
+          pred.lcl<-obs.ili[dates.select,j,i]/ili2.pred.lcl[dates.select,j,i]
+          pred.ucl<-obs.ili[dates.select,j,i]/ili2.pred.ucl[dates.select,j,i]
+          if(input$set.axis==F){
+            y.range<-range(y,na.rm=T)
+          }else{
+            y.range<-c(0.2, 4)
+          }  
         }
         plot(dates[dates.select],y, type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[as.numeric(i)]), ylim=y.range)
         points(dates[dates.select],pred, type='l', col='red', lty=3 )
-        points(dates[dates.select],ili2.pred.lcl[dates.select,j,i], type='l', col='red', lty=3 )
-        points(dates[dates.select],ili2.pred.ucl[dates.select,j,i], type='l', col='red', lty=3 )
-        abline(v=790)
+        points(dates[dates.select],pred.lcl, type='l', col='red', lty=3 )
+        points(dates[dates.select],pred.ucl, type='l', col='red', lty=3 )
+        if(input$set.prop=='Observed/Expected'){
+          abline(h=1, col='gray', lty=2)
+        }
       }
     }
   }
@@ -75,7 +84,7 @@ ui<-fluidPage(
   titlePanel(paste0('NYC ED syndromic surveillance through ', last.date.format)),
   span("CAUTION: Syndromic surveillance data can be hard to interpret. Any increases above expected could be due to changes in healthcare seeking behavior (people might be more likely to go to the ED now with less severe symptoms because they are aware of the COVID-19 epidemic), or it could be due to actual viral illness, or a combination. For a deep dive of the data produced by NYC Department of Health and Mental Hygiene see https://www1.nyc.gov/assets/doh/downloads/pdf/hcp/weekly-surveillance03072020.pdf . This app shows the daily count of ED visits and is not adjusted for overall ED volume (as is typically done, and mainly because a denominator is not readily available from the web interface. "),
   selectInput("set.prop", "Proportion of ED visits or count:",
-              choice=c('Proportion','Count'), selected ="Count" ),
+              choice=c('Proportion','Count','Observed/Expected'), selected ="Count" ),
   selectInput("set.borough", "Borough:",
               choice=counties.to.test, selected ="Citywide" ),
   selectInput("set.syndrome", "Syndrome:",
