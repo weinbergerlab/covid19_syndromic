@@ -21,26 +21,33 @@ library(ciTools)
 library(MASS)
 library(tidyr)
 library(rsatscan)
+library(readxl)
 ```
 
+last date for which data are available (as specificed on folder name of data) YYYY_MM_DD
+```{r}
+last.date<-'2020_03_16'
+```
+
+
 ##Import and clean the data
-```{r, eval=F}
-ili1<- read.table('../Data/ili_2020_3_15_nyc.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
+```{r}
+ili1<- read.table(paste0('../Data/nyc_update_',last.date,'/ili_count.csv'),sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
 ili1$date<-as.Date(ili1$Date, '%m/%d/%y')
 names(ili1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'ili', 'ddate')
 ili1<-ili1[,c('ddate', 'borough','age_group', 'ili')]
 
-ili1.prop<- read.table('../Data/ili_2020_3_15_nyc_prop.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
+ili1.prop<- read.table(paste0('../Data/nyc_update_',last.date,'/ili_prop.csv'),sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
 ili1.prop$date<-as.Date(ili1.prop$Date, '%m/%d/%y')
 names(ili1.prop)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'ili.prop', 'ddate')
 ili1.prop<-ili1.prop[,c('ddate', 'borough','age_group', 'ili.prop')]
 
-resp1<-read.table('../Data/resp_2020_3_15_nyc.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
+resp1<-read.table(paste0('../Data/nyc_update_',last.date,'/resp_count.csv'),sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
 resp1$date<-as.Date(resp1$Date, '%m/%d/%y')
 names(resp1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'resp', 'ddate')
 resp1<-resp1[,c('ddate', 'borough','age_group', 'resp')]
 
-resp1.prop<-read.table('../Data/resp_2020_3_15_nyc_prop.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
+resp1.prop<-read.table(paste0('../Data/nyc_update_',last.date,'/resp_prop.csv'),sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
 resp1.prop$date<-as.Date(resp1.prop$Date, '%m/%d/%y')
 names(resp1.prop)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'resp.prop', 'ddate')
 resp1.prop<-resp1.prop[,c('ddate', 'borough','age_group', 'resp.prop')]
@@ -75,7 +82,7 @@ saveRDS(combo1, '../Data/NYC_resp_ili_combo.rds')
 ```
 
 
-```{r, eval=F}
+```{r}
 
 ili.df = combo1[,c('ddate','borough', 'agec', 'ili')]
 names(ili.df) = c('ddate','borough', 'agec', 'value')
@@ -246,6 +253,10 @@ names(all.glm.res)<-syndromes
 saveRDS(all.glm.res, './nyc_shiny_data/glm.results.rds')
 ```
 
+##When updating app, can stop here
+#######################################
+######################################
+
 
 Next extract residuals and fitted values
 ```{r, fig.width=8, fig.height=6}
@@ -295,8 +306,50 @@ for(i in 1:5){
 dev.off()
 ```
 
-```{r}
 
+
+
+Pop size file by borough
+```{r}
+pop1<-read.csv('../Data/borough_pop.csv')
+pop1$agec<-NA
+pop1$agec[pop1$age %in% c('0-4')]<-1
+pop1$agec[pop1$age %in% c('5-9','10-14','15-19')]<-2
+pop1$agec[pop1$age %in% c('20-24','25-29','30-34','35-39','40-44','45-49','50-54','55-59','60-64')]<-3
+pop1$agec[pop1$age %in% c('65-69', '70-74','75-79','80-84','85+')]<-4
+
+pop1.cw<-pop1
+pop1.cw$borough<-'Citywide'
+pop1.cw<-aggregate(pop1.cw[,c('X2015','X2020')],by=list('agec'=pop1.cw$agec, 'borough'=pop1.cw$borough), FUN=sum)
+
+pop2<-aggregate(pop1[,c('X2015','X2020')], by=list('agec'=pop1$agec, 'borough'=pop1$borough), FUN=sum)
+pop1$agec<-5
+pop2.all<-aggregate(pop1[,c('X2015','X2020')],by=list('agec'=pop1$agec,'borough'=pop1$borough), FUN=sum)
+pop2.all.cw<-pop1
+pop2.all.cw$borough<-'Citywide'
+pop2.all.cw<-aggregate(pop2.all.cw[,c('X2015','X2020')],by=list('agec'=pop2.all.cw$agec,'borough'=pop2.all.cw$borough), FUN=sum)
+
+
+
+
+pop3.all<-rbind.data.frame(pop2,pop2.all,pop2.all.cw,pop1.cw)
+names(pop3.all)<-c('agec','borough', '2015','2020')
+pop3.all$'2016'<-NA
+pop3.all$'2017'<-NA
+pop3.all$'2018'<-NA
+pop3.all$'2019'<-NA
+pop3.all.m<-melt(pop3.all, id.vars=c('agec', 'borough'))
+pop3.all.m$variable<-as.character(as.numeric(pop3.all.m$variable))
+pop3.all.c<-acast(pop3.all.m, variable~borough~agec)
+#names(pop3.all.c)<-c('agec','year','pop')
+pop3<-apply(pop3.all.c, c(2,3), function(z){
+  interpol1<-approx(z, n=6)
+  return(interpol1[[2]])
+}
+  )
+names(pop3)<-c('year','borough','agec')
+dimnames(pop3)[[1]]<-c(2015:2020)
+saveRDS(pop3,'borough.pop.rds')
 ```
 
 

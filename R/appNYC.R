@@ -4,8 +4,9 @@ counties.to.test<-c("Bronx","Brooklyn", "Manhattan","Queens","Staten Island", "C
 syndromes<-c('ili','resp')
 dates<-as.Date(names(all.glm.res[[1]][[1]][[1]]$resid1))
 n.times<-length(dates)
-
-
+last.date.format<-max(dates)
+last.date.format<-format(last.date.format,
+                         "%b %d, %Y")
 server<-function(input, output){
   output$countyPlot = renderPlot({
     ili.prop<-sapply(all.glm.res[[input$set.syndrome]], function(x) sapply(x,'[[','ili.prop'), simplify='array')
@@ -71,7 +72,7 @@ server<-function(input, output){
   width = "auto", height = "auto")
 }
 ui<-fluidPage(
-  titlePanel('NYC ED syndromic surveillance through March 15, 2020'),
+  titlePanel(paste0('NYC ED syndromic surveillance through ', last.date.format)),
   span("CAUTION: Syndromic surveillance data can be hard to interpret. Any increases above expected could be due to changes in healthcare seeking behavior (people might be more likely to go to the ED now with less severe symptoms because they are aware of the COVID-19 epidemic), or it could be due to actual viral illness, or a combination. For a deep dive of the data produced by NYC Department of Health and Mental Hygiene see https://www1.nyc.gov/assets/doh/downloads/pdf/hcp/weekly-surveillance03072020.pdf . This app shows the daily count of ED visits and is not adjusted for overall ED volume (as is typically done, and mainly because a denominator is not readily available from the web interface. "),
   selectInput("set.prop", "Proportion of ED visits or count:",
               choice=c('Proportion','Count'), selected ="Count" ),
@@ -87,7 +88,7 @@ ui<-fluidPage(
          hr(),
          span("The black line shows the observed number of ED visits per day in the indicated stratum, and the red lines denote the mean and 95% prediction intervals for a model adjusting for seasonality, influenza activity, and RSV activity"),
          hr(),
-         span("These plots summarize the NYC syndromic surveillance data, which were downloaded from the Epiquery website of the NYC Department of Health and Mental Hygiene. The models and plots were done by Dr. Dan Weinberger from Yale School of Public Health, with help from Kelsie Cassell. Underlying analysis code can be found at https://github.com/weinbergerlab/covid19_syndromic"),
+         span("These plots summarize the NYC syndromic surveillance data, which were downloaded from the Epiquery website of the NYC Department of Health and Mental Hygiene. The models and plots were done by Dr. Dan Weinberger from the Public Health Modeling Unit and Department of Epidemiology of Microbial Diseases at Yale School of Public Health, with assistance from Kelsie Cassell, Marcus Rossi, Ernest Asare, Yu-Han Kao. Underlying analysis code can be found at https://github.com/weinbergerlab/covid19_syndromic"),
 
 )
 )
