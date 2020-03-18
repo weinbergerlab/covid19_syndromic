@@ -25,7 +25,9 @@ library(ciTools)
 
 ##Import and clean the data
 ```{r, eval=F}
-ds1<-read.csv('../DO_NOT_SYNC/yale_view_2018_2019.csv')
+ds1a<-read.csv('../DO_NOT_SYNC/yale_view_2018_2019.csv')
+ds1b<-read.csv('../DO_NOT_SYNC/yale_view_2020.csv')
+
 zip.cw<-read.csv('../Data/zipcode-town.csv')
 
 zip.cw$Zip.Code<-paste0('0',zip.cw$Zip.Code)
@@ -34,14 +36,19 @@ zip.cw[substr(zip.cw$Zip.Code,1,2) =='06',]
 
 96% of entries have a CT ZIP code (06XXX)
 ```{r, eval=F}
+datestr1a<-as.character(ds1a$date_time_of_admission)
+ds1a$adate<-as.Date(substr(datestr1a,1,10))
+ds1a[ds1a$adate<as.Date('2020-01-01'),]
+datestr1b<-as.character(ds1b$date_time_of_admission)
+ds1b$adate<-as.Date(substr(datestr1b,1,10))
+ds1<-rbind.data.frame(ds1a, ds1b)
+
 ds1$classification<-toupper(ds1$classification)
 ds1$ili<-grepl('ILI', ds1$classification)
 ds1$cough<-grepl('COUGH', ds1$classification)
 ds1$respiratory<-grepl('RESPIRATORY', ds1$classification)
 ds1$circulatory<-grepl('CIRCULATORY', ds1$classification)
 ds1$ili2<- grepl('FEVER/FLU', ds1$classification) 
-datestr<-as.character(ds1$date_time_of_admission)
-ds1$adate<-as.Date(substr(datestr,1,10))
 ds1$agec<-NA
 ds1$agec[ds1$age>=0  & ds1$age<5]<-1
 ds1$agec[ds1$age>=5  & ds1$age<18]<-2
@@ -59,6 +66,8 @@ ds2<-merge(ds1, zip.cw, by.x='zipcode', by.y='Zip.Code')
 ds1.m<-melt(ds2[,c('adate', 'County','agec','ili','cough','respiratory','circulatory','ili2','all.visits')], id.vars=c('adate','County','agec'))
 last.date<- max(ds1.m$adate)
 ds1.m<-ds1.m[ds1.m$adate != last.date,] #remove last day from the dataset,assuming it is incomplete
+ds1.m<-ds1.m[ds1.m$adate != (last.date-1),] #remove second to last day from the dataset,assuming it is incomplete
+
 saveRDS(ds1.m, '../DO_NOT_SYNC/county_ts_ct.rds')
 ds1.c<-acast(ds1.m, agec~adate ~County~variable, fun.aggregate = sum)
 ```
@@ -130,7 +139,11 @@ ds1.df<-cbind.data.frame(ds1.df,mmwr.date)
 combo2<-merge(ds1.df, flu2, by=c('MMWRyear','MMWRweek'), all.x=T)
 combo2<-merge(combo2, rsv, by=c('MMWRyear','MMWRweek'), all.x=T)
 combo2$flu.rate[is.na(combo2$flu.rate)]<-0
+
+#ensures flu variable set to missing if no flu observations
 combo2$flu.rate[combo2$flu.rate==9999]<-NA #last few weeks
+max.date.miss.flu<-max(combo2$ddate[is.na(combo2$flu.rate)], na.rm=T)
+combo2$flu.rate[combo2$ddate>max.date.miss.flu] <-NA
 
 combo2.sub<-combo2[, c('agec', 'adate','MMWRyear', 'MMWRweek', 'County', 'ili2','cough','respiratory','circulatory','flu.rate',"rsv.searches",'all.visits')]
 ili.m<-melt(combo2.sub, id.vars=c('County','agec','adate','MMWRyear','MMWRweek'))
@@ -147,80 +160,77 @@ epiyr[month<=6] <- epiyr[month<=6]-1
 epiyr.index<-epiyr-min(epiyr)+1
 weekN<-MMWRweek(date.string)[,'MMWRweek']
 day.of.year<-yday(date.string)
+day.of.week<-as.factor(weekdays(date.string))
 ```
 
 ## Evaluate results after controlling for flu and RSV
 ```{r}
 counties.to.test<-dimnames(ili.a)[[2]]
 
-gam.func<-function(x.test, age.test, syndrome, all.cause.name){
-clean.array.citywide<-ili.a[,x.test,,]
-      epiyr.index.f<-as.factor(epiyr.index)
-      epiyr.index.f2<-as.factor(epiyr.index)
-      
-      y.age = t(clean.array.citywide[,age.test,syndrome])
-      offset.age = t(clean.array.citywide[,age.test,all.cause.name])
+glm.func<-function(x.test, age.test, syndrome, all.cause.name){
+  clean.array.citywide<-ili.a[,x.test,,]
+  epiyr.index.f<-as.factor(epiyr.index)
+  epiyr.index.f2<-as.factor(epiyr.index)
+  
+    y.age = t(clean.array.citywide[,age.test,syndrome])
+    offset1<-t(clean.array.citywide[,age.test,all.cause.name])
+          n.dates<-length(y.age)
 
-      y.age.fit<-y.age[1,]
-      y.age.fit[epiyr.index==2019 & day.of.year>=60] <- NA #extrapolate after day 60
-     
-            sqrt.rsv =sqrt(clean.array.citywide[,age.test,'rsv.searches']) #same for all ages and boroughs
-            sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu.rate']) #same for all ages and boroughs
-            
-            
-            sqrt.flu<- na.locf(sqrt.flu)  #fill in missing observations for flu at end of TS with most recent observed values
-      t2<-1:length(y.age)
-      # 
-      sin1<-sin(2*pi*t2/365.25)
-      cos1<-cos(2*pi*t2/365.25)
-      sin2<-sin(2*pi*t2*2/365.25)
-      cos2<-cos(2*pi*t2*2/365.25)
-      sin3<-sin(2*pi*t2*3/365.25)
-      cos3<-cos(2*pi*t2*3/365.25)
+  y.age.fit<-y.age[1,]
+  #y.age.fit[(n.dates-30):n.dates] <- NA #extrapolate last 1 months
+  
+  sqrt.rsv =sqrt(clean.array.citywide[,age.test,'rsv.searches']) #same for all ages and boroughs
+  sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu.rate']) #same for all ages and boroughs
+  
+  sqrt.flu<- na.locf(sqrt.flu)  #fill in missing observations for flu at end of TS with most recent observed values
+  
+    sqrt.rsv<- na.locf(sqrt.rsv)  #fill in missing observations for RSV at end of TS with most recent observed values
 
+    
+  t2<-1:length(y.age)
+  # 
+  sin1<-sin(2*pi*t2/365.25)
+  cos1<-cos(2*pi*t2/365.25)
+  sin2<-sin(2*pi*t2*2/365.25)
+  cos2<-cos(2*pi*t2*2/365.25)
+  sin3<-sin(2*pi*t2*3/365.25)
+  cos3<-cos(2*pi*t2*3/365.25)
+  
+  
+  ds.glm<-cbind.data.frame('day.of.year'=day.of.year,'y.age'=y.age[1,],'y.age.fit'=y.age.fit,sqrt.rsv, sqrt.flu, day.of.week, t2,epiyr.index.f, sin1, sin2, cos1, cos2, sin3, cos3)
+  #ds.glm<-ds.glm[complete.cases(ds.glm),]
 
-      
-      ds.glm<-cbind.data.frame('day.of.year'=day.of.year,'y.age'=y.age[1,],sqrt.rsv, sqrt.flu,  t2,epiyr.index.f)
-      # form1<-as.formula(paste0('y.age',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
-      #              epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
-      #              t2+                      #linear trend
-      #              s(day.of.year, bs='cc', k=6)" #seasonality
-      #              ))
-      #  mod1<-gam(form1,
-      #         family='poisson', data=ds.glm,offset=log(offset.age[1,]+0.5))
-      # pred1<-predict(mod1, type='response', newdata = ds.glm)*(offset.age[1,]+0.5)
-      form1<-as.formula(paste0('y.age',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
+  form1<-as.formula(paste0('y.age.fit',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
                    epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
-                   #t2+                      #linear trend
-                   sin1+cos1 +sin2+cos2+sin3+cos2 +log(offset.age[1,]+0.5) "
-                   ))
-        mod1<-glm(form1,
-                    family='poisson', data=ds.glm)
-      pred1<-predict(mod1, type='response', newdata = ds.glm)
-
-     my_data_with_pi <- add_pi(ds.glm, mod1, names = c("lpb", "upb"))
-
-      resid1<-log((y.age[1,]+0.5)/(pred1+0.5))
-      
-      out.list<-list(y=y.age[1,], pred=my_data_with_pi$pred, resid1=resid1, upi=my_data_with_pi$upb, lpi=my_data_with_pi$lpb)
-      return(out.list)
+                   day.of.week+
+                   sin1+cos1 +sin2+cos2+ sin3+cos3 +log(offset1[1,]+0.5)"
+  ))
+  mod1<-glm(form1, data=ds.glm, family=poisson(link='log'))
+  pred1<-predict(mod1, type='response', newdata = ds.glm)
+  my_data_with_pi <- add_pi(ds.glm, mod1, names = c("lpb", "upb"))
+  resid1<- log((ds.glm$y.age+0.5) /(pred1+0.5))
+  
+  out.list<-list(y=y.age[1,], pred=my_data_with_pi$pred, resid1=resid1, upi=my_data_with_pi$upb, lpi=my_data_with_pi$lpb,'all.cause'= t(clean.array.citywide[,age.test,all.cause.name]))
+ 
+  return(out.list)
 }
 
 
 syndromes<- c('ili2', 'respiratory','cough') 
 ages <-   c('1','2','3','4','5','NA')
 
-all.gam.res<- pblapply(syndromes, function(x){
+all.glm.res<- pblapply(syndromes, function(x){
   ww<- lapply(ages, function(y){
-    lapply(counties.to.test, gam.func, age.test=y, syndrome=x, all.cause.name='all.visits')
+    lapply(counties.to.test, glm.func, age.test=y, syndrome=x, all.cause.name='all.visits')
   }
   ) 
   names(ww)<- ages
   return(ww)
   }
 )
-names(all.gam.res)<-syndromes
+names(all.glm.res)<-syndromes
 
+saveRDS(all.glm.res,'./private_data/shiny_data.rds')
 ```
 
 
@@ -228,18 +238,18 @@ Next extract residuals and fitted values
 ```{r, fig.width=8, fig.height=6}
 
 #Residuals for all age groups for ILI
-ili2.resid<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','resid1'), simplify='array')
+ili2.resid<- sapply(all.glm.res[['ili2']], function(x) sapply(x,'[[','resid1'), simplify='array')
 dimnames(ili2.resid)[[2]]<-counties.to.test
-ili2.pred<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','pred'), simplify='array')
+ili2.pred<- sapply(all.glm.res[['ili2']], function(x) sapply(x,'[[','pred'), simplify='array')
 dimnames(ili2.pred)[[2]]<-counties.to.test
 
-ili2.pred.lcl<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','lpi'), simplify='array')
+ili2.pred.lcl<- sapply(all.glm.res[['ili2']], function(x) sapply(x,'[[','lpi'), simplify='array')
 dimnames(ili2.pred.lcl)[[2]]<-counties.to.test
 
-ili2.pred.ucl<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','upi'), simplify='array')
+ili2.pred.ucl<- sapply(all.glm.res[['ili2']], function(x) sapply(x,'[[','upi'), simplify='array')
 dimnames(ili2.pred.ucl)[[2]]<-counties.to.test
 
-obs<- sapply(all.gam.res[['ili2']], function(x) sapply(x,'[[','y'), simplify='array')
+obs<- sapply(all.glm.res[['ili2']], function(x) sapply(x,'[[','y'), simplify='array')
 dimnames(obs)[[2]]<-counties.to.test
 dates<-as.Date(dimnames(ili.a)[[1]])
 ```
@@ -300,10 +310,10 @@ dates<-as.Date(dimnames(ili.a)[[1]])
 
 satscan.fun<-function(syndrome, county.select,age.select){
 
-    obs<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','y'), simplify='array')
+    obs<- sapply(all.glm.res[[syndrome]], function(x) sapply(x,'[[','y'), simplify='array')
     dimnames(obs)[[2]]<-counties.to.test
     
-    case.pred<- sapply(all.gam.res[[syndrome]], function(x) sapply(x,'[[','pred'), simplify='array')
+    case.pred<- sapply(all.glm.res[[syndrome]], function(x) sapply(x,'[[','pred'), simplify='array')
     dimnames(case.pred)[[2]]<-counties.to.test
     
     mycas = data.frame(locid=1:dim(case.pred)[[1]] ,basecas=obs[,county.select,age.select], day=dates)

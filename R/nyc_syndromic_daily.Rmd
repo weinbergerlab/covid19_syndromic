@@ -333,22 +333,27 @@ pop2.all.cw<-aggregate(pop2.all.cw[,c('X2015','X2020')],by=list('agec'=pop2.all.
 
 
 pop3.all<-rbind.data.frame(pop2,pop2.all,pop2.all.cw,pop1.cw)
-names(pop3.all)<-c('agec','borough', '2015','2020')
-pop3.all$'2016'<-NA
-pop3.all$'2017'<-NA
-pop3.all$'2018'<-NA
-pop3.all$'2019'<-NA
+names(pop3.all)<-c('agec','borough', '2015-01-01','2020-01-01')
+
+all.dates<-as.character(date.string)
+all.dates[!all.dates %in% c('2015-01-01', '2020-01-01')]
+all.ages<-unique(pop3.all$agec)
+all.boroughs<-unique(pop3.all$borough)
+all.combos<-expand.grid(list('agec'=all.ages,'variable'=all.dates, 'borough'=all.boroughs))
+all.combos$value<-NA
+
 pop3.all.m<-melt(pop3.all, id.vars=c('agec', 'borough'))
 pop3.all.m$variable<-as.character(as.numeric(pop3.all.m$variable))
+pop3.all.m<-rbind.data.frame(pop3.all.m,all.combos)
 pop3.all.c<-acast(pop3.all.m, variable~borough~agec)
 #names(pop3.all.c)<-c('agec','year','pop')
 pop3<-apply(pop3.all.c, c(2,3), function(z){
-  interpol1<-approx(z, n=6)
+  interpol1<-approx(z, n=length(date.string))
   return(interpol1[[2]])
 }
   )
-names(pop3)<-c('year','borough','agec')
-dimnames(pop3)[[1]]<-c(2015:2020)
+names(pop3)<-c('date','borough','agec')
+dimnames(pop3)[[1]]<-date.string
 saveRDS(pop3,'borough.pop.rds')
 ```
 
