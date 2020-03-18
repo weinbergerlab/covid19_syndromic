@@ -1,7 +1,7 @@
 ---
 title: "nyc_syndromic_daily"
 author: "Dan Weinberger, kelsie Cassell"
-date: "3/10/2020 - KC edits:3/13/2020"
+date: "3/17/2020 - KC edits:3/13/2020"
 output: html_document
 ---
 
@@ -25,22 +25,22 @@ library(rsatscan)
 
 ##Import and clean the data
 ```{r, eval=F}
-ili1<- read.table('../Data/ili_2020_3_15_nyc.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
+ili1<- read.table('../Data/ili_2020_3_16_nyc.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
 ili1$date<-as.Date(ili1$Date, '%m/%d/%y')
 names(ili1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'ili', 'ddate')
 ili1<-ili1[,c('ddate', 'borough','age_group', 'ili')]
 
-ili1.prop<- read.table('../Data/ili_2020_3_15_nyc_prop.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
+ili1.prop<- read.table('../Data/ili_2020_3_16_nyc_prop.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") # had to add "fileEncoding="UCS-2LE"" 
 ili1.prop$date<-as.Date(ili1.prop$Date, '%m/%d/%y')
 names(ili1.prop)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'ili.prop', 'ddate')
 ili1.prop<-ili1.prop[,c('ddate', 'borough','age_group', 'ili.prop')]
 
-resp1<-read.table('../Data/resp_2020_3_15_nyc.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
+resp1<-read.table('../Data/resp_2020_3_16_nyc.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
 resp1$date<-as.Date(resp1$Date, '%m/%d/%y')
 names(resp1)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'resp', 'ddate')
 resp1<-resp1[,c('ddate', 'borough','age_group', 'resp')]
 
-resp1.prop<-read.table('../Data/resp_2020_3_15_nyc_prop.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
+resp1.prop<-read.table('../Data/resp_2020_3_16_nyc_prop.csv',sep="\t", header=TRUE, skipNul = T, fileEncoding="UCS-2LE") 
 resp1.prop$date<-as.Date(resp1.prop$Date, '%m/%d/%y')
 names(resp1.prop)<-c('note','syndrome','geo.level','borough','ag.level','age_group','date','metric', 'resp.prop', 'ddate')
 resp1.prop<-resp1.prop[,c('ddate', 'borough','age_group', 'resp.prop')]
