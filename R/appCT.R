@@ -2,7 +2,7 @@ library(shiny)
 all.glm.res<-readRDS('./private_data/shiny_data.rds')
 counties.to.test<-c("Fairfield","Hartford", "New Haven","Litchfield","New London", "Middlesex", "Windham", "Tolland" )
 syndromes<-c('ili2','respiratory', 'cough')
-dates<-as.Date(names(all.glm.res[[1]][[1]][[1]]$resid1))
+dates<-as.Date(names(all.glm.res[[1]][[1]][[1]][['resid1']]))
 n.times<-length(dates)
 last.date.format<-max(dates)
 last.date.format<-format(last.date.format,
