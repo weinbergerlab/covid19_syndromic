@@ -83,6 +83,11 @@ saveRDS(combo1, '../Data/NYC_resp_ili_combo.rds')
 
 
 ```{r}
+#combo1<-readRDS( '../Data/NYC_resp_ili_combo.rds')
+
+```
+
+```{r}
 
 ili.df = combo1[,c('ddate','borough', 'agec', 'ili')]
 names(ili.df) = c('ddate','borough', 'agec', 'value')
@@ -196,9 +201,15 @@ glm.func<-function(x.test, age.test, syndrome){
   
     y.age = t(clean.array.citywide[,age.test,syndrome])
       n.dates<-length(y.age)
+    
+      if(syndrome=='ili'){
+        denom<-y.age[1,]/t(clean.array.citywide[,age.test,'ili.prop'])[1,]}else{
+       denom<-y.age[1,]/t(clean.array.citywide[,age.test,'resp.prop']+0.01)[1,]
+                  }
 
+      
   y.age.fit<-y.age[1,]
-  #y.age.fit[date.string>=as.Date("2020-03-01")] <- NA #extrapolate last 1 months
+  y.age.fit[date.string>=as.Date("2020-03-01")] <- NA #extrapolate last 1 months
   
   sqrt.rsv =sqrt(clean.array.citywide[,age.test,'rsv.searches']) #same for all ages and boroughs
   sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu.rate']) #same for all ages and boroughs
@@ -227,15 +238,31 @@ glm.func<-function(x.test, age.test, syndrome){
                    day.of.week+
                    sin1+cos1 +sin2+cos2+ sin3+cos3 "
   ))
+  form2<-as.formula(paste0('y.age',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
+                   epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
+                   day.of.week+
+                   sin1+cos1 +sin2+cos2+ sin3+cos3  "
+  ))
   mod1<-glm(form1, data=ds.glm, family=poisson(link='log'))
-  pred1<-predict(mod1, type='response', newdata = ds.glm)
-  my_data_with_pi <- add_pi(ds.glm, mod1, names = c("lpb", "upb"))
-  resid1<- log((ds.glm$y.age+0.5) /(pred1+0.5))
+  #pred1<-predict(mod1, type='response', newdata = ds.glm)
+  #my_data_with_pi <- add_pi(ds.glm, mod1, names = c("lpb", "upb"))
+
+  #500 samples total
+   pred.coefs.reg.mean<- mvrnorm(n = 100, mu=coef(mod1), Sigma=vcov( mod1))
+   mod.mat.pred<-model.matrix(form2, data=ds.glm, family='poisson')
+preds.stage1.regmean<- mod.mat.pred %*% t(pred.coefs.reg.mean) 
+preds.stage2<-rpois(n=length(preds.stage1.regmean)*5, exp(preds.stage1.regmean))
+preds.stage2<-matrix(preds.stage2, nrow=nrow(preds.stage1.regmean), ncol=ncol(preds.stage1.regmean)*5)
+ preds.stage2.q<-t(apply(preds.stage2,1,quantile, probs=c(0.025,0.5, 0.975)))                   
   
-  out.list<-list(y=y.age[1,], pred=my_data_with_pi$pred, resid1=resid1, upi=my_data_with_pi$upb, lpi=my_data_with_pi$lpb,'ili.prop'= t(clean.array.citywide[,age.test,'ili.prop']), 'resp.prop'= t(clean.array.citywide[,age.test,'resp.prop'])
+   resid1<- log((ds.glm$y.age+0.5) /(preds.stage2.q[,'50%']+0.5))
+
+  
+  out.list<-list(y=y.age[1,], pred=preds.stage2.q[,'50%'], resid1=resid1, upi=preds.stage2.q[,'97.5%'], lpi=preds.stage2.q[,'2.5%'],'ili.prop'= t(clean.array.citywide[,age.test,'ili.prop']), 'resp.prop'= t(clean.array.citywide[,age.test,'resp.prop'])
  )
   return(out.list)
 }
+
 syndromes<- c('ili', 'resp') 
 ages <-   c('1','2','3','4','5')
 counties.to.test<-c('Bronx','Brooklyn','Manhattan','Queens','Staten Island','Citywide')
