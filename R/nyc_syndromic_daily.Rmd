@@ -381,7 +381,13 @@ pop3<-apply(pop3.all.c, c(2,3), function(z){
   )
 names(pop3)<-c('date','borough','agec')
 dimnames(pop3)[[1]]<-date.string
-saveRDS(pop3,'borough.pop.rds')
+simpleCap <- function(x) {
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1,1)), substring(s, 2),
+      sep="", collapse=" ")
+}
+dimnames(pop3)[[2]]<-sapply(dimnames(pop3)[[2]], simpleCap)
+saveRDS(pop3,'./nyc_shiny_data/borough.pop.rds')
 ```
 
 
