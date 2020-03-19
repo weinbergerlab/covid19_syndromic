@@ -83,6 +83,7 @@ server<-function(input, output){
           pred.ucl<-obs.ili[dates.select,j,i]/ili2.pred.ucl[dates.select,j,i]
           if(input$set.axis==F){
             y.range<-range(y,na.rm=T)
+            y.range[is.infinite(y.range)]<-10
           }else{
             y.range<-c(0.2, 4)
           }  
