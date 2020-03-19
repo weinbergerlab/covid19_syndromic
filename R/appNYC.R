@@ -104,7 +104,7 @@ ui<-fluidPage(
   titlePanel(paste0('NYC ED syndromic surveillance through ', last.date.format)),
   span("CAUTION: Syndromic surveillance data can be hard to interpret. Any increases above expected could be due to changes in healthcare seeking behavior (people might be more likely to go to the ED now with less severe symptoms because they are aware of the COVID-19 epidemic), or it could be due to actual viral illness, or a combination. For a deep dive of the data produced by NYC Department of Health and Mental Hygiene see https://www1.nyc.gov/assets/doh/downloads/pdf/hcp/weekly-surveillance03072020.pdf . This app shows the daily count of ED visits and is not adjusted for overall ED volume (as is typically done, and mainly because a denominator is not readily available from the web interface. "),
   selectInput("set.prop", "Proportion of ED visits or count:",
-              choice=c('Proportion','Counts','Counts/100,000 people','Observed/Expected'), selected ="Count" ),
+              choice=c('Proportion','Counts','Counts/100,000 people','Observed/Expected'), selected ="Counts" ),
   selectInput("set.borough", "Borough:",
               choice=counties.to.test, selected ="Citywide" ),
   selectInput("set.syndrome", "Syndrome:",
