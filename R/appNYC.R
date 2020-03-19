@@ -2,7 +2,7 @@ library(shiny)
 all.glm.res<-readRDS('./nyc_shiny_data/glm.results.rds')
 counties.to.test<-c("Bronx","Brooklyn", "Manhattan","Queens","Staten Island", "Citywide" )
 syndromes<-c('ili','resp')
-dates<-as.Date(names(all.glm.res[[1]][[1]][[1]]$resid1))
+dates<-as.Date(names(all.glm.res[[1]][[1]][[1]]$y))
 n.times<-length(dates)
 last.date.format<-max(dates)
 last.date.format<-format(last.date.format,
@@ -49,9 +49,11 @@ server<-function(input, output){
           }
         }else if (input$set.prop=='Proportion'){
           y=plot.prop[dates.select,j,i]
-          pred<-rep(NA, length(y))
-          pred.lcl<-rep(NA, length(y))
-          pred.ucl<-rep(NA, length(y))
+          denom<-obs.ili[dates.select,j,i]/y
+          pred<-ili2.pred[dates.select,j,i]/denom
+          pred.lcl<-ili2.pred.lcl[dates.select,j,i]/denom
+          pred.ucl<-ili2.pred.ucl[dates.select,j,i]/denom
+          
         if(input$set.axis==F){
             y.range<-c(0,max(y,na.rm=T))
           }else{
