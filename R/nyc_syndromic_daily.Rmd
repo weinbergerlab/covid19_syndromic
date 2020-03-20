@@ -9,7 +9,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(reshape2)
 library(lubridate)
-# library(INLA)
 library(MMWRweek)
 library(cdcfluview)
 library(gtrendsR)
