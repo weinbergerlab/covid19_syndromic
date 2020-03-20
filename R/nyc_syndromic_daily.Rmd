@@ -310,7 +310,7 @@ pop3.all<-rbind.data.frame(pop2,pop2.all,pop2.all.cw,pop1.cw)
 names(pop3.all)<-c('agec','borough', '2015-01-01','2020-01-01')
 
 all.dates<-as.character(date.string)
-all.dates[!all.dates %in% c('2015-01-01', '2020-01-01')]
+all.dates<-all.dates[!all.dates %in% c('2015-01-01', '2020-01-01')]
 all.ages<-unique(pop3.all$agec)
 all.boroughs<-unique(pop3.all$borough)
 all.combos<-expand.grid(list('agec'=all.ages,'variable'=all.dates, 'borough'=all.boroughs))
