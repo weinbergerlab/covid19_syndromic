@@ -280,59 +280,6 @@ names(all.glm.res)<-syndromes
 saveRDS(all.glm.res, './nyc_shiny_data/glm.results.rds')
 ```
 
-##When updating app, can stop here
-#######################################
-######################################
-
-
-Next extract residuals and fitted values
-```{r, fig.width=8, fig.height=6}
-#Residuals for all age groups for ILI
-ili2.resid<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','resid1'), simplify='array')
-dimnames(ili2.resid)[[2]]<-counties.to.test
-ili2.pred<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','pred'), simplify='array')
-dimnames(ili2.pred)[[2]]<-counties.to.test
-ili2.pred.lcl<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','lpi'), simplify='array')
-dimnames(ili2.pred.lcl)[[2]]<-counties.to.test
-ili2.pred.ucl<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','upi'), simplify='array')
-dimnames(ili2.pred.ucl)[[2]]<-counties.to.test
-obs.ili<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','y'), simplify='array')
-
-dimnames(obs.ili)[[2]]<-counties.to.test
-dates<-as.Date(dimnames(ili.a)[[1]])
-```
-
-
-Observed vs expected by county and age group
-```{r}
-age.labels = c("Ages 0-4 years", "Ages 5-17 years", "Ages 18-64 years", "Ages 65+ years", "All age groups")
-
-n.times<-length(dates)
-dates.select<-(n.times-360):n.times
-par(mfrow=c(2,3), mar=c(3,2,1,1))
-for(i in 1:5){
-  for( j in counties.to.test){
-  plot(dates[dates.select],obs.ili[dates.select,j,i], type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[i]), ylim=range(c(ili2.pred.lcl[dates.select,j,i],ili2.pred.ucl[dates.select,j,i],ili2.pred[dates.select,j,i]), na.rm=T ))
-  points(dates[dates.select],ili2.pred[dates.select,j,i], type='l', col='red', lty=3 )
-  points(dates[dates.select],ili2.pred.lcl[dates.select,j,i], type='l', col='red', lty=3 )
-  points(dates[dates.select],ili2.pred.ucl[dates.select,j,i], type='l', col='red', lty=3 )
-  abline(v=790)
-  }
-}
-pdf(file='../Results/nyc_borough_age.pdf', width=10, height=5)
-par(mfrow=c(2,3), mar=c(3,2,2,1))
-for(i in 1:5){
-  for( j in counties.to.test){
-  plot(dates[dates.select],obs.ili[dates.select,j,i], type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[i]), ylim=range(c(ili2.pred.lcl[dates.select,j,i],ili2.pred.ucl[dates.select,j,i],ili2.pred[dates.select,j,i]), na.rm=T ))
-  points(dates[dates.select],ili2.pred[dates.select,j,i], type='l', col='red', lty=2, lwd=2 )
-  points(dates[dates.select],ili2.pred.lcl[dates.select,j,i], type='l', col='red', lty=3 , lwd=2)
-  points(dates[dates.select],ili2.pred.ucl[dates.select,j,i], type='l', col='red', lty=3 ,lwd=2)
-  abline(v=790)
-  }
-}
-dev.off()
-```
-
 
 
 
@@ -389,6 +336,61 @@ simpleCap <- function(x) {
 dimnames(pop3)[[2]]<-sapply(dimnames(pop3)[[2]], simpleCap)
 saveRDS(pop3,'./nyc_shiny_data/borough.pop.rds')
 ```
+
+##When updating app, can stop here
+#######################################
+######################################
+
+
+Next extract residuals and fitted values
+```{r, fig.width=8, fig.height=6}
+#Residuals for all age groups for ILI
+ili2.resid<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','resid1'), simplify='array')
+dimnames(ili2.resid)[[2]]<-counties.to.test
+ili2.pred<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','pred'), simplify='array')
+dimnames(ili2.pred)[[2]]<-counties.to.test
+ili2.pred.lcl<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','lpi'), simplify='array')
+dimnames(ili2.pred.lcl)[[2]]<-counties.to.test
+ili2.pred.ucl<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','upi'), simplify='array')
+dimnames(ili2.pred.ucl)[[2]]<-counties.to.test
+obs.ili<- sapply(all.glm.res[['ili']], function(x) sapply(x,'[[','y'), simplify='array')
+
+dimnames(obs.ili)[[2]]<-counties.to.test
+dates<-as.Date(dimnames(ili.a)[[1]])
+```
+
+
+Observed vs expected by county and age group
+```{r}
+age.labels = c("Ages 0-4 years", "Ages 5-17 years", "Ages 18-64 years", "Ages 65+ years", "All age groups")
+
+n.times<-length(dates)
+dates.select<-(n.times-360):n.times
+par(mfrow=c(2,3), mar=c(3,2,1,1))
+for(i in 1:5){
+  for( j in counties.to.test){
+  plot(dates[dates.select],obs.ili[dates.select,j,i], type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[i]), ylim=range(c(ili2.pred.lcl[dates.select,j,i],ili2.pred.ucl[dates.select,j,i],ili2.pred[dates.select,j,i]), na.rm=T ))
+  points(dates[dates.select],ili2.pred[dates.select,j,i], type='l', col='red', lty=3 )
+  points(dates[dates.select],ili2.pred.lcl[dates.select,j,i], type='l', col='red', lty=3 )
+  points(dates[dates.select],ili2.pred.ucl[dates.select,j,i], type='l', col='red', lty=3 )
+  abline(v=790)
+  }
+}
+pdf(file='../Results/nyc_borough_age.pdf', width=10, height=5)
+par(mfrow=c(2,3), mar=c(3,2,2,1))
+for(i in 1:5){
+  for( j in counties.to.test){
+  plot(dates[dates.select],obs.ili[dates.select,j,i], type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[i]), ylim=range(c(ili2.pred.lcl[dates.select,j,i],ili2.pred.ucl[dates.select,j,i],ili2.pred[dates.select,j,i]), na.rm=T ))
+  points(dates[dates.select],ili2.pred[dates.select,j,i], type='l', col='red', lty=2, lwd=2 )
+  points(dates[dates.select],ili2.pred.lcl[dates.select,j,i], type='l', col='red', lty=3 , lwd=2)
+  points(dates[dates.select],ili2.pred.ucl[dates.select,j,i], type='l', col='red', lty=3 ,lwd=2)
+  abline(v=790)
+  }
+}
+dev.off()
+```
+
+
 
 
 ## Temporal SATSCAN by county and syndrome
