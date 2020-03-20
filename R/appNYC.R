@@ -50,7 +50,7 @@ server<-function(input, output){
             y.range<-c(0,max(c(ili2.pred.lcl[dates.select,j,],ili2.pred.ucl[dates.select,j,],ili2.pred[dates.select,j,],obs.ili[dates.select,j,]), na.rm=T))
           }
         }else if (input$set.prop=='Counts/100,000 people'){
-          y=obs.ili[dates.select,j,i]
+          y=obs.ili[dates.select,j,i]/pop3[dates.select,j,i]*100000
           pred<-ili2.pred[dates.select,j,i]/pop3[dates.select,j,i]*100000
           pred.lcl<-ili2.pred.lcl[dates.select,j,i]/pop3[dates.select,j,i]*100000
           pred.ucl<-ili2.pred.ucl[dates.select,j,i]/pop3[dates.select,j,i]*100000
