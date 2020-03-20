@@ -70,11 +70,12 @@ ds2<-merge(ds1, zip.cw, by.x='zipcode', by.y='Zip.Code')
 ```
 
 #Resp
+NOTE: only include people who actually are recorded as hospitalized. people who have not yet been discharged are not observed in this analysis
 ```{r}
 ds.resp<-ds2[ds2$respiratory==1,c('adate','ddate','agec')]
 ds.resp<-ds.resp[!(is.na(ds.resp$agec)),]
 
-now.cast<-NobBS.strat(ds.resp, now=as.Date('2020-03-16'),units='1 day', onset_date = "adate", report_date = 'ddate', strata='agec')
+now.cast<-NobBS.strat(ds.resp, now=as.Date('2020-03-16'),units='1 day', onset_date = "adate", report_date = 'ddate', strata='agec', quiet=F)
 ```
 
 
