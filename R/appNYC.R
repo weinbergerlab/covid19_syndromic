@@ -1,10 +1,8 @@
 library(shiny)
 all.glm.res<-readRDS('./nyc_shiny_data/glm.results.rds')
-pop3<-readRDS('./nyc_shiny_data/borough.pop.rds')
-
 counties.to.test<-c("Bronx","Brooklyn", "Manhattan","Queens","Staten Island", "Citywide" )
 syndromes<-c('ili','resp')
-dates<-as.Date(names(all.glm.res[[1]][[1]][[1]]$y))
+dates<-as.Date(names(all.glm.res[[1]][[1]][[1]]$resid1))
 n.times<-length(dates)
 last.date.format<-max(dates)
 last.date.format<-format(last.date.format,
@@ -39,7 +37,7 @@ server<-function(input, output){
     par(mfrow=c(2,3), mar=c(3,2,1,1))
     for(i in c('1','2','3','4','5')){
       for( j in input$set.borough){
-        if(input$set.prop=='Counts'){
+        if(input$set.prop=='Count'){
           y=obs.ili[dates.select,j,i]
           pred<-ili2.pred[dates.select,j,i]
           pred.lcl<-ili2.pred.lcl[dates.select,j,i]
@@ -49,28 +47,11 @@ server<-function(input, output){
           }else{
           y.range<-c(0,max(c(ili2.pred.lcl[dates.select,j,],ili2.pred.ucl[dates.select,j,],ili2.pred[dates.select,j,],obs.ili[dates.select,j,]), na.rm=T))
           }
-        }else if (input$set.prop=='Counts/100,000 people'){
-          y=obs.ili[dates.select,j,i]/pop3[dates.select,j,i]*100000
-          pred<-ili2.pred[dates.select,j,i]/pop3[dates.select,j,i]*100000
-          pred.lcl<-ili2.pred.lcl[dates.select,j,i]/pop3[dates.select,j,i]*100000
-          pred.ucl<-ili2.pred.ucl[dates.select,j,i]/pop3[dates.select,j,i]*100000
-          if(input$set.axis==F){
-            y.range<-c(0,max(c(pred.lcl,pred.ucl,pred,y), na.rm=T))
-          }else{
-            y.range<-c(0,max(c(ili2.pred.lcl[dates.select,j,]/pop3[dates.select,j,]*100000,
-                               ili2.pred.ucl[dates.select,j,]/pop3[dates.select,j,]*100000,
-                               ili2.pred[dates.select,j,]/pop3[dates.select,j,]*100000,
-                               obs.ili[dates.select,j,]/pop3[dates.select,j,]*100000
-                               ), na.rm=T))
-          }
-  
         }else if (input$set.prop=='Proportion'){
           y=plot.prop[dates.select,j,i]
-          denom<-obs.ili[dates.select,j,i]/y
-          pred<-ili2.pred[dates.select,j,i]/denom
-          pred.lcl<-ili2.pred.lcl[dates.select,j,i]/denom
-          pred.ucl<-ili2.pred.ucl[dates.select,j,i]/denom
-          
+          pred<-rep(NA, length(y))
+          pred.lcl<-rep(NA, length(y))
+          pred.ucl<-rep(NA, length(y))
         if(input$set.axis==F){
             y.range<-c(0,max(y,na.rm=T))
           }else{
@@ -105,7 +86,7 @@ ui<-fluidPage(
   titlePanel(paste0('NYC ED syndromic surveillance through ', last.date.format)),
   span("CAUTION: Syndromic surveillance data can be hard to interpret. Any increases above expected could be due to changes in healthcare seeking behavior (people might be more likely to go to the ED now with less severe symptoms because they are aware of the COVID-19 epidemic), or it could be due to actual viral illness, or a combination. For a deep dive of the data produced by NYC Department of Health and Mental Hygiene see https://www1.nyc.gov/assets/doh/downloads/pdf/hcp/weekly-surveillance03072020.pdf . This app shows the daily count of ED visits and is not adjusted for overall ED volume (as is typically done, and mainly because a denominator is not readily available from the web interface. "),
   selectInput("set.prop", "Proportion of ED visits or count:",
-              choice=c('Proportion','Counts','Counts/100,000 people','Observed/Expected'), selected ="Counts" ),
+              choice=c('Proportion','Count','Observed/Expected'), selected ="Count" ),
   selectInput("set.borough", "Borough:",
               choice=counties.to.test, selected ="Citywide" ),
   selectInput("set.syndrome", "Syndrome:",
