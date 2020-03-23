@@ -1,0 +1,132 @@
+ <!DOCTYPE html> 
+ <html lang="en"> 
+     <head> 
+         <title>Cluster Map</title> 
+         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" charset="utf-8"> 
+         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> 
+         <style type="text/css"> 
+          body {background-color: #f0f8ff;} 
+          #chartContainer{ overflow: hidden; } 
+          .chart-options{ display:none; } 
+          .chart-options{ padding:10px 0 10px 0; background-color:#e6eef2; border:1px solid silver; } 
+          .options-row{ margin:0 10px 10px 10px } 
+          .options-row>label:first-child, .options-row detail{ color:#13369f; font-weight:bold; } 
+          .options-row input[type='radio']{ margin:5px } 
+          p.help-block{ font-size:11px; color:#666; font-style:oblique; margin-top:0; } 
+          .main-content{ margin: 5px; } 
+          .options-row label{ font-weight: normal; } 
+          input[type=checkbox]{ margin-right:5px; } 
+          label.option-section{ border-bottom: solid 1px #e6e9eb; width: 100 % ; } 
+          .chart-column{ padding-top: 20px; padding-bottom: 30px; border-left: 1px solid #ddd; } 
+          .print-section a{ padding-right: 20px; text-decoration: none; } 
+          .cluster-selection{ border-bottom: dashed 1px #e6e9eb; } 
+          .cluster-selection label{ white-space: nowrap; color: #313030; } 
+          #id_display_count { margin:10px; } 
+          fieldset { margin-top: 10px; } 
+          @media print{ title{ display: none; } #id_banner { display: none; } .chart-options-section{ display: none; } #chartContainer{ margin: 20px; } .chart-column{ border-left: 0; } } 
+          @media print{ img { max-width: none !important; } a[href]:after { content: ""; } } 
+          #map-outer { height: 440px; padding: 20px; } 
+          #map { height: 400px; box-shadow: 1px 1px 8px #999;} 
+          @media all and (max-width: 991px) { #map-outer  { height: 650px } } 
+          table.info-window td { padding: 3px; } 
+         </style> 
+         <script type='text/javascript' src='https://www.satscan.org/javascript/jquery/jquery-1.12.4/jquery-1.12.4.js'></script> 
+         <script type='text/javascript' src='https://www.satscan.org/javascript/clustercharts/jQuery.resizeEnd.js'></script> 
+         <script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script> 
+     </head> 
+     <body> 
+         <table id="id_banner" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F8FAFA" style="border-bottom: 3px double navy;"> 
+         <tbody><tr> 
+         <td width="120" align="center" bgcolor="#DBD7DB"><img src="https://www.satscan.org/images/swe2.jpg" alt="&Ouml;stersund map" title="ճtersund map" width="120" height="115" hspace="1" border="0"></td> 
+         <td align="right" bgcolor="#D4DCE5"><img src="https://www.satscan.org/images/satscan_title2.jpg" alt="SaTScan&#0153; - Software for the spatial, temporal, and space-time scan statistics" title="SaTScan&#0153; - Software for the spatial, temporal, and space-time scan statistics" width="470" height="115"></td> 
+         <td width="25%" bgcolor="#F8FAFA" align="right"><img src="https://www.satscan.org/images/nyc2.jpg" alt="New York City map" title="New York City map" width="112" height="115" hspace="1" border="0" align="middle"></td> 
+         </tr></tbody></table> 
+ 		<div id="load_error" style="color:#101010; text-align: center;font-size: 1.2em; padding: 20px;background-color: #ece1e1; border: 1px solid #e49595; display:none;"></div> 
+     <div class="container-fluid main-content"> 
+         <div class="row"> 
+             <div id="map-outer" class="col-md-12"> 
+             <div class="col-md-3 chart-options-section"> 
+                 <fieldset> 
+                 <!-- 
+                 <div class="options-row"> 
+                     <label class="option-section" for="title_obs">Title</label> 
+                     <div>
+                         <input type="text" style="width:95%;padding:1px;" class="title-setter" id="title_obs" value="Cartesian Coordinates Map"> 
+                         <p class="help-block">Title can be changed by editing this text.</p> 
+                     </div> 
+                 </div> 
+                 --> 
+                 <div class="options-row"> 
+                     <label class="option-section" for="title_obs">Print</label> 
+                     <div class="print-section"> 
+                         <a href="#" onclick="javascript:window.print();return false;"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</a> 
+                         <!-- <a href="#" id="print_png"><span class="glyphicon glyphicon-picture" aria-hidden = "true"></span> Save Image</a> --> 
+                     </div> 
+                 </div> 
+                 <div class="options-row"> 
+                     <div id="id_significance_option">
+                         <label><input type="radio" name="view_significance" id="id_view_significant" value="entire" checked=checked />Significant clusters</label>
+                         <label><input type="radio" name="view_significance" id="id_view_all" value="cluster" />All clusters</label>
+                         <p class="help-block">Toggle display between significant and all clusters.</p>
+                     </div>
+                     <div id="id_rates_option"> 
+                         <label><input type="radio" name="view_rate" id="id_view_highlow" value="entire" checked=checked />High and low clusters</label>
+                         <label><input type="radio" name="view_rate" id="id_view_high" value="cluster"/>High only</label>
+                         <label><input type="radio" name="view_rate" id="id_view_low" value="cluster"/>Low only</label>
+                         <p class="help-block">Toggle display of clusters for scan rate.</p>
+                     </div> 
+                     <div id="id_secondary_clusters_option"> 
+                         <div>Secondary Clusters:</div>
+                         <label style="margin-left:15px;"><input type="checkbox" id="id_hierarchical" value="secondary" />Hierarchical</label>
+                         <label style="margin-left:15px;"><input type="checkbox" id="id_gini" value="secondary" />Gini</label>
+                         <p class="help-block">Display options for secondary clusters.</p>
+                     </div> 
+                     <div>Show clusters using:</div>
+                     <label style="margin-left:15px;"><input type="checkbox" id="id_cluster_circles" value="cluster" checked=checked />Circles</label>
+                     <label style="margin-left:15px;"><input type="checkbox" id="id_cluster_locations" value="cluster" checked=checked />Locations</label>
+                     <p class="help-block">Display options for clusters.</p>
+                     <!-- <label><input type="checkbox" id="id_show_grid_lines" checked=checked />Show grid lines</label> 
+                     <p class="help-block">Toggle display of graph grid lines.</p> --> 
+                     <label><input type="checkbox" id="id_show_location_points" />Show all location points</label>
+                     <p class="help-block">Toggle display of location points.</p>
+                     <label><input type="checkbox" id="id_fit_graph_viewport" checked=checked />Fit map to viewport</label>
+                     <p class="help-block">Attempts to keep entire map in view.</p>
+                 </div> 
+                 <div id="id_display_count">
+                     <fieldset>
+                             <legend style="font-size:14px; margin-bottom:0;">Display Data:</legend>
+                             <div><span id="id_cluster_count"></span> Clusters</div>
+                             <div><span id="id_cluster_point_count"></span> Cluster Locations</div>
+                             <div><span id="id_point_count"></span> Total Locations</div> 
+                     </fieldset>
+                 </div>
+                 </fieldset> 
+                 <div style="font-style:italic; font-size:smaller;">Generated with SaTScan v9.6</div>
+             </div> 
+             <div class="xx-col-md-9 chart-column" id="map"></div> 
+             </div> 
+         </div> 
+      </div> 
+         <script type='text/javascript'> 
+             var parameters = {scanrate:1/*high=1,low=2,highorlow=3*/,giniscan:false};
+             if (parameters.scanrate != 3) { $('#id_rates_option').hide(); }
+             if (!parameters.giniscan) { $('#id_secondary_clusters_option').hide(); }
+             var entire_region_points = [[-72.740848, 41.842524],[-72.544612, 41.904184],[-73.104548, 42.021872],[-72.742569, 41.942674],[-72.912061, 42.003965],[-72.449535, 41.915041],[-72.542202, 41.707850],[-72.801170, 41.960569],[-72.522734, 41.761647],[-72.527195, 41.797491],[-72.439230, 41.766465],[-72.945000, 41.949045],[-72.845910, 42.006989],[-72.971810, 41.927017],[-73.004291, 41.973954],[-72.460850, 41.836404],[-72.814985, 41.876445],[-72.452373, 41.994597],[-72.557966, 41.660272],[-72.573562, 41.835263],[-72.261864, 41.989658],[-72.650196, 41.989078],[-72.769240, 41.906400],[-72.554980, 41.983950],[-72.364819, 41.878897],[-72.596681, 41.905774],[-72.863412, 41.946472],[-72.974826, 42.012788],[-72.724467, 42.002938],[-72.673838, 41.871063],[-72.657294, 41.927497],[-73.087497, 41.956897],[-72.673575, 41.767487],[-72.621809, 41.780850],[-72.696732, 41.793088],[-72.669731, 41.739342],[-72.610154, 41.748727],[-72.665649, 41.789345],[-72.370578, 41.625438],[-72.376262, 41.733105],[-71.952907, 41.789381],[-72.127776, 41.792915],[-72.307492, 41.694195],[-72.339785, 41.783075],[-71.856808, 41.791499],[-71.848641, 41.856311],[-72.095424, 41.893101],[-72.066453, 41.767068],[-72.405977, 41.684897],[-72.240401, 41.631267],[-72.197584, 41.773284],[-71.902769, 41.988234],[-71.990963, 41.870057],[-71.872314, 41.909016],[-71.948368, 42.020339],[-71.906249, 41.840361],[-72.248010, 41.799673],[-71.839905, 41.968834],[-72.170110, 41.891020],[-72.259566, 41.889539],[-72.015482, 41.972427],[-72.079773, 41.942415],[-72.000005, 41.697873],[-71.902352, 41.731258],[-72.174418, 41.544287],[-71.949584, 41.589138],[-71.856432, 41.702742],[-71.875681, 41.469646],[-72.089514, 41.548817],[-72.001255, 41.522294],[-72.326940, 41.362733],[-71.914441, 41.680379],[-72.254176, 41.294046],[-71.817768, 41.726212],[-72.053325, 41.565469],[-71.831967, 41.581290],[-71.910765, 41.742732],[-72.129365, 41.564145],[-73.056997, 41.438990],[-72.796888, 41.279685],[-72.420440, 41.351166],[-72.483420, 41.405924],[-72.529846, 41.296228],[-72.556219, 41.566426],[-72.347566, 41.557422],[-72.664429, 41.614089],[-72.462519, 41.368921],[-73.083533, 41.326518],[-72.578678, 41.379200],[-72.267047, 41.485152],[-72.683108, 41.462210],[-72.388206, 41.467080],[-72.505861, 41.558893],[-72.398986, 41.352979],[-72.700557, 41.332044],[-72.503776, 41.457084],[-72.577621, 41.464997],[-72.445686, 41.342996],[-72.627028, 41.337631],[-72.454920, 41.633051],[-72.717418, 41.514989],[-72.550383, 41.539745],[-72.655103, 41.547621],[-73.051000, 41.213809],[-73.075416, 41.239509],[-73.225205, 41.337918],[-72.447705, 41.508696],[-72.774960, 41.330547],[-72.779077, 41.380216],[-72.856205, 41.380646],[-72.383741, 41.299921],[-73.027393, 41.282681],[-73.135256, 41.431278],[-72.589282, 41.598819],[-72.700564, 41.533548],[-73.087468, 41.380972],[-73.138502, 41.305970],[-72.804913, 41.459113],[-72.466613, 41.303530],[-72.926229, 41.306507],[-72.927022, 41.316203],[-72.875484, 41.278259],[-72.868451, 41.319637],[-72.941381, 41.373483],[-72.965135, 41.272405],[-72.905242, 41.348254],[-72.913672, 41.427583],[-72.933039, 41.293494],[-72.993307, 41.426084],[-73.200222, 41.169139],[-73.218537, 41.161950],[-73.208281, 41.211728],[-73.168434, 41.170661],[-73.181192, 41.186790],[-73.169697, 41.204635],[-73.209703, 41.260071],[-73.301215, 41.265013],[-73.128125, 41.230094],[-73.133049, 41.169077],[-73.264383, 41.723172],[-73.358206, 41.771812],[-73.481419, 41.650313],[-73.458836, 41.741155],[-73.242259, 41.675433],[-73.214265, 41.757531],[-73.339985, 41.692858],[-73.444703, 41.699453],[-73.129026, 41.837767],[-73.288652, 41.629549],[-73.323771, 41.649444],[-73.207248, 41.561472],[-73.592199, 41.061151],[-73.280743, 41.173968],[-73.242497, 41.197169],[-73.624542, 41.037445],[-73.661171, 41.087780],[-73.499384, 41.159195],[-73.570156, 41.023513],[-73.583739, 41.030427],[-73.349760, 41.133701],[-73.372755, 41.228372],[-73.289744, 41.145798],[-73.440255, 41.207009],[-73.572402, 41.135544]]; 
+             var display_stats = {};
+             var clusters = [ 
+             { id: 1, significant : true, highrate : true, lat : 41.424397, lng : -73.481842, radius : 21486.184739, hierarchical : true, gini : false, color : '#F13C3F', pointscolor : '#FF1A1A', tip : '<div style="text-decoration:underline; ">Cluster 1</div>Time frame : 2019/10/4 to 2020/3/9<br>Number of cases : 845<br>Expected cases : 666.09<br>Observed / expected : 1.27<br>P-value : 0.00000012<br>Recurrence interval : 22700 years<br>', points : [[-73.481842, 41.424397],[-73.459353, 41.376291],[-73.488484, 41.487988],[-73.392446, 41.467404],[-73.393240, 41.374700],[-73.502499, 41.306486],[-73.319694, 41.394112],[-73.359879, 41.520837],[-73.391932, 41.305066],[-73.495971, 41.578388],[-73.245176, 41.406690],[-73.415914, 41.601761],[-73.300218, 41.553986],[-73.233170, 41.474529]] },
+{ id: 2, significant : true, highrate : true, lat : 41.067519, lng : -73.438760, radius : 9120.335451, hierarchical : true, gini : false, color : '#F13C3F', pointscolor : '#FF1A1A', tip : '<div style="text-decoration:underline; ">Cluster 2</div>Time frame : 2019/11/4 to 2020/3/9<br>Number of cases : 513<br>Expected cases : 397.87<br>Observed / expected : 1.29<br>P-value : 0.00015<br>Recurrence interval : 18 years<br>', points : [[-73.438760, 41.067519],[-73.426372, 41.084581],[-73.481381, 41.075978],[-73.396696, 41.083729],[-73.421087, 41.111209],[-73.443366, 41.126514],[-73.522847, 41.071008],[-73.520371, 41.100906],[-73.538367, 41.053592],[-73.404337, 41.139415],[-73.543763, 41.054964],[-73.543708, 41.088821]] },
+{ id: 3, significant : true, highrate : true, lat : 41.957807, lng : -73.317595, radius : 15752.741742, hierarchical : true, gini : false, color : '#F13C3F', pointscolor : '#FF1A1A', tip : '<div style="text-decoration:underline; ">Cluster 3</div>Time frame : 2019/4/25 to 2020/3/9<br>Number of cases : 124<br>Expected cases : 74.36<br>Observed / expected : 1.67<br>P-value : 0.00078<br>Recurrence interval : 3.5 years<br>', points : [[-73.317595, 41.957807],[-73.274487, 42.012121],[-73.308979, 42.026455],[-73.333077, 41.870393],[-73.195634, 41.971870],[-73.445053, 41.950215],[-73.420674, 42.014755],[-73.236360, 41.847311],[-73.447457, 41.854444]] },
+{ id: 4, significant : false, highrate : true, lat : 41.681132, lng : -72.940935, radius : 23323.619151, hierarchical : true, gini : false, color : '#F13C3F', pointscolor : '#FF1A1A', tip : '<div style="text-decoration:underline; ">Cluster 4</div>Time frame : 2020/1/19 to 2020/3/9<br>Number of cases : 944<br>Expected cases : 803.18<br>Observed / expected : 1.18<br>P-value : 0.0048<br>Recurrence interval : 209 days<br>', points : [[-72.940935, 41.681132],[-73.015247, 41.669186],[-72.860989, 41.673375],[-72.888312, 41.746403],[-72.959179, 41.759747],[-73.047801, 41.654658],[-72.973586, 41.600642],[-72.872758, 41.613249],[-72.831610, 41.725298],[-72.805441, 41.657196],[-72.904791, 41.576972],[-73.086083, 41.670173],[-72.794304, 41.688715],[-73.058619, 41.755067],[-73.033450, 41.586463],[-72.933496, 41.562667],[-72.853779, 41.790906],[-72.770058, 41.665127],[-73.109825, 41.709590],[-73.081878, 41.594677],[-73.046043, 41.569131],[-72.993337, 41.548504],[-72.777994, 41.611268],[-73.045904, 41.557220],[-73.123035, 41.618620],[-72.929061, 41.834591],[-72.759173, 41.754125],[-72.731065, 41.686984],[-73.024305, 41.532471],[-73.067469, 41.549434],[-72.733826, 41.732669],[-72.823695, 41.542023],[-73.006453, 41.844072],[-72.762252, 41.786882],[-72.904488, 41.511702],[-72.720183, 41.613751],[-72.823169, 41.837368],[-72.727435, 41.763407],[-72.907205, 41.859634],[-72.976338, 41.499291],[-72.927553, 41.865419],[-72.774105, 41.533014],[-73.202197, 41.692133],[-72.967066, 41.875586],[-72.695130, 41.748695],[-72.705258, 41.774666],[-72.859339, 41.873374],[-72.670572, 41.701282],[-73.123314, 41.527690],[-73.212524, 41.637883],[-72.663416, 41.657177],[-73.053314, 41.489213]] },
+{ id: 5, significant : false, highrate : true, lat : 41.354725, lng : -72.043863, radius : 17181.537716, hierarchical : true, gini : false, color : '#F13C3F', pointscolor : '#FF1A1A', tip : '<div style="text-decoration:underline; ">Cluster 5</div>Time frame : 2019/3/26 to 2020/3/9<br>Number of cases : 554<br>Expected cases : 462.66<br>Observed / expected : 1.20<br>P-value : 0.115<br>Recurrence interval : 9 days<br>', points : [[-72.043863, 41.354725],[-72.102117, 41.347904],[-71.974465, 41.366502],[-72.061849, 41.431148],[-72.125133, 41.405113],[-72.155672, 41.356304],[-71.995997, 41.444580],[-71.914057, 41.379008],[-72.117910, 41.462307],[-72.141833, 41.458497],[-72.215896, 41.323390],[-71.858757, 41.364968],[-72.188178, 41.464748],[-72.245286, 41.385924]] },
+{ id: 6, significant : false, highrate : true, lat : 41.692719, lng : -72.140609, radius : 8625.227806, hierarchical : true, gini : false, color : '#F13C3F', pointscolor : '#FF1A1A', tip : '<div style="text-decoration:underline; ">Cluster 6</div>Time frame : 2020/1/31 to 2020/3/9<br>Number of cases : 42<br>Expected cases : 23.88<br>Observed / expected : 1.76<br>P-value : 0.926<br>Recurrence interval : 1 day<br>', points : [[-72.140609, 41.692719],[-72.100592, 41.694195],[-72.170435, 41.672736],[-72.157522, 41.737042],[-72.207562, 41.708423],[-72.068670, 41.648493],[-72.075473, 41.642861],[-72.143435, 41.615266]] },
+{ id: 7, significant : false, highrate : true, lat : 41.356589, lng : -73.010408, radius : 5095.521441, hierarchical : true, gini : false, color : '#F13C3F', pointscolor : '#FF1A1A', tip : '<div style="text-decoration:underline; ">Cluster 7</div>Time frame : 2020/2/29 to 2020/3/9<br>Number of cases : 18<br>Expected cases : 7.62<br>Observed / expected : 2.36<br>P-value : 0.979<br>Recurrence interval : 1 day<br>', points : [[-73.010408, 41.356589],[-72.969810, 41.327912],[-73.069126, 41.344249]] } 
+             ]; 
+             clusters.reverse();
+             var resource_path = 'https://www.satscan.org/'; 
+     </script> 
+     <script src='https://www.satscan.org/javascript/clustercharts/mapgoogle-1.0.js'></script> 
+   </body> 
+ </html> 
+
+
