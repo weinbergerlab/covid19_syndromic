@@ -1,0 +1,195 @@
+                                 _____________________________
+
+                                         SaTScan v9.6
+                                 _____________________________
+
+
+Program run on: Tue Mar 10 21:29:46 2020
+
+Prospective Space-Time analysis
+scanning for clusters with high rates
+using the Space-Time Permutation model.
+_______________________________________________________________________________________________
+
+SUMMARY OF DATA
+
+Study period.......................: 2018/01/01 to 2020/3/9
+Number of locations................: 276
+Total number of cases..............: 33662
+_______________________________________________________________________________________________
+
+CLUSTERS DETECTED
+
+1.Location IDs included.: 06811, 06810, 06812, 06804, 06801, 06877, 06470, 06752, 06896, 06784,
+                          06482, 06776, 06783, 06488
+  Coordinates / radius..: (41.424397 N, 73.481842 W) / 21.45 km
+  Time frame............: 2019/10/4 to 2020/3/9
+  Number of cases.......: 845
+  Expected cases........: 666.09
+  Observed / expected...: 1.27
+  Test statistic........: 22.611859
+  P-value...............: 0.00000012
+  Recurrence interval...: 22700 years
+
+2.Location IDs included.: 06853, 06854, 06820, 06855, 06856, 06850, 06906, 06907, 06901, 06851,
+                          06902, 06905
+  Coordinates / radius..: (41.067519 N, 73.438760 W) / 9.10 km
+  Time frame............: 2019/11/4 to 2020/3/9
+  Number of cases.......: 513
+  Expected cases........: 397.87
+  Observed / expected...: 1.29
+  Test statistic........: 15.448773
+  P-value...............: 0.00015
+  Recurrence interval...: 18 years
+
+3.Location IDs included.: 06031, 06024, 06018, 06796, 06058, 06039, 06068, 06756, 06069
+  Coordinates / radius..: (41.957807 N, 73.317595 W) / 15.73 km
+  Time frame............: 2019/4/25 to 2020/3/9
+  Number of cases.......: 124
+  Expected cases........: 74.36
+  Observed / expected...: 1.67
+  Test statistic........: 13.804614
+  P-value...............: 0.00078
+  Recurrence interval...: 3.5 years
+
+4.Location IDs included.: 06010, 06786, 06062, 06085, 06013, 06782, 06716, 06489, 06032, 06052,
+                          06479, 06787, 06053, 06791, 06704, 06444, 06001, 06051, 06778, 06779,
+                          06710, 06705, 06037, 06702, 06795, 06020, 06107, 06111, 06706, 06708,
+                          06110, 06451, 06057, 06117, 06410, 06023, 06089, 06119, 06019, 06712,
+                          06022, 06450, 06763, 06061, 06106, 06105, 06092, 06109, 06762, 06751,
+                          06067, 06770
+  Coordinates / radius..: (41.681132 N, 72.940935 W) / 23.28 km
+  Time frame............: 2020/1/19 to 2020/3/9
+  Number of cases.......: 944
+  Expected cases........: 803.18
+  Observed / expected...: 1.18
+  Test statistic........: 11.983571
+  P-value...............: 0.0048
+  Recurrence interval...: 209 days
+
+5.Location IDs included.: 06340, 06320, 06355, 06335, 06375, 06385, 06339, 06378, 06382, 06353,
+                          06357, 06379, 06370, 06333
+  Coordinates / radius..: (41.354725 N, 72.043863 W) / 17.15 km
+  Time frame............: 2019/3/26 to 2020/3/9
+  Number of cases.......: 554
+  Expected cases........: 462.66
+  Observed / expected...: 1.20
+  Test statistic........: 8.600396
+  P-value...............: 0.115
+  Recurrence interval...: 9 days
+
+6.Location IDs included.: 06280, 06264, 06266, 06256, 06226, 06350, 06330, 06254
+  Coordinates / radius..: (41.692719 N, 72.140609 W) / 8.61 km
+  Time frame............: 2020/1/31 to 2020/3/9
+  Number of cases.......: 42
+  Expected cases........: 23.88
+  Observed / expected...: 1.76
+  Test statistic........: 5.599927
+  P-value...............: 0.926
+  Recurrence interval...: 1 day
+
+7.Location IDs included.: 06525, 06515, 06401
+  Coordinates / radius..: (41.356589 N, 73.010408 W) / 5.09 km
+  Time frame............: 2020/2/29 to 2020/3/9
+  Number of cases.......: 18
+  Expected cases........: 7.62
+  Observed / expected...: 2.36
+  Test statistic........: 5.099335
+  P-value...............: 0.979
+  Recurrence interval...: 1 day
+_______________________________________________________________________________________________
+
+PARAMETER SETTINGS
+
+Input
+-----
+  Case File        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\ili.spacetime.cas
+  Time Precision   : Day
+  Start Time       : 2018/01/01
+  End Time         : 2020/3/9
+  Coordinates File : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\geo.spacetime.ct.geo
+  Coordinates      : Latitude/Longitude
+
+Analysis
+--------
+  Type of Analysis        : Prospective Space-Time
+  Probability Model       : Space-Time Permutation
+  Scan for Areas with     : High Rates
+  Time Aggregation Units  : Day
+  Time Aggregation Length : 1
+
+Output
+------
+  Main Results File       : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\spacetime.txt
+  Google Earth File       : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\spacetime.kml
+  Google Maps File        : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\spacetime.clustermap.html
+  Cluster File            : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\spacetime.clustermap.col.dbf
+  Stratified Cluster File : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\spacetime.clustermap.sci.dbf
+  Location File           : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\spacetime.clustermap.gis.dbf
+  Simulated LLRs File     : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\results\spacetime.clustermap.llr.dbf
+
+Data Checking
+-------------
+  Temporal Data Check     : Check to ensure that all cases and controls are within the specified temporal study period.
+  Geographical Data Check : Check to ensure that all observations (cases, controls and populations) are within the specified geographical area.
+
+Spatial Neighbors
+-----------------
+  Use Non-Euclidian Neighbors file : No
+  Use Meta Locations File          : No
+  Multiple Coordinates Type        : Allow only one set of coordinates per location ID.
+
+Spatial Window
+--------------
+  Maximum Spatial Cluster Size : 50 percent of population at risk
+  Window Shape                 : Circular
+
+Temporal Window
+---------------
+  Minimum Temporal Cluster Size : 3 Days
+  Maximum Temporal Cluster Size : 50 percent of study period
+
+Cluster Restrictions
+--------------------
+  Minimum Cases in Cluster for High Rates : 2
+  Restrict High Rate Clusters             : No
+
+Space And Time Adjustments
+--------------------------
+  Adjust for Weekly Trends, Nonparametric : Yes
+
+Inference
+---------
+  P-Value Reporting                  : Default Combination
+  Number of Replications             : 999
+  Adjusting for More Likely Clusters : No
+
+Spatial Output
+--------------
+  Automatically Launch Map                  : Yes
+  Compress KML File into KMZ File           : No
+  Include All Location IDs in the Clusters  : Yes
+  Cluster Location Threshold - Separate KML : 1000
+  Report Hierarchical Clusters              : Yes
+  Criteria for Reporting Secondary Clusters : No Geographical Overlap
+  Restrict Reporting to Smaller Clusters    : No
+
+Temporal Graphs
+---------------
+  Produce Temporal Graphs : No
+
+Other Output
+------------
+  Report Critical Values  : No
+  Report Monte Carlo Rank : No
+
+Run Options
+-----------
+  Processor Usage   : All Available Processors
+  Suppress Warnings : No
+  Logging Analysis  : No
+_______________________________________________________________________________________________
+
+Program completed  : Tue Mar 10 21:30:15 2020
+Total Running Time : 29 seconds
+Processor Usage    : 8 processors

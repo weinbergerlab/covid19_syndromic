@@ -1,0 +1,106 @@
+                                 _____________________________
+
+                                         SaTScan v9.6
+                                 _____________________________
+
+
+Program run on: Wed Mar 11 22:06:38 2020
+
+Prospective Purely Temporal analysis
+scanning for clusters with high rates
+using the Discrete Poisson model.
+_______________________________________________________________________________________________
+
+SUMMARY OF DATA
+
+Study period.......................: 2018/01/01 to 2020/3/9
+Population, averaged over time.....: 12
+Total number of cases..............: 9312
+Annual cases / 100000..............: 36524250.0
+_______________________________________________________________________________________________
+
+CLUSTERS DETECTED
+
+1.Location IDs included.: All
+  Time frame............: 2019/2/5 to 2020/3/9
+  Number of cases.......: 4733
+  Expected cases........: 3533.15
+  Annual cases / 100000.: 48927782.5
+  Observed / expected...: 1.34
+  Relative risk.........: 1.69
+  Log likelihood ratio..: 318.140090
+  P-value...............: 0.001
+  Recurrence interval...: 2.7 years
+_______________________________________________________________________________________________
+
+PARAMETER SETTINGS
+
+Input
+-----
+  Case File       : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\ili.temporal.cas
+  Population File : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\ili.expected.pop
+  Time Precision  : Day
+  Start Time      : 2018/01/01
+  End Time        : 2020/3/9
+
+Analysis
+--------
+  Type of Analysis        : Prospective Purely Temporal
+  Probability Model       : Discrete Poisson
+  Scan for Areas with     : High Rates
+  Time Aggregation Units  : Day
+  Time Aggregation Length : 1
+
+Output
+------
+  Main Results File       : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\temporal.txt
+  Cluster File            : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\temporal.col.dbf
+  Stratified Cluster File : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\temporal.sci.dbf
+  Location File           : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\temporal.gis.dbf
+  Simulated LLRs File     : C:\Users\dmw63\Desktop\My documents h\covid19_syndromic\satscan\data\temporal.llr.dbf
+
+Data Checking
+-------------
+  Temporal Data Check : Check to ensure that all cases and controls are within the specified temporal study period.
+
+Temporal Window
+---------------
+  Minimum Temporal Cluster Size : 3 Days
+  Maximum Temporal Cluster Size : 50 percent of study period
+
+Cluster Restrictions
+--------------------
+  Minimum Cases in Cluster for High Rates : 2
+  Restrict High Rate Clusters             : No
+
+Space And Time Adjustments
+--------------------------
+  Temporal Adjustment                     : None
+  Adjust for Weekly Trends, Nonparametric : Yes
+  Adjust for known relative risks         : No
+
+Inference
+---------
+  P-Value Reporting                  : Default Combination
+  Number of Replications             : 999
+  Adjusting for More Likely Clusters : No
+
+Temporal Graphs
+---------------
+  Produce Temporal Graphs : No
+
+Other Output
+------------
+  Report Critical Values  : No
+  Report Monte Carlo Rank : No
+
+Run Options
+-----------
+  Processor Usage   : All Available Processors
+  Suppress Warnings : No
+  Logging Analysis  : No
+_______________________________________________________________________________________________
+
+Program completed  : Wed Mar 11 22:06:38 2020
+Total Running Time : 0 seconds
+Processor Usage    : 8 processors

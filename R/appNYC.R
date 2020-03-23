@@ -88,10 +88,11 @@ server<-function(input, output){
             y.range<-c(0.2, 4)
           }  
         }
-        plot(dates[dates.select],y, type='l', bty='l', ylab='Fitted', main=paste(j, age.labels[as.numeric(i)]), ylim=y.range)
-        points(dates[dates.select],pred, type='l', col='red', lty=3 )
-        points(dates[dates.select],pred.lcl, type='l', col='red', lty=3 )
-        points(dates[dates.select],pred.ucl, type='l', col='red', lty=3 )
+        plot(dates[dates.select],y, type='n', bty='l', ylab='Fitted', main=paste(j, age.labels[as.numeric(i)]), ylim=y.range)
+        polygon(c(dates[dates.select],rev(dates[dates.select])), 
+                c(pred.lcl, rev(pred.ucl)), col=rgb(1,0,0,alpha=0.1), border=NA)
+        lines(dates[dates.select],pred, type='l', col='red', lty=1, lwd=1.5 )
+        lines(dates[dates.select],y, lwd=1.5)
         if(input$set.prop=='Observed/Expected'){
           abline(h=1, col='gray', lty=2)
         }
@@ -112,13 +113,13 @@ ui<-fluidPage(
               choice=syndromes, selected ="ili" ),
   checkboxInput("set.axis", "Uniform axis for all plots?:",
                 value =F ),
-  sliderInput('display.dates', 'Earliest date to display', min=min(dates), max=max(dates)-30, value=max(dates)-365),
+  sliderInput('display.dates', 'Earliest date to display', min=min(dates), max=max(dates)-30, value=max(dates)-90),
   plotOutput("countyPlot"),
   column(8, align = 'justify',
          hr(),
          span("The black line shows the observed number of ED visits per day in the indicated stratum, and the red lines denote the mean and 95% prediction intervals for a model adjusting for seasonality, influenza activity, and RSV activity"),
          hr(),
-         span("These plots summarize the NYC syndromic surveillance data, which were downloaded from the Epiquery website of the NYC Department of Health and Mental Hygiene. The models and plots were done by Dr. Dan Weinberger from the Public Health Modeling Unit and Department of Epidemiology of Microbial Diseases at Yale School of Public Health, with assistance from Alyssa Amick, Kelsie Cassell, Marcus Rossi, Ernest Asare, Yu-Han Kao. Underlying analysis code can be found at https://github.com/weinbergerlab/covid19_syndromic"),
+         span("These plots summarize the NYC syndromic surveillance data, which were downloaded from the Epiquery website of the NYC Department of Health and Mental Hygiene. The models and plots were done by Dr. Dan Weinberger from the Public Health Modeling Unit and Department of Epidemiology of Microbial Diseases at Yale School of Public Health, with assistance from Alyssa Amick, Forest Crawford, Kelsie Cassell, Marcus Rossi, Ernest Asare, Yu-Han Kao. Underlying analysis code can be found at https://github.com/weinbergerlab/covid19_syndromic"),
          
   )
 )
