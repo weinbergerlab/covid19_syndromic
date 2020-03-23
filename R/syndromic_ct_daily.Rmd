@@ -21,13 +21,17 @@ library(shiny)
 library(pbapply)
 library(zoo)
 library(ciTools)
+library(MASS)
+```
+
+```{r}
+last.date<-as.Date('2020-03-17')
 ```
 
 ##Import and clean the data
 ```{r}
 ds1a<-read.csv('../DO_NOT_SYNC/yale_view_2018_2019.csv')
 ds1b<-read.csv('../DO_NOT_SYNC/yale_view_2020.csv')
-
 zip.cw<-read.csv('../Data/zipcode-town.csv')
 
 zip.cw$Zip.Code<-paste0('0',zip.cw$Zip.Code)
@@ -49,6 +53,9 @@ ds1$cough<-grepl('COUGH', ds1$classification)
 ds1$respiratory<-grepl('RESPIRATORY', ds1$classification)
 ds1$circulatory<-grepl('CIRCULATORY', ds1$classification)
 ds1$ili2<- grepl('FEVER/FLU', ds1$classification)
+#ds1$pneumonia<- grepl('PNEUMONIA', ds1$classification)
+ds1$fever<- grepl('FEVER (INFECTIOUS ', ds1$classification, fixed=T)
+
 ds1$admitted<-0
 #Guessing on this list
 ds1$admitted[ds1$disposition %in% c('9','09','Admitted', 'Adm','TRANSFER to Inpatien', 'YALE','DSCH to VA Hosp Fede', 'Transfer to Danbury',  'HARTFORD', 'STFRANCIS','PACHR Hospit')] <-1
@@ -68,11 +75,10 @@ ds2<-merge(ds1, zip.cw, by.x='zipcode', by.y='Zip.Code')
 #last.date<-ds2[ds2$adate==as.Date('2020-03-09') & ds2$agec==5 & ds2$County=='Fairfield' ,c('classification'), drop=F]
 ```
 
-```{r, eval=F}
-ds1.m<-melt(ds2[,c('adate', 'County','agec','ili','cough','respiratory','circulatory','ili2','all.visits', 'ili2.admit', 'resp.admit','admitted')], id.vars=c('adate','County','agec'))
-last.date<- max(ds1.m$adate)
-ds1.m<-ds1.m[ds1.m$adate != last.date,] #remove last day from the dataset,assuming it is incomplete
-ds1.m<-ds1.m[ds1.m$adate != (last.date-1),] #remove second to last day from the dataset,assuming it is incomplete
+```{r}
+ds1.m<-melt(ds2[,c('adate', 'County','agec','ili','cough','fever','respiratory','circulatory','ili2','all.visits', 'ili2.admit', 'resp.admit','admitted')], id.vars=c('adate','County','agec'))
+#last.date<- max(ds1.m$adate)
+ds1.m<-ds1.m[ds1.m$adate < last.date,] #remove last day from the dataset,assuming it is incomplete
 
 saveRDS(ds1.m, '../DO_NOT_SYNC/county_ts_ct.rds')
 ds1.c<-acast(ds1.m, agec~adate ~County~variable, fun.aggregate = sum)
@@ -86,16 +92,16 @@ ds1.c<-acast(ds1.m, agec~adate ~County~variable, fun.aggregate = sum)
 ```
 
 ## View data
-```{r}
+```{r, eval=F}
 counties<-dimnames(ds1.c)[[3]]
 ages<-dimnames(ds1.c)[[1]]
 #syndromes<- dimnames(ds1.c)[[4]]
-syndromes<-'resp.admit'
+syndromes<-c('fever')
 for(j in syndromes){
 for(i in counties){
 par(mfrow=c(2,3))  
 for(k in ages){
-  plot(ds1.c[k,,i,j]/ds1.c[k,,i,'admitted'], type='l', bty='l', main=paste(j,i,k))
+  plot(ds1.c[k,,i,j]/ds1.c[k,,i,'all.visits'], type='l', bty='l', main=paste(j,i,k))
   }
  }
 }
@@ -173,7 +179,7 @@ combo2$flu.rate[combo2$flu.rate==9999]<-NA #last few weeks
 max.date.miss.flu<-max(combo2$ddate[is.na(combo2$flu.rate)], na.rm=T)
 combo2$flu.rate[combo2$ddate>max.date.miss.flu] <-NA
 
-combo2.sub<-combo2[, c('agec', 'adate','MMWRyear', 'MMWRweek', 'County', 'ili2','cough','respiratory','circulatory','flu.rate',"rsv.searches",'all.visits')]
+combo2.sub<-combo2[, c('agec', 'adate','MMWRyear', 'MMWRweek', 'County', 'ili2','cough','respiratory','circulatory','fever','flu.rate',"rsv.searches",'all.visits')]
 ili.m<-melt(combo2.sub, id.vars=c('County','agec','adate','MMWRyear','MMWRweek'))
 ili.a<-acast(ili.m, adate+MMWRyear+MMWRweek ~County~agec~variable , fun.aggregate = sum )
 dimnames(ili.a)[[1]]<-substr(dimnames(ili.a)[[1]],1,10)
@@ -205,14 +211,14 @@ glm.func<-function(x.test, age.test, syndrome, all.cause.name){
           n.dates<-length(y.age)
 
   y.age.fit<-y.age[1,]
-  #y.age.fit[(n.dates-30):n.dates] <- NA #extrapolate last 1 months
+  y.age.fit[date.string>=as.Date('2020-03-01')] <- NA #extrapolate last 1 months
   
   sqrt.rsv =sqrt(clean.array.citywide[,age.test,'rsv.searches']) #same for all ages and boroughs
   sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu.rate']) #same for all ages and boroughs
   
-  sqrt.flu<- na_locf(sqrt.flu)  #fill in missing observations for flu at end of TS with most recent observed values
+  sqrt.flu<- na.locf(sqrt.flu)  #fill in missing observations for flu at end of TS with most recent observed values
   
-    sqrt.rsv<- na_locf(sqrt.rsv)  #fill in missing observations for RSV at end of TS with most recent observed values
+    sqrt.rsv<- na.locf(sqrt.rsv)  #fill in missing observations for RSV at end of TS with most recent observed values
 
     
   t2<-1:length(y.age)
@@ -231,18 +237,19 @@ glm.func<-function(x.test, age.test, syndrome, all.cause.name){
   form1<-as.formula(paste0('y.age.fit',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
                    epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
                    day.of.week+
-                   sin1+cos1 +sin2+cos2+ sin3+cos3 +log(offset1[1,]+0.5)"
+                   sin1+cos1 +sin2+cos2+ sin3+cos3 +offset(log(offset1[1,]+0.5))"
   ))
    form2<-as.formula(paste0('y.age',"~ epiyr.index.f*sqrt.rsv +   #rsv effect varies by epiyr
                    epiyr.index.f*sqrt.flu + #flu effect, varies by epiyear
                    day.of.week+
-                   sin1+cos1 +sin2+cos2+ sin3+cos3  "
+                   sin1+cos1 +sin2+cos2+ sin3+cos3  +offset(log(offset1[1,]+0.5)) "
   ))
   mod1<-glm(form1, data=ds.glm, family=poisson(link='log'))
    #500 samples total
    pred.coefs.reg.mean<- mvrnorm(n = 100, mu=coef(mod1), Sigma=vcov( mod1))
    mod.mat.pred<-model.matrix(form2, data=ds.glm, family='poisson')
 preds.stage1.regmean<- mod.mat.pred %*% t(pred.coefs.reg.mean) 
+preds.stage1.regmean<-apply(preds.stage1.regmean,2, function(x) x+offset(log(offset1[1,]+0.5)))
 preds.stage2<-rpois(n=length(preds.stage1.regmean)*5, exp(preds.stage1.regmean))
 preds.stage2<-matrix(preds.stage2, nrow=nrow(preds.stage1.regmean), ncol=ncol(preds.stage1.regmean)*5)
  preds.stage2.q<-t(apply(preds.stage2,1,quantile, probs=c(0.025,0.5, 0.975)))                   
@@ -255,7 +262,7 @@ preds.stage2<-matrix(preds.stage2, nrow=nrow(preds.stage1.regmean), ncol=ncol(pr
 }
 
 
-syndromes<- c('ili2', 'respiratory','cough') 
+syndromes<- c('ili2', 'respiratory','cough', 'fever') 
 ages <-   c('1','2','3','4','5','NA')
 
 all.glm.res<- pblapply(syndromes, function(x){
