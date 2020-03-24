@@ -21,6 +21,7 @@ library(MASS)
 library(tidyr)
 library(rsatscan)
 library(readxl)
+library(cdcfluview)
 ```
 
 last date for which data are available (as specificed on folder name of data) YYYY_MM_DD
@@ -143,34 +144,37 @@ rsv<-cbind.data.frame(rsv,mmwr.week.rsv)
 names(rsv)<-c('date','rsv.searches','MMWRyear','MMWRweek')
 ```
 
-flusurvnet data
-https://gis.cdc.gov/GRASP/Fluview/FluHospRates.html
-
+Use NREVSS testing data (% positive)
 ```{r}
-flu<-read.csv('../Data/FluSurveillance_EIP_New York - Albany_Data.csv', skip=2)
-flu2<-flu[flu$AGE.CATEGORY %in% c('Overall'),]
-flu2<-flu2[,c('SEASON', 'MMWR.YEAR', 'MMWR.WEEK', 'WEEKLY.RATE')]
-names(flu2)<-c('season', 'MMWRyear', 'MMWRweek','flu.rate')
-flu2$flu.rate<-as.numeric(as.character(flu2$flu.rate))
-flu2$flu.rate[is.na(flu2$flu.rate)]<-9999
+nrevvs.state<-who_nrevss(region = c("state"))
+clin<-nrevvs.state[['clinical_labs']]
+data(hhs_regions)
+cw.file<-hhs_regions
+clin2<-merge(clin, cw.file, by.x='region', by.y="state_or_territory")
+clin2<-clin2[,c('region','region_number','year','week','wk_date',"percent_positive")]
+names(clin2)[1:2]<-c('state','hhs_region')
+
+nrevvs_hhs<-who_nrevss(region = c("hhs"))
+clin.hhs<-nrevvs_hhs[['clinical_labs']]
+clin.hhs<-clin.hhs[,c('region','wk_date',"percent_positive")]
+clin.hhs$region<-as.numeric(gsub('Region ', '', clin.hhs$region))
+names(clin.hhs)<-c('hhs_region','wk_date',"hhs_percent_positive" )
+clin3<-merge(clin2, clin.hhs, by=c('hhs_region', 'wk_date'))
+clin3$percent_positive[is.na(clin3$percent_positive)]<-clin3$hhs_percent_positive[is.na(clin3$percent_positive)]
+clin3$state.abb<- state.abb[match(clin3$state,state.name)]
+names(clin3)<- c("hhs_region","wk_date", "state_name", "MMWRyear","MMWRweek" ,"flu_pct_pos","hhs_percent_positive", "state")
+clin3$flu_pct_pos<-as.numeric(as.character(clin3$flu_pct_pos))
 ```
 
 Aggregate by week and merge auxillary variables
 ```{r}
 combo1 = readRDS('../Data/NYC_resp_ili_combo.rds')
-
+combo1$state<-'NY'
 mmwr.date<-MMWRweek(combo1$ddate)
 ds1.df<-cbind.data.frame(combo1,mmwr.date)
-combo2<-merge(ds1.df, flu2, by=c('MMWRyear','MMWRweek'), all.x=T)
+combo2<-merge(ds1.df, clin3, by=c('MMWRyear','MMWRweek','state'), all.x=T)
 combo2<-merge(combo2, rsv, by=c('MMWRyear','MMWRweek'), all.x=T)
-combo2$flu.rate[is.na(combo2$flu.rate)]<-0
-
-#ensures flu variable set to missing if no flu observations
-combo2$flu.rate[combo2$flu.rate==9999]<-NA #last few weeks
-max.date.miss.flu<-max(combo2$ddate[is.na(combo2$flu.rate)])
-combo2$flu.rate[combo2$ddate>max.date.miss.flu] <-NA
-
-combo2.sub<-combo2[, c('agec', 'ddate','MMWRyear', 'MMWRweek', 'borough', 'ili','resp','flu.rate',"rsv.searches", 'ili.prop','resp.prop')]
+combo2.sub<-combo2[, c('agec', 'ddate','MMWRyear', 'MMWRweek', 'borough', 'ili','resp','flu_pct_pos',"rsv.searches", 'ili.prop','resp.prop')]
 ili.m<-melt(combo2.sub, id.vars=c('borough','agec','ddate','MMWRyear','MMWRweek'))
 ili.a<-acast(ili.m, ddate+MMWRyear+MMWRweek ~borough~agec~variable , fun.aggregate = sum )
 dimnames(ili.a)[[1]]<-substr(dimnames(ili.a)[[1]],1,10)
@@ -211,7 +215,7 @@ glm.func<-function(x.test, age.test, syndrome){
   y.age.fit[date.string>=as.Date("2020-03-01")] <- NA #extrapolate last 1 months
   
   sqrt.rsv =sqrt(clean.array.citywide[,age.test,'rsv.searches']) #same for all ages and boroughs
-  sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu.rate']) #same for all ages and boroughs
+  sqrt.flu =sqrt(clean.array.citywide[,age.test,'flu_pct_pos']) #same for all ages and boroughs
   
   
   sqrt.flu<- na.locf(sqrt.flu)  #fill in missing observations for flu at end of TS with most recent observed values
