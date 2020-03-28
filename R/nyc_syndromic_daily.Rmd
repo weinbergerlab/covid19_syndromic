@@ -26,7 +26,7 @@ library(cdcfluview)
 
 last date for which data are available (as specificed on folder name of data) YYYY_MM_DD
 ```{r, setdate}
-last.date<-'2020_03_26'
+last.date<-'2020_03_27'
 ```
 
 
