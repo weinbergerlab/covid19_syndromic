@@ -1,0 +1,184 @@
+---
+title: "cincinnati syndromic"
+author: "Dan Weinberger"
+date: "3/26/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RSocrata)
+library(lubridate)
+library(RCurl)
+library(MMWRweek)
+library(cdcfluview)
+library(gtrendsR)
+library(shiny)
+library(pbapply)
+library(zoo)
+library(MASS)
+library(tidyr)
+library(reshape2)
+```
+
+```{r}
+script <- getURL("https://raw.githubusercontent.com/weinbergerlab/ExcessILI/master/R/functions.R")
+eval(parse(text = script))
+
+script2 <- getURL("https://raw.githubusercontent.com/weinbergerlab/ExcessILI/master/R/aux_functions.R")
+eval(parse(text = script2))
+```
+
+```{r}
+url.cin <- 
+  "https://data.cincinnati-oh.gov/resource/vnsz-a3wp.json"
+cin1 <- 
+  read.socrata(url.cin)
+
+#url.nyc <- "https://data.cityofnewyork.us/resource/76xm-jjuj.json"
+#nyc1 <-
+#  read.socrata(url.nyc)
+
+# url.marin <- "https://data.marincounty.org/resource/swth-izpe.json"
+# marin1 <- read.socrata(
+#   url.marin,
+#   app_token = "dj52egvrcnreyp83tl797kpqc",
+#   email     = "daniel.weinberger@yale.edu",
+#   password  = "Yale1234!"
+# )
+
+```
+
+```{r, echo=T}
+cin1$datetime <- 
+  as.POSIXlt(cin1$create_time_incident, #variable with the datetime
+                         format=c("%m/%d/%Y %H:%M")) 
+cin1$date <-
+  date(cin1$datetime)
+
+
+#These are in protolcol 36: pandemic/epidemic
+cin1$flu <-  0
+cin1$flu[grep('FLU',cin1$incident_type_desc)] <- 1
+
+#https://wiki.radioreference.com/index.php/Priority_Dispatch_Codes
+# 6E1, 6D1-5 6C1-2; 36=flu
+cin1$breath2 <- 0
+cin1$breath2[grep('BREATHING PROBLEMS',cin1$cfd_incident_type_group)] <- 1
+#Mostly fall into 6D, 6C
+
+transport.codes <- c('MEDT: MEDIC TRANSPORT', 'MEDIC TR RESP & TRANSPORTED')
+cin1$med_transport <-cin1$disposition_text %in% transport.codes
+
+cin1$breath.transport<-cin1$breath2 * cin1$med_transport
+
+cin1$flu.transport<-cin1$flu * cin1$med_transport
+
+```
+
+```{r}
+cin2<-cin1[,c('date','breath2', 'flu.transport','breath.transport','incident_type_id')]
+cin2$state <- 'OH'
+cin2$age <- 1
+```
+
+Majority of flu calls are for 36A-3-S, flu symptoms, surveillance only only. 36D are most severe
+
+```{r}
+sort(-table(cin1$incident_type_id[cin1$flu==1]))
+sort(-table(cin1$incident_type_id[cin1$flu.transport==1]))
+
+```
+Pandemic/epidemic codes
+36-D-1 Ineffective breathing with flu symptoms
+36-D-2 Difficulty speaking between breaths with flu symptoms
+36-D-3 Not alert with flu symptoms
+36-D-4 Changing color with flu symptoms
+36-C-1 Abnormal breathing with single flu symptom
+36-C-2 Abnormal breathing with multiple flu symptom
+36-C-3 Chest pain/discomfort ≥35 with single flu symptom
+36-C-4 Chest pain/discomfort ≥35 with multiple flu symptoms
+36-C-5 High risk conditions
+36-A-1 Chest pain/discomfort <35 with single flu symptom
+36-A-2 Chest pain/discomfort <35 with multiple flu symptoms
+36-A-3 Flu symptoms only
+```{r}
+cin2$breath.flu.transport <- 0
+cin2$breath.flu.transport[substr(cin2$incident_type_id,1,4) %in% c('36D1','36D2','36C1','36C2')] <- 1
+
+cin2$all.breath.transport<-cin2$breath.flu.transport +cin2$breath.transport
+```
+
+
+Note: there is a flag for flu, but it only started being used in March 2020
+```{r}
+ts1<-ts_format(line.list=cin2, datevar='date', statevar='state',agevar='age', syndromes=c('breath2','breath.transport','breath.flu.transport','all.breath.transport'), remove.final = T)
+```
+
+Breathing problems, transported to hospital
+```{r}
+plot(ts1$date[1811:1911], ts1$breath.transport[1811:1911], type='l')
+```
+
+New flu code
+```{r}
+plot(ts1$date[1811:1911], ts1$breath.flu.transport[1811:1911], type='l')
+```
+
+#Breathing + new flu/breathing codes
+```{r}
+plot(ts1$date[1811:1911], ts1$all.breath.transport[1811:1911], type='l')
+```
+```{r}
+excess_cases1 <-
+  excessCases(ds = ts1,
+              datevar = "date",
+              agevar = "age",
+              statevar = "state",
+              denom.var = "all.visits",
+              use.syndromes = c("all.breath.transport"),
+              time.res = "day",
+              flu.import=T, 
+              rsv.import=F)
+```
+
+
+
+```{r}
+dashboardPlot(excess_cases1)
+```
+
+## Santa monica
+```{r}
+
+url.sm <- "https://data.smgov.net/resource/5y3u-5db4.json"
+sm1 <- read.socrata(url.sm) 
+sm2 <- sm1[sm1$call_type_description =='Emergency Medical Service (EMS)',]
+
+sm2$state <- "CA"
+sm2$agevar <- '1'
+sm2$ems <- 1
+
+sm3 <- ts_format(line.list=sm2, datevar="incident_date", statevar='state',agevar='agevar', syndromes=c('ems'), remove.final = T)
+sm3$all.visits <- 1
+
+excess_cases.sm <-
+  excessCases(ds = sm3,
+              datevar = "incident_date",
+              agevar = "agevar",
+              statevar = "state",
+              denom.var = "all.visits",
+              use.syndromes = c("ems"),
+              time.res = "day",
+              flu.import=T, 
+              rsv.import=F)
+```
+
+```{r}
+dashboardPlot(excess_cases.sm)
+
+```
+
+
+
+
