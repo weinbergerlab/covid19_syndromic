@@ -26,7 +26,7 @@ library(cdcfluview)
 
 last date for which data are available (as specificed on folder name of data) YYYY_MM_DD
 ```{r, setdate}
-last.date<-'2020_03_31'
+last.date<-'2020_04_01'
 ```
 
 
@@ -131,7 +131,7 @@ for(j in syndromes){
 
 
 ##Import auxillary data
-Pulls in google searches for RSV in CT can get 5 years of historical data at weekly reslution (switches to monthly for >5 years)
+Pulls in google searches for RSV in CT can get 5 years of historical data at weekly resolution (switches to monthly for >5 years)
 ```{r}
 rsv.down<-gtrends(keyword = 'RSV', geo="US-NY-501", time = "today+5-y",
                   gprop = c("web") , category = 0,  low_search_volume = FALSE)
