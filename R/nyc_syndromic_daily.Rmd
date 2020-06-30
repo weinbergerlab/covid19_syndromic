@@ -26,7 +26,7 @@ library(cdcfluview)
 
 last date for which data are available (as specificed on folder name of data) YYYY_MM_DD
 ```{r, setdate}
-last.date<-'2020_06_21'
+last.date<-'2020_06_29'
 ```
 
 
@@ -83,7 +83,7 @@ saveRDS(combo1, '../Data/NYC_resp_ili_combo.rds')
 
 
 ```{r}
-#combo1<-readRDS( '../Data/NYC_resp_ili_combo.rds')
+combo1<-readRDS( '../Data/NYC_resp_ili_combo.rds')
 
 ```
 
